@@ -4,3 +4,5 @@ qrc_*
 qacat
 Makefile
 .qmake.stash
+debug
+*.pro.user
