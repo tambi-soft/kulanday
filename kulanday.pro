@@ -17,15 +17,23 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 CONFIG += qt debug
-QT += widgets
+QT += widgets\
+    sql\
+    multimedia
 
 # Input
 HEADERS += src/q_kulanday_main_window.h\
-           src/q_decks_overview.h
+    src/q_decks_overview.h \
+    src/q_deck_overview.h \
+    src/db_adapter.h \
+    src/q_dirtydozen_widget.h
 
 SOURCES += src/kulanday.cpp\
-           src/q_kulanday_main_window.cpp\
-           src/q_decks_overview.cpp
+    src/q_kulanday_main_window.cpp\
+    src/q_decks_overview.cpp \
+    src/q_deck_overview.cpp \
+    src/db_adapter.cpp \
+    src/q_dirtydozen_widget.cpp
 
 #RESOURCES += kulanday.qrc
 
