@@ -13,13 +13,21 @@ QKulandayMainWindow::QKulandayMainWindow(QWidget *parent)
     tab_widget->setMovable(true);
     
     setMenuBar(menu_bar);
+    connect(menu_bar, &QKulandayMenuBar::newDecksOverviewTab, this, &QKulandayMainWindow::showDecksOverviewTab);
     
     connect(tab_widget, &QTabWidget::tabCloseRequested, this, &QKulandayMainWindow::closeTab);
     
+    showDecksOverviewTab();
+}
+
+void QKulandayMainWindow::showDecksOverviewTab()
+{
     QDecksOverviewWidget *decks = new QDecksOverviewWidget();
     tab_widget->addTab(decks, "decks");
     connect(decks, &QDecksOverviewWidget::deckDirtyDozenClicked, this, &QKulandayMainWindow::showDirtyDozenWidget);
     connect(decks, &QDecksOverviewWidget::deckViewClicked, this, &QKulandayMainWindow::showNewDeckWidget);
+    
+    activateNewTab();
 }
 
 void QKulandayMainWindow::showDirtyDozenWidget(QString deck_name)
