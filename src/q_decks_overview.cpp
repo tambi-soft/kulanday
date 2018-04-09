@@ -35,11 +35,11 @@ void QDecksOverviewWidget::populateDecksOverview()
     this->table->setRowCount(decks_names.length());
     
     int i = -1;
-    foreach (QString deck, decks_names)
+    foreach (QString deck_name, decks_names)
     {
         i++;
         
-        QTableWidgetItem *item = new QTableWidgetItem(deck);
+        QTableWidgetItem *item = new QTableWidgetItem(deck_name);
         this->table->setItem(i, 0, item);
         item->setFlags(Qt::ItemIsEnabled);
         
@@ -51,21 +51,23 @@ void QDecksOverviewWidget::populateDecksOverview()
         this->table->setCellWidget(i, 2, button_dirty_dozen);
         this->table->setCellWidget(i, 3, button_view_deck);
         
-        connect(button_dirty_dozen, &QPushButton::clicked, this, &QDecksOverviewWidget::tableButtonDirtyDozenClicked);
+        //connect(button_dirty_dozen, &QPushButton::clicked, this, &QDecksOverviewWidget::tableButtonDirtyDozenClicked);
+        connect(button_dirty_dozen, &QPushButton::clicked, this, [this, deck_name]{  tableButtonDirtyDozenClicked(deck_name); });
         
-        connect(button_view_deck, &QPushButton::clicked, this, &QDecksOverviewWidget::tableButtonViewDeckClicked);
+        //connect(button_view_deck, &QPushButton::clicked, this, &QDecksOverviewWidget::tableButtonViewDeckClicked);
+        connect(button_view_deck, &QPushButton::clicked, this, [this, deck_name]{ tableButtonViewDeckClicked(deck_name); });
         
     }
     
     this->table->resizeColumnsToContents();
 }
 
-void QDecksOverviewWidget::tableButtonDirtyDozenClicked()
+void QDecksOverviewWidget::tableButtonDirtyDozenClicked(QString deck_name)
 {
-    
+    emit deckDirtyDozenClicked(deck_name);
 }
 
-void QDecksOverviewWidget::tableButtonViewDeckClicked()
+void QDecksOverviewWidget::tableButtonViewDeckClicked(QString deck_name)
 {
-    
+    emit deckViewClicked(deck_name);
 }

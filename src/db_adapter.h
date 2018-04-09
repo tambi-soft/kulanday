@@ -15,7 +15,7 @@ private:
     
     QList<QMap<QString,QVariant>> dbIteratorToMapList(QSqlQuery query);
 public:
-    DbAdapter();
+    DbAdapter(QString deck_name);
     
     void saveDeckItem(QString name, QString word, QString phonetical, QString translation);
     int getDeckItemRowID(QString name, QString word, QString phonetical);

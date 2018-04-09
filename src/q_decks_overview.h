@@ -23,6 +23,10 @@ private:
     
 private slots:
     void createNewDeck();
-    void tableButtonDirtyDozenClicked();
-    void tableButtonViewDeckClicked();
+    void tableButtonDirtyDozenClicked(QString deck_name);
+    void tableButtonViewDeckClicked(QString deck_name);
+    
+signals:
+    void deckDirtyDozenClicked(QString deck_name);
+    void deckViewClicked(QString deck_name);
 };

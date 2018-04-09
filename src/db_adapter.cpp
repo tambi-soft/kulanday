@@ -1,10 +1,10 @@
 #include "db_adapter.h"
 
-DbAdapter::DbAdapter()
+DbAdapter::DbAdapter(QString deck_name)
 {
     this->db = QSqlDatabase::addDatabase("QSQLITE");
     
-    QDir path = QDir(QDir::homePath() + "/.tambi/decks/arab_landschaft/database.sqlite");
+    QDir path = QDir(QDir::homePath() + "/.tambi/decks/" + deck_name + "/database.sqlite");
     this->db.setDatabaseName(path.path());
     
     if (! db.open())

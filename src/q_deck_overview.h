@@ -17,7 +17,7 @@ class QDeckOverviewWidget : public QWidget
 {
     Q_OBJECT
 public:
-    explicit QDeckOverviewWidget(QWidget *parent = nullptr);
+    explicit QDeckOverviewWidget(QString deck_name, QWidget *parent = nullptr);
     
 private:
     QLayout *layout;
@@ -25,7 +25,7 @@ private:
     
     int COLUMN_OFFSET = 9;
     
-    void initTableWidget();
+    void initTableWidget(QString deck_name);
     void appendPlayButtons(int table_rowid, QList<QMap<QString,QVariant>> audio_filenames);
     
 signals:
@@ -33,7 +33,6 @@ signals:
 public slots:
     
 private slots:
-    void selectDeckButtonClicked();
     void newItemButtonClicked();
     void editRowButtonClicked(int rowid);
     void deleteRowButtonClicked(int rowid);

@@ -1,6 +1,6 @@
 #include "q_dirtydozen_widget.h"
 
-QDirtyDozenWidget::QDirtyDozenWidget(QWidget *parent)
+QDirtyDozenWidget::QDirtyDozenWidget(QString deck_name, QWidget *parent)
     : QWidget(parent)
     , grid (new QGridLayout)
     , audioPlayer (new QMediaPlayer)
@@ -12,9 +12,9 @@ QDirtyDozenWidget::QDirtyDozenWidget(QWidget *parent)
     
 }
 
-void QDirtyDozenWidget::initialize(QString deckpath)
+void QDirtyDozenWidget::initialize(QString deck_name)
 {
-    DbAdapter *db_adapter = new DbAdapter();
+    DbAdapter *db_adapter = new DbAdapter(deck_name);
     QList<QMap<QString,QVariant>> data = db_adapter->selectDeckDirtyDozenItems();
 }
 

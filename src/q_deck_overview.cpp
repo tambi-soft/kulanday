@@ -1,31 +1,28 @@
 #include "q_deck_overview.h"
 
-QDeckOverviewWidget::QDeckOverviewWidget(QWidget *parent)
+QDeckOverviewWidget::QDeckOverviewWidget(QString deck_name, QWidget *parent)
     : QWidget(parent)
     , layout (new QVBoxLayout)
     , table (new QTableWidget)
 {
     setLayout(layout);
     
-    QPushButton *deck_select_button = new QPushButton("<<<");
     QPushButton *new_item_button = new QPushButton("new item");
     
-    connect (deck_select_button, &QPushButton::clicked, this, &QDeckOverviewWidget::selectDeckButtonClicked);
     connect (new_item_button, &QPushButton::clicked, this, &QDeckOverviewWidget::newItemButtonClicked);
     
-    layout->addWidget(deck_select_button);
     layout->addWidget(table);
     layout->addWidget(new_item_button);
     
     table->horizontalHeader()->hide();
-    initTableWidget();
+    initTableWidget(deck_name);
 }
 
 
 
-void QDeckOverviewWidget::initTableWidget()
+void QDeckOverviewWidget::initTableWidget(QString deck_name)
 {
-    DbAdapter *db_adapter = new DbAdapter();
+    DbAdapter *db_adapter = new DbAdapter(deck_name);
     QList<QMap<QString,QVariant>> data = db_adapter->selectDeckItems();
     
     table->setColumnCount(data.at(0).count());
@@ -53,7 +50,7 @@ void QDeckOverviewWidget::initTableWidget()
         QLabel *image_widget = new QLabel(this);
         if (image_filename != "")
         {
-            QPixmap pixmap("/home/samuel/.tambi/decks/arab_landschaft/" + image_filename);
+            QPixmap pixmap(QDir::homePath() + "/.tambi/decks/" + deck_name + "/" + image_filename);
             pixmap = pixmap.scaled(QSize(60, 30), Qt::KeepAspectRatio);
             image_widget->setPixmap(pixmap);
         }
@@ -77,11 +74,6 @@ void QDeckOverviewWidget::initTableWidget()
 }
 
 void QDeckOverviewWidget::appendPlayButtons(int table_rowid, QList<QMap<QString,QVariant>> audio_filenames)
-{
-    
-}
-
-void QDeckOverviewWidget::selectDeckButtonClicked()
 {
     
 }

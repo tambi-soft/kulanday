@@ -11,9 +11,9 @@ class QDirtyDozenWidget : public QWidget
 {
     Q_OBJECT
 public:
-    explicit QDirtyDozenWidget(QWidget *parent = nullptr);
+    explicit QDirtyDozenWidget(QString deck_name, QWidget *parent = nullptr);
     
-    void initialize(QString deckpath);
+    void initialize(QString deck_name);
     void clear();
     
 private:

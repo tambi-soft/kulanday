@@ -21,6 +21,8 @@ private:
     int DECK_DIRTY_DOZEN_INDEX = 4;
     
 private slots:
-    
-    
+    void showDirtyDozenWidget(QString deck_name);
+    void showNewDeckWidget(QString deck_name);
+    void activateNewTab();
+    void closeTab(int tab_id);
 };
