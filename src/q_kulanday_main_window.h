@@ -2,7 +2,10 @@
 #include <QMainWindow>
 #include <QTabWidget>
 
+#include "q_kulanday_menubar.h"
 #include "q_decks_overview.h"
+#include "q_deck_overview.h"
+#include "q_dirtydozen_widget.h"
 
 class QKulandayMainWindow : public QMainWindow
 {
@@ -13,6 +16,7 @@ public:
     
 private:
     QTabWidget *tab_widget;
+    QKulandayMenuBar *menu_bar;
     
     int SELECT_DECK_INDEX = 0;
     int DECK_OVERVIEW_INDEX = 1;

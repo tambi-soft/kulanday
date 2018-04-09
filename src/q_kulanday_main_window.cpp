@@ -1,17 +1,18 @@
 
 #include "q_kulanday_main_window.h"
-#include "q_deck_overview.h"
-#include "q_dirtydozen_widget.h"
 
 QKulandayMainWindow::QKulandayMainWindow(QWidget *parent)
     : QMainWindow(parent)
     , tab_widget (new QTabWidget)
+    , menu_bar (new QKulandayMenuBar)
 {
     resize(600, 600);
     
     setCentralWidget(tab_widget);
     tab_widget->setTabsClosable(true);
     tab_widget->setMovable(true);
+    
+    setMenuBar(menu_bar);
     
     connect(tab_widget, &QTabWidget::tabCloseRequested, this, &QKulandayMainWindow::closeTab);
     
