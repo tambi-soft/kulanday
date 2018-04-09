@@ -7,6 +7,8 @@
 #include <QPushButton>
 #include <QDir>
 
+#include "q_create_new_deck_widget.h"
+
 class QDecksOverviewWidget : public QWidget
 {
     Q_OBJECT
@@ -18,6 +20,8 @@ private:
     QVBoxLayout *layout;
     QTableWidget *table;
     QPushButton *new_deck_button;
+    
+    QDir *decks_path;
     
     void populateDecksOverview();
     

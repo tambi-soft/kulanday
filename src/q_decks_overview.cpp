@@ -16,6 +16,8 @@ QDecksOverviewWidget :: QDecksOverviewWidget(QWidget *parent)
     
     connect(new_deck_button, &QPushButton::clicked, this, &QDecksOverviewWidget::createNewDeck);
     
+    decks_path = new QDir(QDir::homePath() + "/.tambi/decks");
+    
     table->horizontalHeader()->hide();
     table->verticalHeader()->hide();
     populateDecksOverview();
@@ -23,13 +25,14 @@ QDecksOverviewWidget :: QDecksOverviewWidget(QWidget *parent)
 
 void QDecksOverviewWidget::createNewDeck()
 {
+    QCreateNewDeckWidget *new_deck_widget = new QCreateNewDeckWidget(decks_path);
     
 }
 
 void QDecksOverviewWidget::populateDecksOverview()
 {
-    QDir *decks = new QDir(QDir::homePath() + "/.tambi/decks");
-    QStringList decks_names = decks->entryList(QDir::NoDotAndDotDot | QDir::Dirs, QDir::Name);
+    
+    QStringList decks_names = decks_path->entryList(QDir::NoDotAndDotDot | QDir::Dirs, QDir::Name);
     
     this->table->setColumnCount(4);
     this->table->setRowCount(decks_names.length());
