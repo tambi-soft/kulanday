@@ -17,6 +17,7 @@ QDeckOverviewWidget::QDeckOverviewWidget(QWidget *parent)
     layout->addWidget(table);
     layout->addWidget(new_item_button);
     
+    table->horizontalHeader()->hide();
     initTableWidget();
 }
 

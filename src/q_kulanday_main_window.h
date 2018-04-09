@@ -1,8 +1,8 @@
 
 #include <QMainWindow>
-#include <QGridLayout>
+#include <QTabWidget>
 
-#include <src/q_decks_overview.h>
+#include "q_decks_overview.h"
 
 class QKulandayMainWindow : public QMainWindow
 {
@@ -12,7 +12,7 @@ public:
     QKulandayMainWindow(QWidget *parent = 0);
     
 private:
-    QGridLayout *grid;
+    QTabWidget *tab_widget;
     
     int SELECT_DECK_INDEX = 0;
     int DECK_OVERVIEW_INDEX = 1;

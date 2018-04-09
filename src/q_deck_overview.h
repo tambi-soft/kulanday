@@ -6,6 +6,7 @@
 #include <QPushButton>
 #include <QTableWidget>
 #include <QTableWidgetItem>
+#include <QHeaderView>
 #include <QIcon>
 #include <QLabel>
 #include <QPixmap>

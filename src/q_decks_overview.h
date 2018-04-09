@@ -3,6 +3,7 @@
 #include <QWidget>
 #include <QVBoxLayout>
 #include <QTableWidget>
+#include <QHeaderView> // for hiding headers
 #include <QPushButton>
 #include <QDir>
 

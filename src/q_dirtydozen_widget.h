@@ -21,7 +21,7 @@ private:
     
     int COLUMNS = 4;
     QList<QString> DISPLAY_COMBO_ITEMS;
-    QString test_mode = "image";
+    QString learn_mode = "image";
     
     QList<QMap<QString,QVariant>> dataset;
     QList<QMap<QString,QVariant>> full_dataset;

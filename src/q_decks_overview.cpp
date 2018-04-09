@@ -16,6 +16,8 @@ QDecksOverviewWidget :: QDecksOverviewWidget(QWidget *parent)
     
     connect(new_deck_button, &QPushButton::clicked, this, &QDecksOverviewWidget::createNewDeck);
     
+    table->horizontalHeader()->hide();
+    table->verticalHeader()->hide();
     populateDecksOverview();
 }
 
