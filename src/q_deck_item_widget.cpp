@@ -1,16 +1,32 @@
 #include "q_deck_item_widget.h"
 
-QDeckItemWidget::QDeckItemWidget(QString deck_name, QWidget *parent)
-    : QWidget(parent)
-    , grid (new QGridLayout)
-    , image_view (new QLabel)
-    , name_line (new QLineEdit)
-    , word_line (new QLineEdit)
-    , phonetical_line (new QLineEdit)
-    , translation_line (new QLineEdit)
-    , audio_list_widget (new QAudioListWidget)
+QDeckItemWidget::QDeckItemWidget(QString deck_name, QWidget *parent) : QWidget(parent)
 {
+    this->database = new DbAdapter(deck_name);
+    initializeGui();
+}
+
+QDeckItemWidget::QDeckItemWidget(QString deck_name, int rowid, QWidget *parent) : QWidget(parent)
+{
+    this->database = new DbAdapter(deck_name);
+    initializeGui();
+    
+    QList<QMap<QString,QVariant>> data = database->selectDeckItem(rowid);
+    qDebug() << data;
+    qDebug() << data.length();
+}
+
+void QDeckItemWidget::initializeGui()
+{
+    this->grid = new QGridLayout();
     setLayout(grid);
+    
+    this->image_view = new QLabel();
+    this->name_line = new QLineEdit();
+    this->word_line = new QLineEdit();
+    this->phonetical_line = new QLineEdit();
+    this->translation_line = new QLineEdit();
+    this->audio_list_widget = new QAudioListWidget();
     
     QPushButton *import_image_button = new QPushButton("add image from file");
     import_image_button->setIcon(QIcon::fromTheme("document-open"));

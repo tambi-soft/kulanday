@@ -43,6 +43,7 @@ void QKulandayMainWindow::showNewDeckWidget(QString deck_name)
 {
     QDeckOverviewWidget *deck = new QDeckOverviewWidget(deck_name);
     connect(deck, &QDeckOverviewWidget::newDeckItemRequested, this, &QKulandayMainWindow::createNewDeckItem);
+    connect(deck, &QDeckOverviewWidget::showDeckItemRequested, this, &QKulandayMainWindow::showDeckItem);
     
     tab_widget->addTab(deck, deck_name);
     
@@ -63,6 +64,14 @@ void QKulandayMainWindow::createNewDeck(QUrl deck_url)
 void QKulandayMainWindow::createNewDeckItem(QString deck_name)
 {
     QDeckItemWidget *deck_item = new QDeckItemWidget(deck_name);
+    tab_widget->addTab(deck_item, "item: " + deck_name);
+    
+    activateNewTab();
+}
+
+void QKulandayMainWindow::showDeckItem(QString deck_name, int rowid)
+{
+    QDeckItemWidget *deck_item = new QDeckItemWidget(deck_name, rowid);
     tab_widget->addTab(deck_item, "item: " + deck_name);
     
     activateNewTab();

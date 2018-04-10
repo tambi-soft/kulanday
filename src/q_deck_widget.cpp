@@ -37,13 +37,16 @@ void QDeckOverviewWidget::initTableWidget(QString deck_name)
         
         for (int i = 0; i < data.length(); ++i)
         {
+            int rowid = data.at(i)["rowid"].toInt(); // needed for SELECTing audio files
+            
             QPushButton *edit_button = new QPushButton();
             edit_button->setIcon(QIcon::fromTheme("document-properties"));
+            connect(edit_button, &QPushButton::clicked, this, [this, deck_name, rowid]{ editRowButtonClicked(deck_name, rowid); });
             
             QPushButton *delete_button = new QPushButton();
             delete_button->setIcon(QIcon::fromTheme("edit-delete"));
+            connect(delete_button, &QPushButton::clicked, this, [this, deck_name, rowid]{ deleteRowButtonClicked(rowid); });
             
-            int rowid = data.at(i)["rowid"].toInt(); // needed for SELECTing audio files
             QString order_index = data.at(i)["order_index"].toString();
             QString name = data.at(i)["name"].toString();
             QString word = data.at(i)["word"].toString();
@@ -89,9 +92,9 @@ void QDeckOverviewWidget::newItemButtonClicked()
     emit newDeckItemRequested(deck_name);
 }
 
-void QDeckOverviewWidget::editRowButtonClicked(int rowid)
+void QDeckOverviewWidget::editRowButtonClicked(QString deck_name, int rowid)
 {
-    
+    emit showDeckItemRequested(deck_name, rowid);
 }
 
 void QDeckOverviewWidget::deleteRowButtonClicked(int rowid)

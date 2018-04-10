@@ -31,6 +31,7 @@ private slots:
     void showNewDeckWidget(QString deck_name);
     void createNewDeck(QUrl deck_url);
     void createNewDeckItem(QString deck_name);
+    void showDeckItem(QString deck_name, int rowid);
     
     void activateNewTab();
     void closeTab(int tab_id);

@@ -90,9 +90,12 @@ QList<QMap<QString,QVariant>> DbAdapter::selectDeckDirtyDozenItems()
     return dbIteratorToMapList(query);
 }
 
-QList<QVariant> DbAdapter::selectDeckItem()
+QList<QMap<QString,QVariant>> DbAdapter::selectDeckItem(int rowid)
 {
+    QSqlQuery query("SELECT name, word, phonetical, translation, svg_filename, image FROM deck WHERE rowid = :rowid");
+    query.bindValue(":rowid", rowid);
     
+    return dbIteratorToMapList(query);
 }
 
 void DbAdapter::updateDeckItem(int rowid, QString name, QString word, QString phonetical, QString translation)

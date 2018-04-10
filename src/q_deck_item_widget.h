@@ -8,6 +8,7 @@
 #include <QLabel>
 #include <QLineEdit>
 
+#include "db_adapter.h"
 #include "q_audio_list_widget.h"
 
 class QDeckItemWidget : public QWidget
@@ -15,7 +16,8 @@ class QDeckItemWidget : public QWidget
     Q_OBJECT
 public:
     explicit QDeckItemWidget(QString deck_name, QWidget *parent = nullptr);
-
+    explicit QDeckItemWidget(QString deck_name, int rowid, QWidget *parent = nullptr);
+    
 private:
     QGridLayout *grid;
     QLabel *image_view;
@@ -24,6 +26,9 @@ private:
     QLineEdit *phonetical_line;
     QLineEdit *translation_line;
     QAudioListWidget *audio_list_widget;
+    DbAdapter *database;
+    
+    void initializeGui();
     
     QString randomword(int length);
     

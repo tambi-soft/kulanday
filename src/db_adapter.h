@@ -21,10 +21,10 @@ public:
     
     void saveDeckItem(QString name, QString word, QString phonetical, QString translation);
     int getDeckItemRowID(QString name, QString word, QString phonetical);
-    QList<QMap<QString,QVariant> > selectDeckItems();
+    QList<QMap<QString,QVariant>> selectDeckItems();
     QList<QVariant> selectDeckItemsWithAudio();
-    QList<QMap<QString,QVariant> > selectDeckDirtyDozenItems();
-    QList<QVariant> selectDeckItem();
+    QList<QMap<QString,QVariant>> selectDeckDirtyDozenItems();
+    QList<QMap<QString,QVariant>> selectDeckItem(int rowid);
     void updateDeckItem(int rowid, QString name, QString word, QString phonetical, QString translation);
     void deleteItem(int rowid);
     void deleteImage(int rowid);

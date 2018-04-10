@@ -31,13 +31,13 @@ private:
     
 signals:
     void newDeckItemRequested(QString deck_name);
-    void showDeckItemRequested(int deck_id);
+    void showDeckItemRequested(QString deck_name, int deck_id);
     
 public slots:
     
 private slots:
     void newItemButtonClicked();
-    void editRowButtonClicked(int rowid);
+    void editRowButtonClicked(QString deck_name, int rowid);
     void deleteRowButtonClicked(int rowid);
 };
 
