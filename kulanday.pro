@@ -27,8 +27,8 @@ HEADERS += src/q_kulanday_main_window.h\
     src/q_deck_overview.h \
     src/db_adapter.h \
     src/q_dirtydozen_widget.h \
-    src/q_create_new_deck_widget.h \
-    src/q_kulanday_menubar.h
+    src/q_kulanday_menubar.h \
+    src/q_create_new_deck_dialog.h
 
 SOURCES += src/kulanday.cpp\
     src/q_kulanday_main_window.cpp\
@@ -36,8 +36,8 @@ SOURCES += src/kulanday.cpp\
     src/q_deck_overview.cpp \
     src/db_adapter.cpp \
     src/q_dirtydozen_widget.cpp \
-    src/q_create_new_deck_widget.cpp \
-    src/q_kulanday_menubar.cpp
+    src/q_kulanday_menubar.cpp \
+    src/q_create_new_deck_dialog.cpp
 
 #RESOURCES += kulanday.qrc
 

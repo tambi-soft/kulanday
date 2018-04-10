@@ -7,7 +7,7 @@
 #include <QPushButton>
 #include <QDir>
 
-#include "q_create_new_deck_widget.h"
+#include "q_create_new_deck_dialog.h"
 
 class QDecksOverviewWidget : public QWidget
 {

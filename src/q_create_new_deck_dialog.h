@@ -1,14 +1,14 @@
 #ifndef Q_CREATE_NEW_DECK_WIDGET_H
 #define Q_CREATE_NEW_DECK_WIDGET_H
 
-#include <QWidget>
+#include <QDialog>
 #include <QDir>
 
-class QCreateNewDeckWidget : public QWidget
+class QCreateNewDeckDialog : public QDialog
 {
     Q_OBJECT
 public:
-    explicit QCreateNewDeckWidget(QDir *decks_path, QWidget *parent = nullptr);
+    explicit QCreateNewDeckDialog(QDir *decks_path, QDialog *parent = nullptr);
     
 signals:
     

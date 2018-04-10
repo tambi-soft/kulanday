@@ -19,14 +19,14 @@ QDecksOverviewWidget :: QDecksOverviewWidget(QWidget *parent)
     decks_path = new QDir(QDir::homePath() + "/.tambi/decks");
     
     table->horizontalHeader()->hide();
-    table->verticalHeader()->hide();
+    //table->verticalHeader()->hide();
     populateDecksOverview();
 }
 
 void QDecksOverviewWidget::createNewDeck()
 {
-    QCreateNewDeckWidget *new_deck_widget = new QCreateNewDeckWidget(decks_path);
-    
+    QCreateNewDeckDialog *new_deck_dialog = new QCreateNewDeckDialog(decks_path);
+    //QDir new_deck_dir = new_deck_dialog->
 }
 
 void QDecksOverviewWidget::populateDecksOverview()
