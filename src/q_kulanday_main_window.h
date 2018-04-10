@@ -6,6 +6,7 @@
 #include "q_decks_overview.h"
 #include "q_deck_overview.h"
 #include "q_dirtydozen_widget.h"
+#include "q_deck_item_widget.h"
 
 class QKulandayMainWindow : public QMainWindow
 {
@@ -29,6 +30,8 @@ private slots:
     void showDirtyDozenWidget(QString deck_name);
     void showNewDeckWidget(QString deck_name);
     void createNewDeck(QUrl deck_url);
+    void createNewDeckItem(QString deck_name);
+    
     void activateNewTab();
     void closeTab(int tab_id);
 };

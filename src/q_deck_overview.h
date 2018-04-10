@@ -11,7 +11,7 @@
 #include <QLabel>
 #include <QPixmap>
 
-#include <src/db_adapter.h>
+#include "db_adapter.h"
 
 class QDeckOverviewWidget : public QWidget
 {
@@ -22,6 +22,7 @@ public:
 private:
     QLayout *layout;
     QTableWidget *table;
+    QString deck_name;
     
     int COLUMN_OFFSET = 9;
     
@@ -29,6 +30,8 @@ private:
     void appendPlayButtons(int table_rowid, QList<QMap<QString,QVariant>> audio_filenames);
     
 signals:
+    void newDeckItemRequested(QString deck_name);
+    void showDeckItemRequested(int deck_id);
     
 public slots:
     

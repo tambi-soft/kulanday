@@ -1,3 +1,4 @@
+
 #include "q_deck_overview.h"
 
 QDeckOverviewWidget::QDeckOverviewWidget(QString deck_name, QWidget *parent)
@@ -6,6 +7,8 @@ QDeckOverviewWidget::QDeckOverviewWidget(QString deck_name, QWidget *parent)
     , table (new QTableWidget)
 {
     setLayout(layout);
+    
+    this->deck_name = deck_name;
     
     QPushButton *new_item_button = new QPushButton("new item");
     
@@ -25,7 +28,7 @@ void QDeckOverviewWidget::initTableWidget(QString deck_name)
     DbAdapter *db_adapter = new DbAdapter(deck_name);
     QList<QMap<QString,QVariant>> data = db_adapter->selectDeckItems();
     
-    if (data.length() < 0)
+    if (data.length() > 0)
     {
         table->setColumnCount(data.at(0).count());
         table->setRowCount(data.length());
@@ -83,7 +86,7 @@ void QDeckOverviewWidget::appendPlayButtons(int table_rowid, QList<QMap<QString,
 
 void QDeckOverviewWidget::newItemButtonClicked()
 {
-    
+    emit newDeckItemRequested(deck_name);
 }
 
 void QDeckOverviewWidget::editRowButtonClicked(int rowid)

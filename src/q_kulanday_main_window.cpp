@@ -42,6 +42,8 @@ void QKulandayMainWindow::showDirtyDozenWidget(QString deck_name)
 void QKulandayMainWindow::showNewDeckWidget(QString deck_name)
 {
     QDeckOverviewWidget *deck = new QDeckOverviewWidget(deck_name);
+    connect(deck, &QDeckOverviewWidget::newDeckItemRequested, this, &QKulandayMainWindow::createNewDeckItem);
+    
     tab_widget->addTab(deck, deck_name);
     
     activateNewTab();
@@ -56,6 +58,14 @@ void QKulandayMainWindow::createNewDeck(QUrl deck_url)
         
         activateNewTab();
     }
+}
+
+void QKulandayMainWindow::createNewDeckItem(QString deck_name)
+{
+    QDeckItemWidget *deck_item = new QDeckItemWidget(deck_name);
+    tab_widget->addTab(deck_item, "item: " + deck_name);
+    
+    activateNewTab();
 }
 
 void QKulandayMainWindow::activateNewTab()
