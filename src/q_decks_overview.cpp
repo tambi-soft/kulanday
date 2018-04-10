@@ -14,7 +14,7 @@ QDecksOverviewWidget :: QDecksOverviewWidget(QWidget *parent)
     
     new_deck_button->setText("create new deck");
     
-    connect(new_deck_button, &QPushButton::clicked, this, &QDecksOverviewWidget::createNewDeck);
+    connect(new_deck_button, &QPushButton::clicked, this, &QDecksOverviewWidget::createNewDeckClicked);
     
     decks_path = new QDir(QDir::homePath() + "/.tambi/decks");
     
@@ -23,10 +23,17 @@ QDecksOverviewWidget :: QDecksOverviewWidget(QWidget *parent)
     populateDecksOverview();
 }
 
-void QDecksOverviewWidget::createNewDeck()
+void QDecksOverviewWidget::createNewDeckClicked()
 {
-    QCreateNewDeckDialog *new_deck_dialog = new QCreateNewDeckDialog(decks_path);
-    //QDir new_deck_dir = new_deck_dialog->
+    //QCreateNewDeckDialog *new_deck_dialog = new QCreateNewDeckDialog(decks_path);
+    //new_deck_dialog->exec();
+    QString default_deck_path = QDir::homePath();
+    //QUrl url = QFileDialog::getExistingDirectoryUrl(this, "Select Directory for the new Deck", default_deck_path, QFileDialog::ShowDirsOnly);
+    QString url_path = QFileDialog::getExistingDirectory(this, tr("Create New Deck"),
+                                                    default_deck_path + "/.tambi/decks",
+                                                    QFileDialog::ShowDirsOnly);
+    
+    emit createNewDeck(QUrl(url_path));
 }
 
 void QDecksOverviewWidget::populateDecksOverview()

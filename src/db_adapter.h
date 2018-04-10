@@ -14,6 +14,8 @@ private:
     QSqlDatabase db;
     
     QList<QMap<QString,QVariant>> dbIteratorToMapList(QSqlQuery query);
+    
+    void initializeTables();
 public:
     DbAdapter(QString deck_name);
     

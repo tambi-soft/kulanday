@@ -15,6 +15,8 @@ DbAdapter::DbAdapter(QString deck_name)
     {
       qDebug() << "Database: connection ok";
     }
+    
+    initializeTables();
 }
 
 // maps the selected field name to the fetched value
@@ -38,6 +40,15 @@ QList<QMap<QString,QVariant>> DbAdapter::dbIteratorToMapList(QSqlQuery query)
     }
     
     return result;
+}
+
+void DbAdapter::initializeTables()
+{
+    QSqlQuery query_deck("CREATE TABLE IF NOT EXISTS deck (rowid INTEGER PRIMARY KEY AUTOINCREMENT, order_index INTEGER, name TEXT, word TEXT, phonetical TEXT, translation TEXT, svg_filename TEXT, image TEXT, created NUMERIC, known NUMERIC, priority NUMERIC, changed NUMERIC)");
+    query_deck.exec();
+    
+    QSqlQuery query_audio("CREATE TABLE IF NOT EXISTS audio (rowid INTEGER PRIMARY KEY AUTOINCREMENT, deck_rowid INTEGER, description TEXT, filename TEXT)");
+    query_audio.exec();
 }
 
 void DbAdapter::saveDeckItem(QString name, QString word, QString phonetical, QString translation)

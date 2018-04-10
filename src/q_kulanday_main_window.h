@@ -28,6 +28,7 @@ private slots:
     void showDecksOverviewTab();
     void showDirtyDozenWidget(QString deck_name);
     void showNewDeckWidget(QString deck_name);
+    void createNewDeck(QUrl deck_url);
     void activateNewTab();
     void closeTab(int tab_id);
 };
