@@ -23,25 +23,25 @@ QT += widgets\
 
 # Input
 HEADERS += src/q_kulanday_main_window.h\
-    src/q_decks_overview.h \
-    src/q_deck_overview.h \
     src/db_adapter.h \
     src/q_dirtydozen_widget.h \
     src/q_kulanday_menubar.h \
     src/q_create_new_deck_dialog.h \
     src/q_deck_item_widget.h \
-    src/q_audio_list_widget.h
+    src/q_audio_list_widget.h \
+    src/q_deck_widget.h \
+    src/q_decks_widget.h
 
 SOURCES += src/kulanday.cpp\
     src/q_kulanday_main_window.cpp\
-    src/q_decks_overview.cpp \
-    src/q_deck_overview.cpp \
     src/db_adapter.cpp \
     src/q_dirtydozen_widget.cpp \
     src/q_kulanday_menubar.cpp \
     src/q_create_new_deck_dialog.cpp \
     src/q_deck_item_widget.cpp \
-    src/q_audio_list_widget.cpp
+    src/q_audio_list_widget.cpp \
+    src/q_deck_widget.cpp \
+    src/q_decks_widget.cpp
 
 #RESOURCES += kulanday.qrc
 

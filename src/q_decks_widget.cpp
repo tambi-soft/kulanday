@@ -1,5 +1,5 @@
 
-#include <src/q_decks_overview.h>
+#include <src/q_decks_widget.h>
 
 QDecksOverviewWidget :: QDecksOverviewWidget(QWidget *parent)
     : layout (new QVBoxLayout)

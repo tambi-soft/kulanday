@@ -1,5 +1,5 @@
 
-#include "q_deck_overview.h"
+#include "q_deck_widget.h"
 
 QDeckOverviewWidget::QDeckOverviewWidget(QString deck_name, QWidget *parent)
     : QWidget(parent)
