@@ -1,8 +1,15 @@
 #include "db_adapter.h"
 
-DbAdapter::DbAdapter(QString deck_name)
+DbAdapter::DbAdapter(QString deck_name, QObject *parent) : QObject(parent)
 {
-    this->db = QSqlDatabase::addDatabase("QSQLITE");
+    this->deck_name = deck_name;
+    
+    if (! QSqlDatabase::contains(deck_name))
+    {
+        QSqlDatabase::addDatabase("QSQLITE", deck_name);
+    }
+    
+    this->db = QSqlDatabase::database(deck_name);
     
     QDir path = QDir(QDir::homePath() + "/.tambi/decks/" + deck_name + "/database.sqlite");
     this->db.setDatabaseName(path.path());
@@ -44,10 +51,10 @@ QList<QMap<QString,QVariant>> DbAdapter::dbIteratorToMapList(QSqlQuery query)
 
 void DbAdapter::initializeTables()
 {
-    QSqlQuery query_deck("CREATE TABLE IF NOT EXISTS deck (rowid INTEGER PRIMARY KEY AUTOINCREMENT, order_index INTEGER, name TEXT, word TEXT, phonetical TEXT, translation TEXT, svg_filename TEXT, image TEXT, created NUMERIC, known NUMERIC, priority NUMERIC, changed NUMERIC)");
+    QSqlQuery query_deck("CREATE TABLE IF NOT EXISTS deck (rowid INTEGER PRIMARY KEY AUTOINCREMENT, order_index INTEGER, name TEXT, word TEXT, phonetical TEXT, translation TEXT, svg_filename TEXT, image TEXT, created NUMERIC, known NUMERIC, priority NUMERIC, changed NUMERIC)", this->db);
     query_deck.exec();
     
-    QSqlQuery query_audio("CREATE TABLE IF NOT EXISTS audio (rowid INTEGER PRIMARY KEY AUTOINCREMENT, deck_rowid INTEGER, description TEXT, filename TEXT)");
+    QSqlQuery query_audio("CREATE TABLE IF NOT EXISTS audio (rowid INTEGER PRIMARY KEY AUTOINCREMENT, deck_rowid INTEGER, description TEXT, filename TEXT)", this->db);
     query_audio.exec();
 }
 
@@ -63,7 +70,7 @@ int DbAdapter::getDeckItemRowID(QString name, QString word, QString phonetical)
 
 QList<QMap<QString,QVariant>> DbAdapter::selectDeckItems()
 {
-    QSqlQuery query("SELECT rowid, order_index, name, word, phonetical, translation, svg_filename, image, created FROM deck ORDER BY order_index");
+    QSqlQuery query("SELECT rowid, order_index, name, word, phonetical, translation, svg_filename, image, created FROM deck ORDER BY order_index", this->db);
     
     return dbIteratorToMapList(query);
 }
@@ -85,15 +92,17 @@ QList<QMap<QString,QVariant>> DbAdapter::selectDeckDirtyDozenItems()
         ) AS T\
         GROUP BY rowid\
         ORDER BY RANDOM()\
-        LIMIT 12");
+        LIMIT 12", this->db);
     
     return dbIteratorToMapList(query);
 }
 
 QList<QMap<QString,QVariant>> DbAdapter::selectDeckItem(int rowid)
 {
-    QSqlQuery query("SELECT name, word, phonetical, translation, svg_filename, image FROM deck WHERE rowid = :rowid");
+    QSqlQuery query(this->db);
+    query.prepare("SELECT name, word, phonetical, translation, svg_filename, image FROM deck WHERE rowid = :rowid");
     query.bindValue(":rowid", rowid);
+    query.exec();
     
     return dbIteratorToMapList(query);
 }
@@ -117,7 +126,7 @@ void DbAdapter::deleteImage(int rowid)
 
 QList<QMap<QString,QVariant>> DbAdapter::audioFilenamesForDeckRowID(int rowid)
 {
-    QSqlQuery query("SELECT rowid, description, filename FROM audio WHERE deck_rowid = :rowid");
+    QSqlQuery query("SELECT rowid, description, filename FROM audio WHERE deck_rowid = :rowid", this->db);
     query.bindValue(":rowid", rowid);
     
     return dbIteratorToMapList(query);
@@ -125,7 +134,7 @@ QList<QMap<QString,QVariant>> DbAdapter::audioFilenamesForDeckRowID(int rowid)
 
 int DbAdapter::getMaxAudioCount()
 {
-    QSqlQuery query("SELECT COUNT(*) AS result FROM audio GROUP BY deck_rowid ORDER BY result DESC LIMIT 1");
+    QSqlQuery query("SELECT COUNT(*) AS result FROM audio GROUP BY deck_rowid ORDER BY result DESC LIMIT 1", this->db);
     return query.exec();
 }
 

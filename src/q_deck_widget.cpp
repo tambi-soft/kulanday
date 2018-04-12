@@ -45,7 +45,7 @@ void QDeckOverviewWidget::initTableWidget(QString deck_name)
             
             QPushButton *delete_button = new QPushButton();
             delete_button->setIcon(QIcon::fromTheme("edit-delete"));
-            connect(delete_button, &QPushButton::clicked, this, [this, deck_name, rowid]{ deleteRowButtonClicked(rowid); });
+            connect(delete_button, &QPushButton::clicked, this, [this, rowid]{ deleteRowButtonClicked(rowid); });
             
             QString order_index = data.at(i)["order_index"].toString();
             QString name = data.at(i)["name"].toString();

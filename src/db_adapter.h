@@ -8,16 +8,18 @@
 #include <QSqlRecord>
 #include <QDir>
 
-class DbAdapter
+class DbAdapter : public QObject
 {
+    Q_OBJECT
 private:
     QSqlDatabase db;
+    QString deck_name;
     
     QList<QMap<QString,QVariant>> dbIteratorToMapList(QSqlQuery query);
     
     void initializeTables();
 public:
-    DbAdapter(QString deck_name);
+    explicit DbAdapter(QString deck_name, QObject *parent = nullptr);
     
     void saveDeckItem(QString name, QString word, QString phonetical, QString translation);
     int getDeckItemRowID(QString name, QString word, QString phonetical);

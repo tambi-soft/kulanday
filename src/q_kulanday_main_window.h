@@ -7,6 +7,7 @@
 #include "q_deck_widget.h"
 #include "q_dirtydozen_widget.h"
 #include "q_deck_item_widget.h"
+#include "db_adapter.h"
 
 class QKulandayMainWindow : public QMainWindow
 {

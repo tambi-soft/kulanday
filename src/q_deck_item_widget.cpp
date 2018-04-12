@@ -8,12 +8,16 @@ QDeckItemWidget::QDeckItemWidget(QString deck_name, QWidget *parent) : QWidget(p
 
 QDeckItemWidget::QDeckItemWidget(QString deck_name, int rowid, QWidget *parent) : QWidget(parent)
 {
-    this->database = new DbAdapter(deck_name);
     initializeGui();
     
+    this->database = new DbAdapter(deck_name);
     QList<QMap<QString,QVariant>> data = database->selectDeckItem(rowid);
-    qDebug() << data;
-    qDebug() << data.length();
+    
+    this->name_line->setText(data[0]["name"].toString());
+    this->word_line->setText(data[0]["word"].toString());
+    this->phonetical_line->setText(data[0]["phonetical"].toString());
+    this->translation_line->setText(data[0]["translation"].toString());
+    
 }
 
 void QDeckItemWidget::initializeGui()
