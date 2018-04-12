@@ -18,6 +18,15 @@ QDeckItemWidget::QDeckItemWidget(QString deck_name, int rowid, QWidget *parent) 
     this->phonetical_line->setText(data[0]["phonetical"].toString());
     this->translation_line->setText(data[0]["translation"].toString());
     
+    if (! data[0]["image"].isNull())
+    {
+        QString image_path = QDir::homePath() + "/.tambi/decks/" + deck_name + "/" + data[0]["image"].toString();
+        QPixmap pixmap;
+        pixmap.load(image_path);
+        QPixmap scaled = pixmap.scaled(QSize(600, 300), Qt::KeepAspectRatio);
+        
+        this->image_view->setPixmap(scaled);
+    }
 }
 
 void QDeckItemWidget::initializeGui()
@@ -69,6 +78,9 @@ void QDeckItemWidget::initializeGui()
     grid->addWidget(translation_line, 5, 1, 1, 3);
     
     grid->addWidget(audio_list_widget, 6, 0, 1, 4);
+    grid->addWidget(new_audio_button, 7, 0);
+    
+    grid->addWidget(save_button, 7, 3);
 }
 
 void QDeckItemWidget::importImageClicked()

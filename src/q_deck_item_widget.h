@@ -7,6 +7,9 @@
 #include <QIcon>
 #include <QLabel>
 #include <QLineEdit>
+#include <QPixmap>
+#include <QDir>
+#include <QSize>
 
 #include "db_adapter.h"
 #include "q_audio_list_widget.h"
