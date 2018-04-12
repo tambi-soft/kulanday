@@ -81,6 +81,12 @@ void QDeckItemWidget::initializeGui()
     grid->addWidget(new_audio_button, 7, 0);
     
     grid->addWidget(save_button, 7, 3);
+    
+    if (QSysInfo::kernelType() != "darwin") // font-rendering is quite a mess on mac and looks uselessly uggly here
+    {
+        QString style = "QLineEdit{ font-size: 20px; }";
+        setStyleSheet(style);
+    }
 }
 
 void QDeckItemWidget::importImageClicked()
