@@ -56,6 +56,7 @@ void QDeckOverviewWidget::initTableWidget(QString deck_name)
             QString translation = data.at(i)["translation"].toString();
             
             QString image_filename = data.at(i)["image"].toString();
+            QString svg_filename = data.at(i)["svg_filename"].toString();
             
             QLabel *image_widget = new QLabel(this);
             if (image_filename != "")
@@ -63,6 +64,13 @@ void QDeckOverviewWidget::initTableWidget(QString deck_name)
                 QPixmap pixmap(QDir::homePath() + "/.tambi/decks/" + deck_name + "/" + image_filename);
                 pixmap = pixmap.scaled(QSize(60, 30), Qt::KeepAspectRatio);
                 image_widget->setPixmap(pixmap);
+            }
+            
+            QSvgWidget *svg_widget = new QSvgWidget();
+            if (svg_filename != "")
+            {
+                svg_widget->load(QDir::homePath() + "/.tambi/decks/" + deck_name + "/" + svg_filename);
+                svg_widget->setFixedSize(60, 30);
             }
             
             table->setCellWidget(i, 0, edit_button);
@@ -74,6 +82,7 @@ void QDeckOverviewWidget::initTableWidget(QString deck_name)
             table->setItem(i, 5, new QTableWidgetItem(phonetical));
             table->setItem(i, 6, new QTableWidgetItem(translation));
             
+            table->setCellWidget(i, 7, svg_widget);
             table->setCellWidget(i, 8, image_widget);
             
             QList<QMap<QString,QVariant>> audio_filenames = db_adapter->audioFilenamesForDeckRowID(rowid);

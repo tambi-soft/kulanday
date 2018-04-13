@@ -19,7 +19,8 @@ DEFINES += QT_DEPRECATED_WARNINGS
 CONFIG += qt debug
 QT += widgets\
     sql\
-    multimedia
+    multimedia\
+    svg
 
 # Input
 HEADERS += src/q_kulanday_main_window.h\

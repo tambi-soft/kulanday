@@ -10,6 +10,7 @@
 #include <QIcon>
 #include <QLabel>
 #include <QPixmap>
+#include <QSvgWidget>
 
 #include <QMediaPlayer>
 #include <QMediaContent>
