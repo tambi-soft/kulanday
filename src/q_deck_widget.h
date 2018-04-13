@@ -11,7 +11,13 @@
 #include <QLabel>
 #include <QPixmap>
 
+#include <QMediaPlayer>
+#include <QMediaContent>
+#include <QDir>
+#include <QUrl>
+
 #include "db_adapter.h"
+#include "q_audio_button.h"
 
 class QDeckOverviewWidget : public QWidget
 {
@@ -23,11 +29,13 @@ private:
     QLayout *layout;
     QTableWidget *table;
     QString deck_name;
+    QMediaPlayer *player;
     
     int COLUMN_OFFSET = 9;
     
     void initTableWidget(QString deck_name);
-    void appendPlayButtons(int table_rowid, QList<QMap<QString,QVariant>> audio_filenames);
+    void appendPlayButtons(int table_rowid, QList<QMap<QString,QVariant>> audio_filenames, int max_audio_count);
+    void audioButtonClicked(QPushButton *button, QString audio_filename);
     
 signals:
     void newDeckItemRequested(QString deck_name);

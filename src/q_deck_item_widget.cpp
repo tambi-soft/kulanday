@@ -3,12 +3,12 @@
 QDeckItemWidget::QDeckItemWidget(QString deck_name, QWidget *parent) : QWidget(parent)
 {
     this->database = new DbAdapter(deck_name);
-    initializeGui();
+    initializeGui(deck_name);
 }
 
 QDeckItemWidget::QDeckItemWidget(QString deck_name, int rowid, QWidget *parent) : QWidget(parent)
 {
-    initializeGui();
+    initializeGui(deck_name);
     
     this->database = new DbAdapter(deck_name);
     QList<QMap<QString,QVariant>> data = database->selectDeckItem(rowid);
@@ -29,7 +29,7 @@ QDeckItemWidget::QDeckItemWidget(QString deck_name, int rowid, QWidget *parent) 
     }
 }
 
-void QDeckItemWidget::initializeGui()
+void QDeckItemWidget::initializeGui(QString deck_name)
 {
     this->grid = new QGridLayout();
     setLayout(grid);
@@ -39,7 +39,7 @@ void QDeckItemWidget::initializeGui()
     this->word_line = new QLineEdit();
     this->phonetical_line = new QLineEdit();
     this->translation_line = new QLineEdit();
-    this->audio_list_widget = new QAudioListWidget();
+    this->audio_list_widget = new QAudioListWidget(deck_name);
     
     QPushButton *import_image_button = new QPushButton("add image from file");
     import_image_button->setIcon(QIcon::fromTheme("document-open"));

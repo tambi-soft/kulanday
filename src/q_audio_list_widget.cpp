@@ -1,6 +1,6 @@
 #include "q_audio_list_widget.h"
 
-QAudioListWidget::QAudioListWidget(QWidget *parent) : QWidget(parent)
+QAudioListWidget::QAudioListWidget(QString deck_name, QWidget *parent) : QWidget(parent)
 {
     
 }

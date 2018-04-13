@@ -5,6 +5,7 @@ QDeckOverviewWidget::QDeckOverviewWidget(QString deck_name, QWidget *parent)
     : QWidget(parent)
     , layout (new QVBoxLayout)
     , table (new QTableWidget)
+    , player (new QMediaPlayer)
 {
     setLayout(layout);
     
@@ -30,10 +31,11 @@ void QDeckOverviewWidget::initTableWidget(QString deck_name)
     
     if (data.length() > 0)
     {
-        table->setColumnCount(data.at(0).count());
+        //table->setColumnCount(data.at(0).count());
         table->setRowCount(data.length());
         
         int max_audio_count = db_adapter->getMaxAudioCount();
+        table->setColumnCount(COLUMN_OFFSET + max_audio_count);
         
         for (int i = 0; i < data.length(); ++i)
         {
@@ -75,16 +77,32 @@ void QDeckOverviewWidget::initTableWidget(QString deck_name)
             table->setCellWidget(i, 8, image_widget);
             
             QList<QMap<QString,QVariant>> audio_filenames = db_adapter->audioFilenamesForDeckRowID(rowid);
-            appendPlayButtons(i, audio_filenames);
+            appendPlayButtons(i, audio_filenames, max_audio_count);
         }
     }
     
     table->resizeColumnsToContents();
 }
 
-void QDeckOverviewWidget::appendPlayButtons(int table_rowid, QList<QMap<QString,QVariant>> audio_filenames)
+void QDeckOverviewWidget::appendPlayButtons(int table_rowid, QList<QMap<QString,QVariant>> audio_filenames, int max_audio_count)
 {
-    
+    for (int column = 0; column < audio_filenames.length(); ++column)
+    {
+        QAudioButton *audio_button = new QAudioButton();
+        audio_button->setIcon(QIcon::fromTheme("media-playback-start"));
+        
+        QString audio_filename = audio_filenames.at(column)["filename"].toString();
+        connect(audio_button, &QPushButton::clicked, this, [this, audio_button, audio_filename]{ audioButtonClicked(audio_button, audio_filename); });
+        
+        table->setCellWidget(table_rowid, column + COLUMN_OFFSET, audio_button);
+    }
+}
+void QDeckOverviewWidget::audioButtonClicked(QPushButton *button, QString audio_filename)
+{
+    QString audio_path = "file://" + QDir::homePath() + "/.tambi/decks/" + this->deck_name + "/" + audio_filename;
+    QUrl audio_url = QUrl(audio_path);
+    player->setMedia(QMediaContent(audio_url));
+    player->play();
 }
 
 void QDeckOverviewWidget::newItemButtonClicked()

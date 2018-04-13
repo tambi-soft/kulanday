@@ -3,12 +3,17 @@
 
 #include <QWidget>
 #include <QMediaPlayer>
+#include <QTableWidget>
+
+#ifdef __linux__
+
+#endif
 
 class QAudioListWidget : public QWidget
 {
     Q_OBJECT
 public:
-    explicit QAudioListWidget(QWidget *parent = nullptr);
+    explicit QAudioListWidget(QString deck_name,  QWidget *parent = nullptr);
     
 private:
     int PLAY_BUTTON_COLUMN = 1;

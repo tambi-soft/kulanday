@@ -126,8 +126,10 @@ void DbAdapter::deleteImage(int rowid)
 
 QList<QMap<QString,QVariant>> DbAdapter::audioFilenamesForDeckRowID(int rowid)
 {
-    QSqlQuery query("SELECT rowid, description, filename FROM audio WHERE deck_rowid = :rowid", this->db);
+    QSqlQuery query(this->db);
+    query.prepare("SELECT rowid, description, filename FROM audio WHERE deck_rowid = :rowid");
     query.bindValue(":rowid", rowid);
+    query.exec();
     
     return dbIteratorToMapList(query);
 }
@@ -135,7 +137,9 @@ QList<QMap<QString,QVariant>> DbAdapter::audioFilenamesForDeckRowID(int rowid)
 int DbAdapter::getMaxAudioCount()
 {
     QSqlQuery query("SELECT COUNT(*) AS result FROM audio GROUP BY deck_rowid ORDER BY result DESC LIMIT 1", this->db);
-    return query.exec();
+    
+    QList<QMap<QString,QVariant>> list = dbIteratorToMapList(query);
+    return list.at(0)["result"].toInt();
 }
 
 void DbAdapter::deleteAudioItem(int rowid)

@@ -32,7 +32,7 @@ private:
     QAudioListWidget *audio_list_widget;
     DbAdapter *database;
     
-    void initializeGui();
+    void initializeGui(QString deck_name);
     
     QString randomword(int length);
     
