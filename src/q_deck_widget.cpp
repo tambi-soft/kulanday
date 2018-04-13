@@ -168,4 +168,7 @@ void QDeckOverviewWidget::deleteRowButtonClicked(int rowid)
             }
         }
     }
+    
+    table->clear();
+    initTableWidget(this->deck_name);
 }
