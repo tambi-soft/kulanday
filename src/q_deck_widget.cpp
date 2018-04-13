@@ -155,7 +155,17 @@ void QDeckOverviewWidget::deleteRowButtonClicked(int rowid)
     
     if (reply == QMessageBox::Yes)
     {
-        QList<QVariant> data_to_delete = this->database->deleteItem(rowid);
-        qDebug() << data_to_delete;
+        QList<QMap<QString,QVariant>> data_to_delete = this->database->deleteItem(rowid);
+        
+        for (int i = 0; i < data_to_delete.length(); ++i)
+        {
+            QString filename = data_to_delete.at(i)["filename"].toString();
+            if (filename != "")
+            {
+                QString filepath = QDir::homePath() + "/.tambi/decks/" + this->deck_name + "/" + filename;
+                QFile file(filepath);
+                file.remove();
+            }
+        }
     }
 }

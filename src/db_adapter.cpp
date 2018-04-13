@@ -112,34 +112,36 @@ void DbAdapter::updateDeckItem(int rowid, QString name, QString word, QString ph
     
 }
 
-QList<QVariant> DbAdapter::deleteItem(int rowid)
+QList<QMap<QString,QVariant>> DbAdapter::deleteItem(int rowid)
 {
-    QList<QVariant> result;
+    QList<QMap<QString,QVariant>> result;
     
     QSqlQuery select_svg(this->db);
     select_svg.prepare("SELECT svg_filename FROM deck WHERE rowid = :rowid");
     select_svg.bindValue(":rowid", rowid);
     select_svg.exec();
     QList<QMap<QString,QVariant>> svg_list = dbIteratorToMapList(select_svg);
-    result.append( svg_list.at(0)["svg_filename"].toString() );
+    QMap<QString,QVariant> svg_map;
+    svg_map.insert("filename", svg_list.at(0)["svg_filename"].toString());
+    result.append( svg_map );
     
     QSqlQuery select_image(this->db);
     select_image.prepare("SELECT image FROM deck WHERE rowid = :rowid");
     select_image.bindValue(":rowid", rowid);
     select_image.exec();
     QList<QMap<QString,QVariant>> image_list = dbIteratorToMapList(select_image);
-    result.append( image_list.at(0)["image"].toString() );
+    QMap<QString,QVariant> image_map;
+    image_map.insert("filename", image_list.at(0)["image"].toString());
+    result.append( image_map );
     
     QSqlQuery select_audio(this->db);
     select_audio.prepare("SELECT filename FROM audio WHERE deck_rowid = :rowid");
     select_audio.bindValue(":rowid", rowid);
     select_audio.exec();
     QList<QMap<QString,QVariant>> audio_list = dbIteratorToMapList(select_audio);
-    qDebug() << audio_list;
+    result.append(audio_list);
     
-    qDebug() << ":::::::::::";
     
-    /*
     QSqlQuery delete_deck_row(this->db);
     delete_deck_row.prepare("DELETE FROM deck WHERE rowid = :rowid");
     delete_deck_row.bindValue(":rowid", rowid);
@@ -149,7 +151,7 @@ QList<QVariant> DbAdapter::deleteItem(int rowid)
     delete_audio.prepare("DELETE FROM audio WHERE deck_rowid = :rowid");
     delete_audio.bindValue(":rowid", rowid);
     delete_audio.exec();
-    */
+    
     return result;
 }
 

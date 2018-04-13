@@ -18,6 +18,8 @@
 #include <QDir>
 #include <QUrl>
 
+#include <QFile>
+
 #include "db_adapter.h"
 
 class QDeckOverviewWidget : public QWidget
