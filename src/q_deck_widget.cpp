@@ -107,7 +107,7 @@ void QDeckOverviewWidget::audioButtonClicked(QPushButton *button, QString audio_
     {
         if (this->playing_button != NULL)
         {
-            this->playing_button->setIcon(QIcon::fromTheme("media-playback-start"));
+            playing_button->setIcon(QIcon::fromTheme("media-playback-start"));
         }
         
         this->playing_button = button;
