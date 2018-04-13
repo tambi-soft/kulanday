@@ -29,7 +29,7 @@ private:
     QTableWidget *table;
     QString deck_name;
     QMediaPlayer *player;
-    QPushButton *playing_button;
+    QPushButton *playing_button = nullptr;
     
     int COLUMN_OFFSET = 9;
     
