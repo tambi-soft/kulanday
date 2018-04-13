@@ -175,7 +175,15 @@ int DbAdapter::getMaxAudioCount()
     QSqlQuery query("SELECT COUNT(*) AS result FROM audio GROUP BY deck_rowid ORDER BY result DESC LIMIT 1", this->db);
     
     QList<QMap<QString,QVariant>> list = dbIteratorToMapList(query);
-    return list.at(0)["result"].toInt();
+    
+    if (list.length() > 0 && list.at(0).contains("result"))
+    {
+        return list.at(0)["result"].toInt();
+    }
+    else
+    {
+        return 0;
+    }
 }
 
 void DbAdapter::deleteAudioItem(int rowid)
