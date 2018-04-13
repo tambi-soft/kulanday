@@ -8,12 +8,12 @@ QDeckOverviewWidget::QDeckOverviewWidget(QString deck_name, QWidget *parent)
     , player (new QMediaPlayer)
 {
     setLayout(layout);
-    
     this->deck_name = deck_name;
     
     QPushButton *new_item_button = new QPushButton("new item");
-    
     connect (new_item_button, &QPushButton::clicked, this, &QDeckOverviewWidget::newItemButtonClicked);
+    
+    connect (player, &QMediaPlayer::stateChanged, this, &QDeckOverviewWidget::mediaPlayerStateChanged);
     
     layout->addWidget(table);
     layout->addWidget(new_item_button);
@@ -88,7 +88,7 @@ void QDeckOverviewWidget::appendPlayButtons(int table_rowid, QList<QMap<QString,
 {
     for (int column = 0; column < audio_filenames.length(); ++column)
     {
-        QAudioButton *audio_button = new QAudioButton();
+        QPushButton *audio_button = new QPushButton();
         audio_button->setIcon(QIcon::fromTheme("media-playback-start"));
         
         QString audio_filename = audio_filenames.at(column)["filename"].toString();
@@ -99,10 +99,35 @@ void QDeckOverviewWidget::appendPlayButtons(int table_rowid, QList<QMap<QString,
 }
 void QDeckOverviewWidget::audioButtonClicked(QPushButton *button, QString audio_filename)
 {
-    QString audio_path = "file://" + QDir::homePath() + "/.tambi/decks/" + this->deck_name + "/" + audio_filename;
-    QUrl audio_url = QUrl(audio_path);
-    player->setMedia(QMediaContent(audio_url));
-    player->play();
+    if (this->player->state() == QMediaPlayer::PlayingState && this->playing_button == button)
+    {
+        this->player->stop();
+    }
+    else
+    {
+        if (this->playing_button != NULL)
+        {
+            this->playing_button->setIcon(QIcon::fromTheme("media-playback-start"));
+        }
+        
+        this->playing_button = button;
+        
+        QString audio_path = "file://" + QDir::homePath() + "/.tambi/decks/" + this->deck_name + "/" + audio_filename;
+        QUrl audio_url = QUrl(audio_path);
+        player->setMedia(QMediaContent(audio_url));
+        player->play();
+    }
+}
+void QDeckOverviewWidget::mediaPlayerStateChanged(int state)
+{
+    if (state == QMediaPlayer::StoppedState)
+    {
+        this->playing_button->setIcon(QIcon::fromTheme("media-playback-start"));
+    }
+    else if (state == QMediaPlayer::PlayingState)
+    {
+        this->playing_button->setIcon(QIcon::fromTheme("media-playback-stop"));
+    }
 }
 
 void QDeckOverviewWidget::newItemButtonClicked()

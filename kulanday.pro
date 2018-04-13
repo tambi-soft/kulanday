@@ -30,8 +30,7 @@ HEADERS += src/q_kulanday_main_window.h\
     src/q_deck_item_widget.h \
     src/q_audio_list_widget.h \
     src/q_deck_widget.h \
-    src/q_decks_widget.h \
-    src/q_audio_button.h
+    src/q_decks_widget.h
 
 SOURCES += src/kulanday.cpp\
     src/q_kulanday_main_window.cpp\
@@ -42,8 +41,7 @@ SOURCES += src/kulanday.cpp\
     src/q_deck_item_widget.cpp \
     src/q_audio_list_widget.cpp \
     src/q_deck_widget.cpp \
-    src/q_decks_widget.cpp \
-    src/q_audio_button.cpp
+    src/q_decks_widget.cpp
 
 #RESOURCES += kulanday.qrc
 

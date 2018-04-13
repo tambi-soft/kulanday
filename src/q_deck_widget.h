@@ -17,7 +17,6 @@
 #include <QUrl>
 
 #include "db_adapter.h"
-#include "q_audio_button.h"
 
 class QDeckOverviewWidget : public QWidget
 {
@@ -30,6 +29,7 @@ private:
     QTableWidget *table;
     QString deck_name;
     QMediaPlayer *player;
+    QPushButton *playing_button;
     
     int COLUMN_OFFSET = 9;
     
@@ -47,6 +47,7 @@ private slots:
     void newItemButtonClicked();
     void editRowButtonClicked(QString deck_name, int rowid);
     void deleteRowButtonClicked(int rowid);
+    void mediaPlayerStateChanged(int state);
 };
 
 #endif // Q_DECK_OVERVIEW_H
