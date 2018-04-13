@@ -7,6 +7,7 @@
 #include <QTableWidget>
 #include <QTableWidgetItem>
 #include <QHeaderView>
+#include <QMessageBox>
 #include <QIcon>
 #include <QLabel>
 #include <QPixmap>
@@ -31,6 +32,7 @@ private:
     QString deck_name;
     QMediaPlayer *player;
     QPushButton *playing_button = nullptr;
+    DbAdapter *database;
     
     int COLUMN_OFFSET = 9;
     

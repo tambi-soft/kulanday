@@ -28,7 +28,7 @@ public:
     QList<QMap<QString,QVariant>> selectDeckDirtyDozenItems();
     QList<QMap<QString,QVariant>> selectDeckItem(int rowid);
     void updateDeckItem(int rowid, QString name, QString word, QString phonetical, QString translation);
-    void deleteItem(int rowid);
+    QList<QVariant> deleteItem(int rowid);
     void deleteImage(int rowid);
     // saveAudioDict(audio_dict, deck_rowid);
     QList<QMap<QString,QVariant> > audioFilenamesForDeckRowID(int rowid);

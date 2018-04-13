@@ -25,6 +25,8 @@ QDeckOverviewWidget::QDeckOverviewWidget(QString deck_name, QWidget *parent)
 void QDeckOverviewWidget::initTableWidget(QString deck_name)
 {
     DbAdapter *db_adapter = new DbAdapter(deck_name);
+    this->database = db_adapter;
+    
     QList<QMap<QString,QVariant>> data = db_adapter->selectDeckItems();
     
     if (data.length() > 0)
@@ -149,5 +151,11 @@ void QDeckOverviewWidget::editRowButtonClicked(QString deck_name, int rowid)
 
 void QDeckOverviewWidget::deleteRowButtonClicked(int rowid)
 {
+    int reply = QMessageBox::question(this, "Delete", "really?", QMessageBox::Yes, QMessageBox::No);
     
+    if (reply == QMessageBox::Yes)
+    {
+        QList<QVariant> data_to_delete = this->database->deleteItem(rowid);
+        qDebug() << data_to_delete;
+    }
 }
