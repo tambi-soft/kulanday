@@ -22,8 +22,6 @@ QDeckOverviewWidget::QDeckOverviewWidget(QString deck_name, QWidget *parent)
     initTableWidget(deck_name);
 }
 
-
-
 void QDeckOverviewWidget::initTableWidget(QString deck_name)
 {
     DbAdapter *db_adapter = new DbAdapter(deck_name);

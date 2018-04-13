@@ -27,6 +27,19 @@ QDeckItemWidget::QDeckItemWidget(QString deck_name, int rowid, QWidget *parent) 
         
         this->image_view->setPixmap(scaled);
     }
+    
+    if (! data[0]["svg_filename"].isNull() && data[0]["image"].isNull())
+    {
+        QSvgWidget *svg_widget = new QSvgWidget();
+        
+        svg_widget->load(QDir::homePath() + "/.tambi/decks/" + deck_name + "/" + data[0]["svg_filename"].toString());
+        svg_widget->setFixedSize(600, 300);
+        
+        QPixmap pixmap(svg_widget->size());
+        svg_widget->render(&pixmap);
+        
+        this->image_view->setPixmap(pixmap);
+    }
 }
 
 void QDeckItemWidget::initializeGui(QString deck_name)

@@ -11,6 +11,7 @@
 #include <QDir>
 #include <QSize>
 #include <QSysInfo>
+#include <QSvgWidget>
 
 #include "db_adapter.h"
 #include "q_audio_list_widget.h"
