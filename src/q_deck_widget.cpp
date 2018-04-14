@@ -67,6 +67,7 @@ void QDeckOverviewWidget::initTableWidget(QString deck_name)
             }
             
             QSvgWidget *svg_widget = new QSvgWidget();
+            svg_widget->setFixedSize(0, 0);
             if (svg_filename != "")
             {
                 svg_widget->load(QDir::homePath() + "/.tambi/decks/" + deck_name + "/" + svg_filename);
