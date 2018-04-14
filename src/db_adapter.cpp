@@ -52,15 +52,16 @@ QList<QMap<QString,QVariant>> DbAdapter::dbIteratorToMapList(QSqlQuery query)
 void DbAdapter::initializeTables()
 {
     QSqlQuery query_deck("CREATE TABLE IF NOT EXISTS deck (rowid INTEGER PRIMARY KEY AUTOINCREMENT, order_index INTEGER, name TEXT, word TEXT, phonetical TEXT, translation TEXT, svg_filename TEXT, image TEXT, created NUMERIC, known NUMERIC, priority NUMERIC, changed NUMERIC)", this->db);
-    query_deck.exec();
     
     QSqlQuery query_audio("CREATE TABLE IF NOT EXISTS audio (rowid INTEGER PRIMARY KEY AUTOINCREMENT, deck_rowid INTEGER, description TEXT, filename TEXT)", this->db);
-    query_audio.exec();
 }
 
-void DbAdapter::saveDeckItem(QString name, QString word, QString phonetical, QString translation)
+//void DbAdapter::saveDeckItem(QString name, QString word, QString phonetical, QString translation)
+qlonglong DbAdapter::newDeckRow()
 {
+    QSqlQuery query("INSERT INTO deck (name) VALUES ('')", this->db);
     
+    return query.lastInsertId().toLongLong();
 }
 
 int DbAdapter::getDeckItemRowID(QString name, QString word, QString phonetical)
@@ -162,7 +163,7 @@ void DbAdapter::deleteImage(int rowid)
 
 // saveAudioDict(audio_dict, deck_rowid);
 
-QList<QMap<QString,QVariant>> DbAdapter::audioFilenamesForDeckRowID(int rowid)
+QList<QMap<QString,QVariant>> DbAdapter::audioFilenamesForDeckRowID(qlonglong rowid)
 {
     QSqlQuery query(this->db);
     query.prepare("SELECT rowid, description, filename FROM audio WHERE deck_rowid = :rowid");

@@ -14,7 +14,7 @@
 #include <QSvgWidget>
 
 #include "db_adapter.h"
-#include "q_audio_list_widget.h"
+#include "q_audio_list_table.h"
 
 class QDeckItemWidget : public QWidget
 {
@@ -30,10 +30,12 @@ private:
     QLineEdit *word_line;
     QLineEdit *phonetical_line;
     QLineEdit *translation_line;
-    QAudioListWidget *audio_list_widget;
-    DbAdapter *database;
+    QAudioListTable *audio_list_widget;
+    DbAdapter *database = nullptr;
     
-    void initializeGui(QString deck_name);
+    QSize IMAGE_SIZE = QSize(300, 150); // 600 300
+    
+    void initializeGui(QString deck_name, int rowid);
     
     QString randomword(int length);
     

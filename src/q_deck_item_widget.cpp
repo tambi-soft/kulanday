@@ -2,15 +2,24 @@
 
 QDeckItemWidget::QDeckItemWidget(QString deck_name, QWidget *parent) : QWidget(parent)
 {
-    this->database = new DbAdapter(deck_name);
-    initializeGui(deck_name);
+    if (this->database == nullptr)
+    {
+        this->database = new DbAdapter(deck_name);
+    }
+    // create an empty row and return the id
+    int rowid = this->database->newDeckRow();
+    
+    QDeckItemWidget(deck_name, rowid);
 }
 
 QDeckItemWidget::QDeckItemWidget(QString deck_name, int rowid, QWidget *parent) : QWidget(parent)
 {
-    initializeGui(deck_name);
+    initializeGui(deck_name, rowid);
     
-    this->database = new DbAdapter(deck_name);
+    if (this->database == nullptr)
+    {
+        this->database = new DbAdapter(deck_name);
+    }
     QList<QMap<QString,QVariant>> data = database->selectDeckItem(rowid);
     
     this->name_line->setText(data[0]["name"].toString());
@@ -23,7 +32,7 @@ QDeckItemWidget::QDeckItemWidget(QString deck_name, int rowid, QWidget *parent) 
         QString image_path = QDir::homePath() + "/.tambi/decks/" + deck_name + "/" + data[0]["image"].toString();
         QPixmap pixmap;
         pixmap.load(image_path);
-        QPixmap scaled = pixmap.scaled(QSize(600, 300), Qt::KeepAspectRatio);
+        QPixmap scaled = pixmap.scaled(IMAGE_SIZE, Qt::KeepAspectRatio);
         
         this->image_view->setPixmap(scaled);
     }
@@ -33,7 +42,7 @@ QDeckItemWidget::QDeckItemWidget(QString deck_name, int rowid, QWidget *parent) 
         QSvgWidget *svg_widget = new QSvgWidget();
         
         svg_widget->load(QDir::homePath() + "/.tambi/decks/" + deck_name + "/" + data[0]["svg_filename"].toString());
-        svg_widget->setFixedSize(600, 300);
+        svg_widget->setFixedSize(IMAGE_SIZE);
         
         QPixmap pixmap(svg_widget->size());
         svg_widget->render(&pixmap);
@@ -42,7 +51,7 @@ QDeckItemWidget::QDeckItemWidget(QString deck_name, int rowid, QWidget *parent) 
     }
 }
 
-void QDeckItemWidget::initializeGui(QString deck_name)
+void QDeckItemWidget::initializeGui(QString deck_name, int rowid)
 {
     this->grid = new QGridLayout();
     setLayout(grid);
@@ -52,7 +61,7 @@ void QDeckItemWidget::initializeGui(QString deck_name)
     this->word_line = new QLineEdit();
     this->phonetical_line = new QLineEdit();
     this->translation_line = new QLineEdit();
-    this->audio_list_widget = new QAudioListWidget(deck_name);
+    this->audio_list_widget = new QAudioListTable(deck_name, rowid);
     
     QPushButton *import_image_button = new QPushButton("add image from file");
     import_image_button->setIcon(QIcon::fromTheme("document-open"));

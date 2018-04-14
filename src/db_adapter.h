@@ -21,7 +21,7 @@ private:
 public:
     explicit DbAdapter(QString deck_name, QObject *parent = nullptr);
     
-    void saveDeckItem(QString name, QString word, QString phonetical, QString translation);
+    qlonglong newDeckRow();
     int getDeckItemRowID(QString name, QString word, QString phonetical);
     QList<QMap<QString,QVariant>> selectDeckItems();
     QList<QVariant> selectDeckItemsWithAudio();
@@ -31,7 +31,7 @@ public:
     QList<QMap<QString, QVariant> > deleteItem(int rowid);
     void deleteImage(int rowid);
     // saveAudioDict(audio_dict, deck_rowid);
-    QList<QMap<QString,QVariant> > audioFilenamesForDeckRowID(int rowid);
+    QList<QMap<QString,QVariant>> audioFilenamesForDeckRowID(qlonglong rowid);
     int getMaxAudioCount();
     void deleteAudioItem(int rowid);
     void deleteAudioItemByFilename(QString filename);

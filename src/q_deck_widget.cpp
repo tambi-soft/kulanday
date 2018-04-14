@@ -142,6 +142,9 @@ void QDeckOverviewWidget::mediaPlayerStateChanged(int state)
 void QDeckOverviewWidget::newItemButtonClicked()
 {
     emit newDeckItemRequested(deck_name);
+    
+    table->clear();
+    initTableWidget(this->deck_name);
 }
 
 void QDeckOverviewWidget::editRowButtonClicked(QString deck_name, int rowid)

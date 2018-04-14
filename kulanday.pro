@@ -29,9 +29,9 @@ HEADERS += src/q_kulanday_main_window.h\
     src/q_kulanday_menubar.h \
     src/q_create_new_deck_dialog.h \
     src/q_deck_item_widget.h \
-    src/q_audio_list_widget.h \
     src/q_deck_widget.h \
-    src/q_decks_widget.h
+    src/q_decks_widget.h \
+    src/q_audio_list_table.h
 
 SOURCES += src/kulanday.cpp\
     src/q_kulanday_main_window.cpp\
@@ -40,9 +40,9 @@ SOURCES += src/kulanday.cpp\
     src/q_kulanday_menubar.cpp \
     src/q_create_new_deck_dialog.cpp \
     src/q_deck_item_widget.cpp \
-    src/q_audio_list_widget.cpp \
     src/q_deck_widget.cpp \
-    src/q_decks_widget.cpp
+    src/q_decks_widget.cpp \
+    src/q_audio_list_table.cpp
 
 #RESOURCES += kulanday.qrc
 
@@ -57,3 +57,6 @@ debug:OBJECTS_DIR = debug/obj
 debug:MOC_DIR = debug/moc
 debug:RCC_DIR = debug/rcc
 debug:UI_DIR = debug/ui
+
+RESOURCES += \
+    resources.qrc
