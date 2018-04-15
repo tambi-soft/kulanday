@@ -122,8 +122,8 @@ void QDeckOverviewWidget::audioButtonClicked(QPushButton *button, QString audio_
         
         this->playing_button = button;
         
-        QString audio_path = "file://" + QDir::homePath() + "/.tambi/decks/" + this->deck_name + "/" + audio_filename;
-        QUrl audio_url = QUrl(audio_path);
+        QString audio_path = QDir::homePath() + "/.tambi/decks/" + this->deck_name + "/" + audio_filename;
+        QUrl audio_url = QUrl::fromLocalFile(audio_path);
         player->setMedia(QMediaContent(audio_url));
         player->play();
     }

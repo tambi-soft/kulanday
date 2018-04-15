@@ -102,7 +102,7 @@ void QDeckItemWidget::initializeGui(QString deck_name, int rowid)
     grid->addWidget(audio_list_widget, 6, 0, 1, 4);
     grid->addWidget(new_audio_button, 7, 0);
     
-    grid->addWidget(save_button, 7, 3);
+    //grid->addWidget(save_button, 7, 3);
     
     if (QSysInfo::kernelType() != "darwin") // font-rendering is quite a mess on mac and looks uselessly uggly here
     {
@@ -123,7 +123,7 @@ void QDeckItemWidget::deleteImageClicked()
 
 void QDeckItemWidget::newAudioButtonClicked()
 {
-    
+    this->audio_list_widget->newAudioLine();
 }
 
 void QDeckItemWidget::saveButtonClicked()
