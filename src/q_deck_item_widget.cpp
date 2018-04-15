@@ -14,6 +14,7 @@ QDeckItemWidget::QDeckItemWidget(QString deck_name, QWidget *parent) : QWidget(p
 
 QDeckItemWidget::QDeckItemWidget(QString deck_name, int rowid, QWidget *parent) : QWidget(parent)
 {
+    this->rowid = rowid;
     initializeGui(deck_name, rowid);
     
     if (this->database == nullptr)
@@ -22,10 +23,12 @@ QDeckItemWidget::QDeckItemWidget(QString deck_name, int rowid, QWidget *parent) 
     }
     QList<QMap<QString,QVariant>> data = database->selectDeckItem(rowid);
     
+    this->ignore_item_changes = true;
     this->name_line->setText(data[0]["name"].toString());
     this->word_line->setText(data[0]["word"].toString());
     this->phonetical_line->setText(data[0]["phonetical"].toString());
     this->translation_line->setText(data[0]["translation"].toString());
+    this->ignore_item_changes = false;
     
     if (! data[0]["image"].isNull())
     {
@@ -63,6 +66,11 @@ void QDeckItemWidget::initializeGui(QString deck_name, int rowid)
     this->translation_line = new QLineEdit();
     this->audio_list_widget = new QAudioListTable(deck_name, rowid);
     
+    connect(this->name_line, &QLineEdit::textChanged, this, &QDeckItemWidget::onItemChanged);
+    connect(this->word_line, &QLineEdit::textChanged, this, &QDeckItemWidget::onItemChanged);
+    connect(this->phonetical_line, &QLineEdit::textChanged, this, &QDeckItemWidget::onItemChanged);
+    connect(this->translation_line, &QLineEdit::textChanged, this, &QDeckItemWidget::onItemChanged);
+    
     QPushButton *import_image_button = new QPushButton("add image from file");
     import_image_button->setIcon(QIcon::fromTheme("document-open"));
     connect(import_image_button, &QPushButton::clicked, this, &QDeckItemWidget::importImageClicked);
@@ -74,8 +82,8 @@ void QDeckItemWidget::initializeGui(QString deck_name, int rowid)
     QPushButton *new_audio_button = new QPushButton("new audio");
     connect(new_audio_button, &QPushButton::clicked, this, &QDeckItemWidget::newAudioButtonClicked);
     
-    QPushButton *save_button = new QPushButton("save");
-    connect(save_button, &QPushButton::clicked, this, &QDeckItemWidget::saveButtonClicked);
+    //QPushButton *save_button = new QPushButton("save");
+    //connect(save_button, &QPushButton::clicked, this, &QDeckItemWidget::saveButtonClicked);
     
     QLabel *name_label = new QLabel("name:");
     QLabel *word_label = new QLabel("word:");
@@ -126,7 +134,15 @@ void QDeckItemWidget::newAudioButtonClicked()
     this->audio_list_widget->newAudioLine();
 }
 
-void QDeckItemWidget::saveButtonClicked()
+void QDeckItemWidget::onItemChanged()
 {
-    
+    if (! this->ignore_item_changes)
+    {
+        QString name = this->name_line->text();
+        QString word = this->word_line->text();
+        QString phonetical = this->phonetical_line->text();
+        QString translation = this->translation_line->text();
+        
+        this->database->updateDeckItem(rowid, name, word, phonetical, translation);
+    }
 }

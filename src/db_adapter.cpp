@@ -111,7 +111,7 @@ QList<QMap<QString,QVariant>> DbAdapter::selectDeckDirtyDozenItems()
 QList<QMap<QString,QVariant>> DbAdapter::selectDeckItem(int rowid)
 {
     QSqlQuery query(this->db);
-    query.prepare("SELECT name, word, phonetical, translation, svg_filename, image FROM deck WHERE rowid = :rowid");
+    query.prepare("SELECT name, word, phonetical, translation, svg_filename, image FROM deck WHERE rowid=:rowid");
     query.bindValue(":rowid", rowid);
     query.exec();
     
@@ -120,7 +120,14 @@ QList<QMap<QString,QVariant>> DbAdapter::selectDeckItem(int rowid)
 
 void DbAdapter::updateDeckItem(int rowid, QString name, QString word, QString phonetical, QString translation)
 {
-    
+    QSqlQuery query(this->db);
+    query.prepare("UPDATE deck SET name=:name, word=:word, phonetical=:phonetical, translation=:translation WHERE rowid=:rowid");
+    query.bindValue(":rowid", rowid);
+    query.bindValue(":name", name);
+    query.bindValue(":word", word);
+    query.bindValue(":phonetical", phonetical);
+    query.bindValue(":translation", translation);
+    query.exec();
 }
 
 QList<QMap<QString,QVariant>> DbAdapter::deleteItem(int rowid)
@@ -128,7 +135,7 @@ QList<QMap<QString,QVariant>> DbAdapter::deleteItem(int rowid)
     QList<QMap<QString,QVariant>> result;
     
     QSqlQuery select_svg(this->db);
-    select_svg.prepare("SELECT svg_filename FROM deck WHERE rowid = :rowid");
+    select_svg.prepare("SELECT svg_filename FROM deck WHERE rowid=:rowid");
     select_svg.bindValue(":rowid", rowid);
     select_svg.exec();
     QList<QMap<QString,QVariant>> svg_list = dbIteratorToMapList(select_svg);

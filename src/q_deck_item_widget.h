@@ -24,6 +24,7 @@ public:
     explicit QDeckItemWidget(QString deck_name, int rowid, QWidget *parent = nullptr);
     
 private:
+    int rowid;
     QGridLayout *grid;
     QLabel *image_view;
     QLineEdit *name_line;
@@ -32,6 +33,8 @@ private:
     QLineEdit *translation_line;
     QAudioListTable *audio_list_widget;
     DbAdapter *database = nullptr;
+    
+    bool ignore_item_changes;
     
     QSize IMAGE_SIZE = QSize(300, 150); // 600 300
     
@@ -46,7 +49,7 @@ public slots:
     void deleteImageClicked();
     
     void newAudioButtonClicked();
-    void saveButtonClicked();
+    void onItemChanged();
 };
 
 #endif // Q_DECK_ITEM_WIDGET_H
