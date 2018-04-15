@@ -16,11 +16,11 @@ DbAdapter::DbAdapter(QString deck_name, QObject *parent) : QObject(parent)
     
     if (! db.open())
     {
-      qDebug() << "Error: connection with database fail";
+        qDebug() << "Error: connection with database fail";
     }
     else
     {
-      qDebug() << "Database: connection ok";
+        //qDebug() << "Database: connection ok";
     }
     
     initializeTables();

@@ -38,6 +38,7 @@ private:
     
     QSize IMAGE_SIZE = QSize(300, 150); // 600 300
     
+    void populateGui(QString deck_name, int rowid);
     void initializeGui(QString deck_name, int rowid);
     
     QString randomword(int length);

@@ -9,10 +9,15 @@ QDeckItemWidget::QDeckItemWidget(QString deck_name, QWidget *parent) : QWidget(p
     // create an empty row and return the id
     int rowid = this->database->newDeckRow();
     
-    QDeckItemWidget(deck_name, rowid);
+    populateGui(deck_name, rowid);
 }
 
 QDeckItemWidget::QDeckItemWidget(QString deck_name, int rowid, QWidget *parent) : QWidget(parent)
+{
+    populateGui(deck_name, rowid);
+}
+
+void QDeckItemWidget::populateGui(QString deck_name, int rowid)
 {
     this->rowid = rowid;
     initializeGui(deck_name, rowid);
