@@ -133,6 +133,9 @@ void QDeckItemWidget::importImageClicked()
     QFile filepath(image_url);
     
     QString filename = QUrl(image_url).fileName();
+    // copy the image to the deck.
+    // if there is already a file with this name, just append an undersore to it (probably before the extension)
+    // and try again
     bool success = false;
     while (! success)
     {
