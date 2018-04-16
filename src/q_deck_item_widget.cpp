@@ -20,6 +20,8 @@ QDeckItemWidget::QDeckItemWidget(QString deck_name, int rowid, QWidget *parent) 
 void QDeckItemWidget::populateGui(QString deck_name, int rowid)
 {
     this->rowid = rowid;
+    this->deck_name = deck_name;
+    
     initializeGui(deck_name, rowid);
     
     if (this->database == nullptr)
@@ -37,9 +39,9 @@ void QDeckItemWidget::populateGui(QString deck_name, int rowid)
     
     if (! data[0]["image"].isNull())
     {
-        QString image_path = QDir::homePath() + "/.tambi/decks/" + deck_name + "/" + data[0]["image"].toString();
+        this->image_path = QDir::homePath() + "/.tambi/decks/" + deck_name + "/" + data[0]["image"].toString();
         QPixmap pixmap;
-        pixmap.load(image_path);
+        pixmap.load(this->image_path);
         QPixmap scaled = pixmap.scaled(IMAGE_SIZE, Qt::KeepAspectRatio);
         
         this->image_view->setPixmap(scaled);
@@ -126,12 +128,25 @@ void QDeckItemWidget::initializeGui(QString deck_name, int rowid)
 
 void QDeckItemWidget::importImageClicked()
 {
+    this->default_import_path = "";
+    QUrl image_url = QFileDialog::getOpenFileUrl(this, "Please select an Image File", this->default_import_path);
+    qDebug() << image_url;
     
+    //this->database->insertImageFilename(this->rowid, filename);
 }
 
 void QDeckItemWidget::deleteImageClicked()
 {
-    
+    int reply = QMessageBox::question(this, "Delete Image", "sure?", QMessageBox::Yes, QMessageBox::No);
+    if (reply == QMessageBox::Yes)
+    {
+        QFile file(this->image_path);
+        file.remove();
+        
+        this->database->deleteImage(this->rowid);
+        
+        this->image_view->clear();
+    }
 }
 
 void QDeckItemWidget::newAudioButtonClicked()

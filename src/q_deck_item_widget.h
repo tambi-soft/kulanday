@@ -12,6 +12,8 @@
 #include <QSize>
 #include <QSysInfo>
 #include <QSvgWidget>
+#include <QMessageBox>
+#include <QFileDialog>
 
 #include "db_adapter.h"
 #include "q_audio_list_table.h"
@@ -25,6 +27,9 @@ public:
     
 private:
     int rowid;
+    QString deck_name;
+    QString image_path;
+    
     QGridLayout *grid;
     QLabel *image_view;
     QLineEdit *name_line;
@@ -35,6 +40,7 @@ private:
     DbAdapter *database = nullptr;
     
     bool ignore_item_changes;
+    QUrl default_import_path = QDir::homePath();
     
     QSize IMAGE_SIZE = QSize(300, 150); // 600 300
     

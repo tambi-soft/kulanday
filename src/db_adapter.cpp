@@ -176,7 +176,7 @@ QList<QMap<QString,QVariant>> DbAdapter::deleteItem(int rowid)
 void DbAdapter::deleteImage(int rowid)
 {
     QSqlQuery query(this->db);
-    query.prepare("UPDATE deck SET image = NULL WHERE rowid = :rowid");
+    query.prepare("UPDATE deck SET image=NULL WHERE rowid=:rowid");
     query.bindValue(":rowid", rowid);
     query.exec();
 }
@@ -232,5 +232,9 @@ void DbAdapter::insertAudioFilename(int deck_rowid, int audio_rowid, QString fil
 
 void DbAdapter::insertImageFilename(int rowid, QString filename)
 {
-    
+    QSqlQuery query(this->db);
+    query.prepare("UPDATE deck SET image=:filename WHERE rowid=:rowid");
+    query.bindValue(":rowid", rowid);
+    query.bindValue(":filename", filename);
+    query.exec();
 }
