@@ -129,10 +129,26 @@ void QDeckItemWidget::initializeGui(QString deck_name, int rowid)
 void QDeckItemWidget::importImageClicked()
 {
     this->default_import_path = "";
-    QUrl image_url = QFileDialog::getOpenFileUrl(this, "Please select an Image File", this->default_import_path);
-    qDebug() << image_url;
+    QString image_url = QFileDialog::getOpenFileName(this, "Please select an Image File", QDir::homePath());
+    QFile filepath(image_url);
     
-    //this->database->insertImageFilename(this->rowid, filename);
+    QString filename = QUrl(image_url).fileName();
+    bool success = false;
+    while (! success)
+    {
+        success = filepath.copy(QDir::homePath() + "/.tambi/decks/" + this->deck_name + "/" + filename);
+        if (! success)
+        {
+            filename = filename.replace(".", "_.");
+        }
+    }
+    
+    this->database->insertImageFilename(this->rowid, QUrl(image_url).fileName());
+    
+    QPixmap pixmap;
+    pixmap.load(image_url);
+    QPixmap scaled = pixmap.scaled(IMAGE_SIZE, Qt::KeepAspectRatio);
+    this->image_view->setPixmap(scaled);
 }
 
 void QDeckItemWidget::deleteImageClicked()
