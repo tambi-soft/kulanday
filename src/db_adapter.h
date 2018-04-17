@@ -35,7 +35,7 @@ public:
     int getMaxAudioCount();
     void deleteAudio(int rowid);
     void deleteAudioByFilename(QString filename);
-    void insertAudioFilename(int deck_rowid, int audio_rowid, QString filename, QString description);
+    void insertAudioFilename(qlonglong deck_rowid, int audio_rowid, QString filename, QString description);
     void insertImageFilename(int rowid, QString filename);
 };
 

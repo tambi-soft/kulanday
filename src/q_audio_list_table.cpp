@@ -32,6 +32,7 @@ void QAudioListTable::drawAudioTable()
     
     for (int i = 0; i < rowCount(); ++i)
     {
+        this->audio_rowid[i] = data.at(i)["rowid"].toInt();;
         QString audio_filename = data.at(i)["filename"].toString();
                 
         QTableWidgetItem *item_description = new QTableWidgetItem(data.at(i)["description"].toString());
@@ -162,7 +163,31 @@ void QAudioListTable::deleteButtonClicked(int row)
 
 void QAudioListTable::importButtonClicked(int row)
 {
-    qDebug() << "import:" << row;
+    QString audio_url = QFileDialog::getOpenFileName(this, "Import Audio", QDir::homePath());
+    qDebug() << audio_url;
+    QFile filepath(audio_url);
+    QString filename = QUrl(audio_url).fileName();
+    
+    // copy the image to the deck.
+    // if there is already a file with this name, just append an undersore to it (probably before the extension)
+    // and try again
+    bool success = false;
+    while (! success)
+    {
+        success = filepath.copy(QDir::homePath() + "/.tambi/decks/" + this->deck_name + "/" + filename);
+        if (! success)
+        {
+            filename = filename.replace(".", "_.");
+        }
+    }
+    
+    qDebug() << "filename:" << filename;
+    
+    this->database->insertAudioFilename(this->deck_rowid, this->audio_rowid[row], filename, itemAt(row, DESCRIPTION_COLUMN)->text());
+    
+    clear();
+    drawAudioTable();
+    
 }
 
 void QAudioListTable::editButtonClicked(int row)
@@ -173,7 +198,9 @@ void QAudioListTable::editButtonClicked(int row)
 void QAudioListTable::newAudioLine()
 {
     insertRow(rowCount());
-    this->database->newAudioRow(this->deck_rowid);
+    int db_rowid = this->database->newAudioRow(this->deck_rowid);
+    this->audio_rowid[rowCount(), db_rowid];
+    
     clear();
     drawAudioTable();
 }

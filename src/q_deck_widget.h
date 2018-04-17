@@ -42,6 +42,9 @@ private:
     void appendPlayButtons(int table_rowid, QList<QMap<QString,QVariant>> audio_filenames, int max_audio_count);
     void audioButtonClicked(QPushButton *button, QString audio_filename);
     
+protected:
+    void focusInEvent(QFocusEvent* e);
+    
 signals:
     void newDeckItemRequested(QString deck_name);
     void showDeckItemRequested(QString deck_name, int deck_id);

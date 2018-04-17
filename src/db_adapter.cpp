@@ -220,12 +220,13 @@ void DbAdapter::deleteAudioByFilename(QString filename)
     
 }
 
-void DbAdapter::insertAudioFilename(int deck_rowid, int audio_rowid, QString filename, QString description)
+void DbAdapter::insertAudioFilename(qlonglong deck_rowid, int audio_rowid, QString filename, QString description)
 {
     QSqlQuery query(this->db);
-    query.prepare("UPDATE audio SET deck_rowid = :deck_rowid, description = :description WHERE rowid = :audio_rowid");
+    query.prepare("UPDATE audio SET deck_rowid = :deck_rowid, filename=:filename, description = :description WHERE rowid = :audio_rowid");
     query.bindValue(":deck_rowid", deck_rowid);
     query.bindValue(":audio_rowid", audio_rowid);
+    query.bindValue(":filename", filename);
     query.bindValue(":description", description);
     query.exec();
 }

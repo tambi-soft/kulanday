@@ -8,6 +8,7 @@
 #include <QIcon>
 
 #include <QMessageBox>
+#include <QFileDialog>
 
 #include <QMediaPlayer>
 #include <QAudioRecorder>
@@ -30,6 +31,7 @@ public:
 private:
     QString deck_name;
     qlonglong deck_rowid;
+    QMap<int,int> audio_rowid; // table row -> db row
     
     QList<QMap<QString,QVariant>> data;
     
