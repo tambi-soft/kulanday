@@ -29,7 +29,7 @@ private:
 private slots:
     void showDecksOverviewTab();
     void showDirtyDozenWidget(QString deck_name);
-    void showNewDeckWidget(QString deck_name);
+    void showDeckWidget(QString deck_name);
     void createNewDeck(QUrl deck_url);
     void createNewDeckItem(QString deck_name);
     void showDeckItem(QString deck_name, int rowid);

@@ -25,7 +25,7 @@ void QKulandayMainWindow::showDecksOverviewTab()
     QDecksOverviewWidget *decks = new QDecksOverviewWidget();
     tab_widget->addTab(decks, "decks");
     connect(decks, &QDecksOverviewWidget::deckDirtyDozenClicked, this, &QKulandayMainWindow::showDirtyDozenWidget);
-    connect(decks, &QDecksOverviewWidget::deckViewClicked, this, &QKulandayMainWindow::showNewDeckWidget);
+    connect(decks, &QDecksOverviewWidget::deckViewClicked, this, &QKulandayMainWindow::showDeckWidget);
     connect(decks, &QDecksOverviewWidget::createNewDeck, this, &QKulandayMainWindow::createNewDeck);
     
     activateNewTab();
@@ -39,7 +39,7 @@ void QKulandayMainWindow::showDirtyDozenWidget(QString deck_name)
     activateNewTab();
 }
 
-void QKulandayMainWindow::showNewDeckWidget(QString deck_name)
+void QKulandayMainWindow::showDeckWidget(QString deck_name)
 {
     QDeckOverviewWidget *deck = new QDeckOverviewWidget(deck_name);
     connect(deck, &QDeckOverviewWidget::newDeckItemRequested, this, &QKulandayMainWindow::createNewDeckItem);
@@ -53,12 +53,7 @@ void QKulandayMainWindow::createNewDeck(QUrl deck_url)
 {
     if (! deck_url.isEmpty())
     {
-        QDeckOverviewWidget *deck = new QDeckOverviewWidget(deck_url.fileName());
-        connect(deck, &QDeckOverviewWidget::newDeckItemRequested, this, &QKulandayMainWindow::createNewDeckItem);
-        connect(deck, &QDeckOverviewWidget::showDeckItemRequested, this, &QKulandayMainWindow::showDeckItem);
-        
-        tab_widget->addTab(deck, deck_url.fileName());
-        activateNewTab();
+        showDeckWidget(deck_url.fileName());
     }
 }
 
