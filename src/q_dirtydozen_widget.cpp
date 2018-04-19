@@ -9,13 +9,28 @@ QDirtyDozenWidget::QDirtyDozenWidget(QString deck_name, QWidget *parent)
     
     setLayout(grid);
     
-    
+    initialize(deck_name);
 }
 
 void QDirtyDozenWidget::initialize(QString deck_name)
 {
     DbAdapter *db_adapter = new DbAdapter(deck_name);
     QList<QMap<QString,QVariant>> data = db_adapter->selectDeckDirtyDozenItems();
+    
+    QLabel *select_display_combo_label = new QLabel("select display:");
+    this->grid->addWidget(select_display_combo_label, 0, 0);
+    
+    QComboBox *select_display_combo = new QComboBox();
+    select_display_combo->addItems(DISPLAY_COMBO_ITEMS);
+    this->grid->addWidget(select_display_combo, 0, 1);
+    
+    QPushButton *replay_audio_button = new QPushButton("replay audio");
+    this->grid->addWidget(replay_audio_button, 0, 3);
+    
+    for (int i; i < data.length(); ++i)
+    {
+        
+    }
 }
 
 void QDirtyDozenWidget::update()
