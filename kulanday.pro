@@ -5,6 +5,17 @@
 TEMPLATE = app
 TARGET = kulanday
 
+linux-g++ | linux-g++-64 | linux-g++-32 {
+    # on linux we have to use gstreamer for audio recording directly
+    # because QAudioRecorder is broken here for over a year now
+    INCLUDEPATH += "/usr/include/gstreamer-1.0/"
+    INCLUDEPATH += "/usr/include/glib-2.0/"
+    INCLUDEPATH += "/usr/lib/glib-2.0/include/"
+}
+win32 {
+    # QAudioRecorder works here properly
+}
+
 # The following define makes your compiler warn you if you use any
 # feature of Qt which has been marked as deprecated (the exact warnings
 # depend on your compiler). Please consult the documentation of the
@@ -23,7 +34,8 @@ QT += widgets\
     svg
 
 # Input
-HEADERS += src/q_kulanday_main_window.h\
+HEADERS += \
+    src/q_kulanday_main_window.h\
     src/db_adapter.h \
     src/q_dirtydozen_widget.h \
     src/q_kulanday_menubar.h \
@@ -33,7 +45,8 @@ HEADERS += src/q_kulanday_main_window.h\
     src/q_decks_widget.h \
     src/q_audio_list_table.h
 
-SOURCES += src/kulanday.cpp\
+SOURCES += \
+    src/kulanday.cpp\
     src/q_kulanday_main_window.cpp\
     src/db_adapter.cpp \
     src/q_dirtydozen_widget.cpp \
@@ -44,7 +57,11 @@ SOURCES += src/kulanday.cpp\
     src/q_decks_widget.cpp \
     src/q_audio_list_table.cpp
 
-#RESOURCES += kulanday.qrc
+
+linux-g++ | linux-g++-64 | linux-g++-32 {
+    HEADERS += src/audio_recorder.h
+    SOURCES += src/audio_recorder.cpp
+}
 
 release:DESTDIR = release
 release:OBJECTS_DIR = release/obj
