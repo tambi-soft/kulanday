@@ -46,7 +46,6 @@ void QKulandayMainWindow::showNewDeckWidget(QString deck_name)
     connect(deck, &QDeckOverviewWidget::showDeckItemRequested, this, &QKulandayMainWindow::showDeckItem);
     
     tab_widget->addTab(deck, deck_name);
-    
     activateNewTab();
 }
 
@@ -54,9 +53,11 @@ void QKulandayMainWindow::createNewDeck(QUrl deck_url)
 {
     if (! deck_url.isEmpty())
     {
-        QDeckOverviewWidget *deck = new QDeckOverviewWidget(deck_url.path());
-        tab_widget->addTab(deck, deck_url.path());
+        QDeckOverviewWidget *deck = new QDeckOverviewWidget(deck_url.fileName());
+        connect(deck, &QDeckOverviewWidget::newDeckItemRequested, this, &QKulandayMainWindow::createNewDeckItem);
+        connect(deck, &QDeckOverviewWidget::showDeckItemRequested, this, &QKulandayMainWindow::showDeckItem);
         
+        tab_widget->addTab(deck, deck_url.fileName());
         activateNewTab();
     }
 }
