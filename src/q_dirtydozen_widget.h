@@ -3,9 +3,13 @@
 
 #include <QWidget>
 #include <QGridLayout>
+#include <QComboBox>
+#include <QLabel>
+#include <QPushButton>
 #include <QMediaPlayer>
 
 #include "db_adapter.h"
+#include "q_click_label.h"
 
 class QDirtyDozenWidget : public QWidget
 {

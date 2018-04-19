@@ -43,7 +43,8 @@ HEADERS += \
     src/q_deck_item_widget.h \
     src/q_deck_widget.h \
     src/q_decks_widget.h \
-    src/q_audio_list_table.h
+    src/q_audio_list_table.h \
+    src/q_click_label.h
 
 SOURCES += \
     src/kulanday.cpp\
@@ -55,7 +56,8 @@ SOURCES += \
     src/q_deck_item_widget.cpp \
     src/q_deck_widget.cpp \
     src/q_decks_widget.cpp \
-    src/q_audio_list_table.cpp
+    src/q_audio_list_table.cpp \
+    src/q_click_label.cpp
 
 
 linux-g++ | linux-g++-64 | linux-g++-32 {
