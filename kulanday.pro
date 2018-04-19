@@ -63,6 +63,9 @@ linux-g++ | linux-g++-64 | linux-g++-32 {
     SOURCES += src/audio_recorder.cpp
 }
 
+RESOURCES += \
+    resources.qrc
+
 release:DESTDIR = release
 release:OBJECTS_DIR = release/obj
 release:MOC_DIR = release/moc
@@ -74,6 +77,3 @@ debug:OBJECTS_DIR = debug/obj
 debug:MOC_DIR = debug/moc
 debug:RCC_DIR = debug/rcc
 debug:UI_DIR = debug/ui
-
-RESOURCES += \
-    resources.qrc
