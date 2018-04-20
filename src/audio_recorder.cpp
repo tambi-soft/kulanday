@@ -7,9 +7,6 @@ AudioRecorder::AudioRecorder(QString record_url, QObject *parent) : QObject(pare
 
 void AudioRecorder::recStart()
 {
-    //GMainLoop *loop;
-    //loop = g_main_loop_new(NULL, FALSE);
-    
     GstElement *source, *demuxer, *muxer, *decoder, *encoder, *conv, *filesink;
     GstBus *bus;
     guint bus_watch_id;
@@ -49,15 +46,4 @@ void AudioRecorder::recStart()
 void AudioRecorder::recStop()
 {
     gst_element_set_state(pipeline, GST_STATE_NULL);
-}
-
-
-AudioRecorderThread::AudioRecorderThread(QThread *parent)
-{
-    
-}
-
-void AudioRecorderThread::run()
-{
-    
 }

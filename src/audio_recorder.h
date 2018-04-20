@@ -27,29 +27,3 @@ public slots:
 };
 
 #endif // AUDIO_RECORDER_H
-
-
-#ifndef AUDIO_RECORDER_THREAD_H
-
-#include <QThread>
-
-
-
-class AudioRecorderThread : public QThread
-{
-    Q_OBJECT
-public:
-    explicit AudioRecorderThread(QThread *parent = nullptr);
-    
-protected:
-    
-    
-    void run();
-    
-signals:
-    
-public slots:
-    
-};
-
-#endif //AUDIO_RECORDER_THREAD_H
