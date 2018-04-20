@@ -98,13 +98,16 @@ void QKulandayMainWindow::showDeckItem(QString deck_name, int rowid)
         activateNewTab();
         
         this->deck_item_widgets[deck_name + "_" + QString::number(rowid)] = this->tab_widget->currentIndex();
+        
+        qDebug() << deck_item;
     }
 }
 
 void QKulandayMainWindow::onDeckItemContentsUpdated(QString deck_name)
 {
-    //QDeckOverviewWidget *deck = deck_widgets["deck_name"];
-    //deck->refresh();
+    int deck_id = this->deck_item_widgets[deck_name];
+    QDeckOverviewWidget *deck = (QDeckOverviewWidget*) tab_widget->widget(deck_id);
+    deck->refresh();
     
 }
 

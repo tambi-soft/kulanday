@@ -198,7 +198,6 @@ void QDeckOverviewWidget::showEvent(QShowEvent *event)
 
 void QDeckOverviewWidget::refresh()
 {
-    //table->clear();
-    //initTableWidget(this->deck_name);
-    qDebug() << this->deck_name;
+    table->clear();
+    initTableWidget(this->deck_name);
 }

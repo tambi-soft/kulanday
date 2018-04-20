@@ -183,10 +183,15 @@ void QDeckItemWidget::onItemChanged()
         QString translation = this->translation_line->text();
         
         this->database->updateDeckItem(rowid, name, word, phonetical, translation);
+        this->item_changed = true;
     }
 }
 
 void QDeckItemWidget::hideEvent(QHideEvent *event)
 {
-    emit contentsUpdated(this->deck_name);
+    if (this->item_changed)
+    {
+        this->item_changed = false;
+        emit contentsUpdated(this->deck_name);
+    }
 }

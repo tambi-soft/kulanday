@@ -41,6 +41,8 @@ private:
     DbAdapter *database = nullptr;
     
     bool ignore_item_changes;
+    bool item_changed = false;
+    
     QUrl default_import_path = QDir::homePath();
     
     QSize IMAGE_SIZE = QSize(300, 150); // 600 300
