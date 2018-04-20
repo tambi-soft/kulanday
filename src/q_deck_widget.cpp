@@ -10,6 +10,8 @@ QDeckOverviewWidget::QDeckOverviewWidget(QString deck_name, QWidget *parent)
     setLayout(layout);
     this->deck_name = deck_name;
     
+    //setFocusPolicy(Qt::StrongFocus);
+    
     QPushButton *new_item_button = new QPushButton("new item");
     connect (new_item_button, &QPushButton::clicked, this, &QDeckOverviewWidget::newItemButtonClicked);
     
@@ -19,7 +21,7 @@ QDeckOverviewWidget::QDeckOverviewWidget(QString deck_name, QWidget *parent)
     layout->addWidget(new_item_button);
     
     table->horizontalHeader()->hide();
-    initTableWidget(deck_name);
+    //initTableWidget(deck_name);
 }
 
 void QDeckOverviewWidget::initTableWidget(QString deck_name)
@@ -184,7 +186,12 @@ void QDeckOverviewWidget::deleteRowButtonClicked(int rowid)
     initTableWidget(this->deck_name);
 }
 
-void QDeckOverviewWidget::focusInEvent(QFocusEvent *e)
+void QDeckOverviewWidget::hideEvent(QHideEvent *event)
 {
-    qDebug() << "focus";
+    table->clear();
+}
+
+void QDeckOverviewWidget::showEvent(QShowEvent *event)
+{
+    initTableWidget(this->deck_name);
 }

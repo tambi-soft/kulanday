@@ -43,7 +43,8 @@ private:
     void audioButtonClicked(QPushButton *button, QString audio_filename);
     
 protected:
-    void focusInEvent(QFocusEvent* e);
+    void hideEvent(QHideEvent *event);
+    void showEvent(QShowEvent *event);
     
 signals:
     void newDeckItemRequested(QString deck_name);
