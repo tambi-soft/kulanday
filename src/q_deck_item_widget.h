@@ -25,8 +25,9 @@ public:
     explicit QDeckItemWidget(QString deck_name, QWidget *parent = nullptr);
     explicit QDeckItemWidget(QString deck_name, int rowid, QWidget *parent = nullptr);
     
-private:
     int rowid;
+    
+private:
     QString deck_name;
     QString image_path;
     
@@ -49,7 +50,11 @@ private:
     
     QString randomword(int length);
     
+protected:
+    void hideEvent(QHideEvent *event);
+    
 signals:
+    void contentsUpdated(QString deck_name);
     
 public slots:
     void importImageClicked();

@@ -28,6 +28,8 @@ class QDeckOverviewWidget : public QWidget
 public:
     explicit QDeckOverviewWidget(QString deck_name, QWidget *parent = nullptr);
     
+    void refresh();
+    
 private:
     QLayout *layout;
     QTableWidget *table;

@@ -17,6 +17,9 @@ QKulandayMainWindow::QKulandayMainWindow(QWidget *parent)
     
     connect(tab_widget, &QTabWidget::tabCloseRequested, this, &QKulandayMainWindow::closeTab);
     
+    QTabBar *tab_bar = tab_widget->tabBar();
+    connect(tab_bar, &QTabBar::tabMoved, this, &QKulandayMainWindow::onTabMoved);
+    
     showDecksOverviewTab();
 }
 
@@ -47,6 +50,8 @@ void QKulandayMainWindow::showDeckWidget(QString deck_name)
     
     tab_widget->addTab(deck, deck_name);
     activateNewTab();
+    
+    //this->deck_widgets[deck_name] = deck;
 }
 
 void QKulandayMainWindow::createNewDeck(QUrl deck_url)
@@ -60,17 +65,39 @@ void QKulandayMainWindow::createNewDeck(QUrl deck_url)
 void QKulandayMainWindow::createNewDeckItem(QString deck_name)
 {
     QDeckItemWidget *deck_item = new QDeckItemWidget(deck_name);
+    connect(deck_item, &QDeckItemWidget::contentsUpdated, this, &QKulandayMainWindow::onDeckItemContentsUpdated);
     tab_widget->addTab(deck_item, "item: " + deck_name);
     
     activateNewTab();
+    
+    int rowid = deck_item->rowid;
+    this->deck_item_widgets[deck_name + "_" + QString::number(rowid)] = this->tab_widget->currentIndex();
 }
 
 void QKulandayMainWindow::showDeckItem(QString deck_name, int rowid)
 {
-    QDeckItemWidget *deck_item = new QDeckItemWidget(deck_name, rowid);
-    tab_widget->addTab(deck_item, "item: " + deck_name);
+    if (this->deck_item_widgets.contains(deck_name + "_" + QString::number(rowid)))
+    {
+        int index = this->deck_item_widgets[deck_name + "_" + QString::number(rowid)];
+        this->tab_widget->setCurrentIndex(index);
+    }
+    else
+    {
+        QDeckItemWidget *deck_item = new QDeckItemWidget(deck_name, rowid);
+        connect(deck_item, &QDeckItemWidget::contentsUpdated, this, &QKulandayMainWindow::onDeckItemContentsUpdated);
+        tab_widget->addTab(deck_item, "item: " + deck_name);
+        
+        activateNewTab();
+        
+        this->deck_item_widgets[deck_name + "_" + QString::number(rowid)] = this->tab_widget->currentIndex();
+    }
+}
+
+void QKulandayMainWindow::onDeckItemContentsUpdated(QString deck_name)
+{
+    //QDeckOverviewWidget *deck = deck_widgets["deck_name"];
+    //deck->refresh();
     
-    activateNewTab();
 }
 
 void QKulandayMainWindow::activateNewTab()
@@ -81,4 +108,38 @@ void QKulandayMainWindow::activateNewTab()
 void QKulandayMainWindow::closeTab(int tab_id)
 {
     tab_widget->removeTab(tab_id);
+    
+    for (auto k : this->deck_item_widgets.keys())
+    {
+        int value = this->deck_item_widgets[k];
+        // remove key->value pair from the map
+        if (value == tab_id)
+        {
+            this->deck_item_widgets.remove(k);
+        }
+        // adjust the map to match the new tab ids
+        else if (value > tab_id)
+        {
+            this->deck_item_widgets[k] = value -1;
+        }
+    }
+}
+
+void QKulandayMainWindow::onTabMoved(int from, int to)
+{
+    // adjust the map to match the new tab ids
+    for (auto k : this->deck_item_widgets.keys())
+    {
+        int value = this->deck_item_widgets[k];
+        
+        if (value == from)
+        {
+            this->deck_item_widgets[k] = to;
+        }
+        if (value == to)
+        {
+            this->deck_item_widgets[k] = from;
+        }
+        
+    }
 }

@@ -21,7 +21,7 @@ QDeckOverviewWidget::QDeckOverviewWidget(QString deck_name, QWidget *parent)
     layout->addWidget(new_item_button);
     
     table->horizontalHeader()->hide();
-    //initTableWidget(deck_name);
+    initTableWidget(deck_name);
 }
 
 void QDeckOverviewWidget::initTableWidget(QString deck_name)
@@ -188,10 +188,17 @@ void QDeckOverviewWidget::deleteRowButtonClicked(int rowid)
 
 void QDeckOverviewWidget::hideEvent(QHideEvent *event)
 {
-    table->clear();
+    //table->clear();
 }
 
 void QDeckOverviewWidget::showEvent(QShowEvent *event)
 {
-    initTableWidget(this->deck_name);
+    //initTableWidget(this->deck_name);
+}
+
+void QDeckOverviewWidget::refresh()
+{
+    //table->clear();
+    //initTableWidget(this->deck_name);
+    qDebug() << this->deck_name;
 }

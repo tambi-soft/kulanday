@@ -185,3 +185,8 @@ void QDeckItemWidget::onItemChanged()
         this->database->updateDeckItem(rowid, name, word, phonetical, translation);
     }
 }
+
+void QDeckItemWidget::hideEvent(QHideEvent *event)
+{
+    emit contentsUpdated(this->deck_name);
+}

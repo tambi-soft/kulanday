@@ -26,6 +26,8 @@ private:
     int DECK_LEARN_INDEX = 3;
     int DECK_DIRTY_DOZEN_INDEX = 4;
     
+    QMap<QString,int> deck_item_widgets; // {deck_name} OR {deck_name}_{item_id} -> tab widget id
+    
 private slots:
     void showDecksOverviewTab();
     void showDirtyDozenWidget(QString deck_name);
@@ -33,7 +35,9 @@ private slots:
     void createNewDeck(QUrl deck_url);
     void createNewDeckItem(QString deck_name);
     void showDeckItem(QString deck_name, int rowid);
+    void onDeckItemContentsUpdated(QString deck_name);
     
     void activateNewTab();
     void closeTab(int tab_id);
+    void onTabMoved(int from, int to);
 };
