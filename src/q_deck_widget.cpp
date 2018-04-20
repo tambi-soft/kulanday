@@ -98,10 +98,17 @@ void QDeckOverviewWidget::appendPlayButtons(int table_rowid, QList<QMap<QString,
 {
     for (int column = 0; column < audio_filenames.length(); ++column)
     {
-        QPushButton *audio_button = new QPushButton();
-        audio_button->setIcon(QIcon::fromTheme("media-playback-start"));
-        
         QString audio_filename = audio_filenames.at(column)["filename"].toString();
+        QPushButton *audio_button = new QPushButton();
+        if (audio_filename != "")
+        {
+            audio_button->setIcon(QIcon::fromTheme("media-playback-start"));
+        }
+        else
+        {
+            audio_button->setIcon(QIcon::fromTheme("media-record"));
+            audio_button->setEnabled(false);
+        }
         connect(audio_button, &QPushButton::clicked, this, [this, audio_button, audio_filename]{ audioButtonClicked(audio_button, audio_filename); });
         
         table->setCellWidget(table_rowid, column + COLUMN_OFFSET, audio_button);
