@@ -23,7 +23,6 @@ public:
     
     qlonglong newDeckRow();
     qlonglong newAudioRow(int deck_rowid);
-    int getDeckItemRowID(QString name, QString word, QString phonetical);
     QList<QMap<QString,QVariant>> selectDeckItems();
     QList<QVariant> selectDeckItemsWithAudio();
     QList<QMap<QString,QVariant>> selectDeckDirtyDozenItems();
@@ -34,7 +33,6 @@ public:
     QList<QMap<QString,QVariant>> audioFilenamesForDeckRowID(qlonglong rowid);
     int getMaxAudioCount();
     void deleteAudio(int rowid);
-    void deleteAudioByFilename(QString filename);
     void insertAudioFilename(qlonglong deck_rowid, int audio_rowid, QString filename, QString description);
     void insertImageFilename(int rowid, QString filename);
 };

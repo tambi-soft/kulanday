@@ -1,3 +1,8 @@
+
+// == recording audio on linux with gstreamer ==
+// on mac and windows QAudioRecorder can be used,
+// which is sadly broken on (arch) linux for more than a year now.
+
 #include "audio_recorder.h"
 
 AudioRecorder::AudioRecorder(QString record_url, QObject *parent) : QObject(parent)

@@ -74,11 +74,6 @@ qlonglong DbAdapter::newAudioRow(int deck_rowid)
     return query.lastInsertId().toLongLong();
 }
 
-int DbAdapter::getDeckItemRowID(QString name, QString word, QString phonetical)
-{
-    
-}
-
 QList<QMap<QString,QVariant>> DbAdapter::selectDeckItems()
 {
     QSqlQuery query("SELECT rowid, order_index, name, word, phonetical, translation, svg_filename, image, created FROM deck ORDER BY order_index", this->db);
@@ -213,11 +208,6 @@ void DbAdapter::deleteAudio(int rowid)
     query.prepare("DELETE FROM audio WHERE rowid = :rowid");
     query.bindValue(":rowid", rowid);
     query.exec();
-}
-
-void DbAdapter::deleteAudioByFilename(QString filename)
-{
-    
 }
 
 void DbAdapter::insertAudioFilename(qlonglong deck_rowid, int audio_rowid, QString filename, QString description)
