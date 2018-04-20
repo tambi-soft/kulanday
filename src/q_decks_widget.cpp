@@ -34,6 +34,9 @@ void QDecksOverviewWidget::createNewDeckClicked()
                                                     QFileDialog::ShowDirsOnly);
     
     emit createNewDeck(QUrl(url_path));
+    
+    table->clear();
+    populateDecksOverview();
 }
 
 void QDecksOverviewWidget::populateDecksOverview()
