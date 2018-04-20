@@ -3,7 +3,7 @@
 QAudioListTable::QAudioListTable(QString deck_name, qlonglong deck_rowid, QTableWidget *parent)
     : QTableWidget(parent)
     , player (new QMediaPlayer)
-    , recorder (new QAudioRecorder)
+    //, recorder (new QAudioRecorder)
 {
     connect(this->player, &QMediaPlayer::stateChanged, this, &QAudioListTable::mediaPlayerStateChanged);
     connect(this, &QAudioListTable::itemChanged, this, &QAudioListTable::onItemChanged);
@@ -14,8 +14,8 @@ QAudioListTable::QAudioListTable(QString deck_name, qlonglong deck_rowid, QTable
     
     QAudioEncoderSettings settings;
     settings.setCodec("audio/vorbis");
-    this->recorder->setContainerFormat("ogg");
-    this->recorder->setEncodingSettings(settings);
+    //this->recorder->setContainerFormat("ogg");
+    //this->recorder->setEncodingSettings(settings);
     
     drawAudioTable();
 }
@@ -46,13 +46,6 @@ void QAudioListTable::drawAudioTable()
             audio_button->setIcon(QIcon::fromTheme("media-record"));
             connect(audio_button, &QPushButton::clicked, this, [this, i, audio_button, audio_filename]{ recordButtonClicked(i, audio_button, audio_filename); });
         }
-        /*
-        else if (this->recording_row == i)
-        {
-            audio_button->setIcon(QIcon::fromTheme("media-playback-stop"));
-            
-        }
-        */
         else
         {
             audio_button->setIcon(QIcon::fromTheme("media-playback-start"));
@@ -100,17 +93,21 @@ void QAudioListTable::audioButtonClicked(QPushButton *button, QString audio_file
 {
     this->ignore_item_changes = true;
     
-    if (this->player->state() == QMediaPlayer::PlayingState && this->playing_button == button)
+    if (this->player->state() == QMediaPlayer::PlayingState)
     {
         this->player->stop();
+        this->playing_button = nullptr;
     }
     else
     {
+        /*
         if (this->playing_button != nullptr)
         {
-            qDebug() << "button:" << this->playing_button;
-            this->playing_button->setIcon(QIcon::fromTheme("media-playback-start"));
+            qDebug() << "button1:" << this->playing_button;
+            qDebug() << "button2:" << button;
+            //this->playing_button->setIcon(QIcon::fromTheme("media-playback-start"));
         }
+        */
         
         this->playing_button = button;
         

@@ -14,7 +14,7 @@ linux-g++ | linux-g++-64 | linux-g++-32 {
     
     LIBS += -lgstreamer-1.0
     LIBS += -lgobject-2.0
-    LIBS += -lglib-2.0
+    #LIBS += -lglib-2.0
     
     HEADERS += src/audio_recorder.h
     SOURCES += src/audio_recorder.cpp
