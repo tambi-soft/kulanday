@@ -7,9 +7,7 @@ AudioRecorder::AudioRecorder(QString record_url, QObject *parent) : QObject(pare
 
 void AudioRecorder::recStart()
 {
-    GstElement *source, *demuxer, *muxer, *decoder, *encoder, *conv, *filesink;
-    GstBus *bus;
-    guint bus_watch_id;
+    GstElement *source, *muxer, *encoder, *conv, *filesink;
     GError **gerror;
     
     int *argc = 0;
@@ -22,13 +20,8 @@ void AudioRecorder::recStart()
     encoder = gst_element_factory_make("vorbisenc", "vorbisenc");
     muxer = gst_element_factory_make("oggmux", "oggmux");
     filesink = gst_element_factory_make("filesink", "filesink");
-    //filesink->set_property("location");
     
-    //QString q_url_str = "/home/samuel/.tambi/aaaa.ogg";
-    qDebug() << this->record_url;
     QByteArray q_url_arr = this->record_url.toLatin1();
-    //QByteArray q_url_arr = q_url_str.toLatin1();
-    
     gchar *record_url = q_url_arr.data();
     g_object_set(G_OBJECT(filesink), "location", record_url, NULL);
     
@@ -39,8 +32,6 @@ void AudioRecorder::recStart()
     gst_element_link(encoder, muxer);
     gst_element_link(muxer, filesink);
     gst_element_set_state(pipeline, GST_STATE_PLAYING);
-    
-    //g_main_loop_run(loop);
 }
 
 void AudioRecorder::recStop()
