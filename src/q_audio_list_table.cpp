@@ -44,8 +44,15 @@ void QAudioListTable::drawAudioTable()
         if (data.at(i)["filename"].toString() == "")
         {
             audio_button->setIcon(QIcon::fromTheme("media-record"));
-            connect(audio_button, &QPushButton::clicked, this, [this, audio_button, audio_filename]{ recordButtonClicked(audio_button, audio_filename); });
+            connect(audio_button, &QPushButton::clicked, this, [this, i, audio_button, audio_filename]{ recordButtonClicked(i, audio_button, audio_filename); });
         }
+        /*
+        else if (this->recording_row == i)
+        {
+            audio_button->setIcon(QIcon::fromTheme("media-playback-stop"));
+            
+        }
+        */
         else
         {
             audio_button->setIcon(QIcon::fromTheme("media-playback-start"));
@@ -116,14 +123,42 @@ void QAudioListTable::audioButtonClicked(QPushButton *button, QString audio_file
     this->ignore_item_changes = false;
 }
 
-void QAudioListTable::recordButtonClicked(QPushButton *button, QString audio_filename)
+void QAudioListTable::recordButtonClicked(int row, QPushButton *button, QString audio_filename)
 {
-    qDebug() << "recording";
-    button->setIcon(QIcon::fromTheme("media-playback-stop"));
-    
-    QUrl record_url = QUrl::fromLocalFile(QDir::homePath() + "/.tambi/decks/" + this->deck_name + "/" + "aaaa.ogg");
-    this->recorder->setOutputLocation(record_url);
-    this->recorder->record();
+    if (this->recording_row == row)
+    {
+        qDebug() << "stop recording";
+        this->recording_row = -1;
+        
+        this->arec->recStop();
+        
+        clear();
+        drawAudioTable();
+    }
+    else
+    {
+        qDebug() << "recording";
+        this->recording_row = row;
+        
+        button->setIcon(QIcon::fromTheme("media-playback-stop"));
+        
+        QDateTime *date = new QDateTime();
+        uint filename_stmp_int = date->currentDateTime().toTime_t();
+        QString filename_stmp = QString::number((int) filename_stmp_int);
+        QString filename_rnd = randomString(5);
+        QString filename = filename_stmp + "_" + filename_rnd;
+        QUrl record_url = QUrl::fromLocalFile(QDir::homePath() + "/.tambi/decks/" + this->deck_name + "/" + filename + ".ogg");
+        
+        //this->recorder->setOutputLocation(record_url);
+        //this->recorder->record();
+        
+        QTableWidgetItem *item = new QTableWidgetItem(record_url.fileName());
+        setItem(row, FILE_NAME_COLUMN, item);
+        
+        this->arec = new AudioRecorder(record_url.path());
+        this->arec->recStart();
+        
+    }   
 }
 
 void QAudioListTable::mediaPlayerStateChanged(int state)
@@ -220,4 +255,22 @@ void QAudioListTable::onItemChanged()
             this->database->insertAudioFilename(this->deck_rowid, audio_rowid, filename, description);
         }
     }
+    
+    resizeColumnsToContents();
+}
+
+QString QAudioListTable::randomString(int length)
+{
+    // https://stackoverflow.com/questions/18862963/qt-c-random-string-generation?utm_medium=organic&utm_source=google_rich_qa&utm_campaign=google_rich_qa
+    
+    const QString possibleCharacters("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789");
+    
+       QString randomString;
+       for(int i=0; i < length; ++i)
+       {
+           int index = qrand() % possibleCharacters.length();
+           QChar nextChar = possibleCharacters.at(index);
+           randomString.append(nextChar);
+       }
+       return randomString;
 }

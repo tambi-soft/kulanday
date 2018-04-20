@@ -7,6 +7,8 @@
 #include <QPushButton>
 #include <QIcon>
 
+#include <QDateTime>
+
 #include <QMessageBox>
 #include <QFileDialog>
 
@@ -15,6 +17,7 @@
 #include <QAudioEncoderSettings>
 
 #include "db_adapter.h"
+#include "audio_recorder.h"
 
 #ifdef __linux__
 
@@ -36,6 +39,8 @@ private:
     QList<QMap<QString,QVariant>> data;
     
     bool ignore_item_changes;
+    int recording_row = -1; // -1: not recording
+    
     void drawAudioTable();
     
     int COLUMN_COUNT = 6;
@@ -51,11 +56,14 @@ private:
     DbAdapter *database = nullptr;
     QMediaPlayer *player;
     QAudioRecorder *recorder;
+    AudioRecorder *arec;
     QPushButton *playing_button = nullptr;
     
     void audioButtonClicked(QPushButton *button, QString audio_filename);
-    void recordButtonClicked(QPushButton *button, QString audio_filename);
+    void recordButtonClicked(int row, QPushButton *button, QString audio_filename);
     void mediaPlayerStateChanged(int state);
+    
+    QString randomString(int length);
     
 signals:
     

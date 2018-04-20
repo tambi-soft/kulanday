@@ -11,6 +11,13 @@ linux-g++ | linux-g++-64 | linux-g++-32 {
     INCLUDEPATH += "/usr/include/gstreamer-1.0/"
     INCLUDEPATH += "/usr/include/glib-2.0/"
     INCLUDEPATH += "/usr/lib/glib-2.0/include/"
+    
+    LIBS += -lgstreamer-1.0
+    LIBS += -lgobject-2.0
+    LIBS += -lglib-2.0
+    
+    HEADERS += src/audio_recorder.h
+    SOURCES += src/audio_recorder.cpp
 }
 win32 {
     # QAudioRecorder works here properly
@@ -58,12 +65,6 @@ SOURCES += \
     src/q_decks_widget.cpp \
     src/q_audio_list_table.cpp \
     src/q_click_label.cpp
-
-
-linux-g++ | linux-g++-64 | linux-g++-32 {
-    HEADERS += src/audio_recorder.h
-    SOURCES += src/audio_recorder.cpp
-}
 
 RESOURCES += \
     resources.qrc
