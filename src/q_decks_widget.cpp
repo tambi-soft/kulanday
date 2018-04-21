@@ -61,8 +61,6 @@ void QDecksOverviewWidget::populateComboBox()
     this->combo->blockSignals(true);
     this->combo->addItems(items);
     this->combo->blockSignals(false);
-    
-    
 }
 
 void QDecksOverviewWidget::populateDecksOverview()

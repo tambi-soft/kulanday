@@ -16,6 +16,8 @@
 #include <QAudioRecorder>
 #include <QAudioEncoderSettings>
 
+#include <QProcess>
+
 #include "db_adapter.h"
 #include "audio_recorder.h"
 

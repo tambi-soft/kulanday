@@ -225,6 +225,12 @@ void QAudioListTable::importButtonClicked(int row)
 void QAudioListTable::editButtonClicked(int row)
 {
     qDebug() << "edit:" << row;
+    
+    QString filename = item(row, FILE_NAME_COLUMN)->text();
+    QString filepath = QDir::homePath() + "/.tambi/decks/" + this->deck_name + "/" + filename;
+    
+    QProcess *pro = new QProcess();
+    pro->startDetached("audacity " + filepath);
 }
 
 void QAudioListTable::newAudioLine()
