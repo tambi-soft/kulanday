@@ -7,6 +7,7 @@
 #include <QPushButton>
 #include <QDir>
 #include <QFileDialog>
+#include <QComboBox>
 
 #include "q_create_new_deck_dialog.h"
 
@@ -19,17 +20,20 @@ public:
 
 private:
     QVBoxLayout *layout;
+    QComboBox *combo;
     QTableWidget *table;
     QPushButton *new_deck_button;
     
     QDir *decks_path;
     
+    void populateComboBox();
     void populateDecksOverview();
     
 private slots:
     void createNewDeckClicked();
     void tableButtonDirtyDozenClicked(QString deck_name);
     void tableButtonViewDeckClicked(QString deck_name);
+    void onComboTextChanged(QString text);
     
 signals:
     void deckDirtyDozenClicked(QString deck_name);
