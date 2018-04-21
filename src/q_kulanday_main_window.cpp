@@ -19,8 +19,10 @@ QKulandayMainWindow::QKulandayMainWindow(QWidget *parent)
     
     QTabBar *tab_bar = tab_widget->tabBar();
     connect(tab_bar, &QTabBar::tabMoved, this, &QKulandayMainWindow::onTabMoved);
-    
+ 
     showDecksOverviewTab();
+    
+    deactivateDecksOverviewCloseButton();
 }
 
 void QKulandayMainWindow::showDecksOverviewTab()
@@ -153,4 +155,10 @@ void QKulandayMainWindow::onTabMoved(int from, int to)
         }
         
     }
+}
+
+void QKulandayMainWindow::deactivateDecksOverviewCloseButton()
+{
+    QTabBar *tb = this->tab_widget->tabBar();
+    tb->tabButton(0, QTabBar::RightSide)->hide();
 }

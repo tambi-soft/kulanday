@@ -26,6 +26,7 @@ private:
     int DECK_LEARN_INDEX = 3;
     int DECK_DIRTY_DOZEN_INDEX = 4;
     
+    void deactivateDecksOverviewCloseButton();
     QMap<QString,int> deck_item_widgets; // {deck_name} OR {deck_name}_{item_id} -> tab widget id
     
 private slots:
