@@ -45,6 +45,8 @@ void QDeckItemWidget::populateGui(QString deck_name, int rowid)
         QPixmap scaled = pixmap.scaled(IMAGE_SIZE, Qt::KeepAspectRatio);
         
         this->image_view->setPixmap(scaled);
+        
+        this->import_image_button->setEnabled(false);
     }
     
     if (! data[0]["svg_filename"].isNull() && data[0]["image"].isNull())
@@ -78,7 +80,7 @@ void QDeckItemWidget::initializeGui(QString deck_name, int rowid)
     connect(this->phonetical_line, &QLineEdit::textChanged, this, &QDeckItemWidget::onItemChanged);
     connect(this->translation_line, &QLineEdit::textChanged, this, &QDeckItemWidget::onItemChanged);
     
-    QPushButton *import_image_button = new QPushButton("add image from file");
+    this->import_image_button = new QPushButton("add image from file");
     import_image_button->setIcon(QIcon::fromTheme("document-open"));
     connect(import_image_button, &QPushButton::clicked, this, &QDeckItemWidget::importImageClicked);
     
@@ -130,28 +132,35 @@ void QDeckItemWidget::importImageClicked()
 {
     this->default_import_path = "";
     QString image_url = QFileDialog::getOpenFileName(this, "Please select an Image File", QDir::homePath());
-    QFile filepath(image_url);
     
-    QString filename = QUrl(image_url).fileName();
-    // copy the image to the deck.
-    // if there is already a file with this name, just append an undersore to it (probably before the extension)
-    // and try again
-    bool success = false;
-    while (! success)
+    if (image_url != NULL)
     {
-        success = filepath.copy(QDir::homePath() + "/.tambi/decks/" + this->deck_name + "/" + filename);
-        if (! success)
+        QFile filepath(image_url);
+        
+        QString filename = QUrl(image_url).fileName();
+        // copy the image to the deck.
+        // if there is already a file with this name, just append an undersore to it (probably before the extension)
+        // and try again
+        bool success = false;
+        while (! success)
         {
-            filename = filename.replace(".", "_.");
+            success = filepath.copy(QDir::homePath() + "/.tambi/decks/" + this->deck_name + "/" + filename);
+            if (! success)
+            {
+                filename = filename.replace(".", "_.");
+            }
         }
+        
+        this->database->insertImageFilename(this->rowid, QUrl(image_url).fileName());
+        
+        QPixmap pixmap;
+        pixmap.load(image_url);
+        QPixmap scaled = pixmap.scaled(IMAGE_SIZE, Qt::KeepAspectRatio);
+        this->image_view->setPixmap(scaled);
+        
+        this->import_image_button->setEnabled(false);
+        this->item_changed = true;
     }
-    
-    this->database->insertImageFilename(this->rowid, QUrl(image_url).fileName());
-    
-    QPixmap pixmap;
-    pixmap.load(image_url);
-    QPixmap scaled = pixmap.scaled(IMAGE_SIZE, Qt::KeepAspectRatio);
-    this->image_view->setPixmap(scaled);
 }
 
 void QDeckItemWidget::deleteImageClicked()
@@ -166,11 +175,15 @@ void QDeckItemWidget::deleteImageClicked()
         
         this->image_view->clear();
     }
+    
+    this->import_image_button->setEnabled(true);
+    this->item_changed = true;
 }
 
 void QDeckItemWidget::newAudioButtonClicked()
 {
     this->audio_list_widget->newAudioLine();
+    this->item_changed = true;
 }
 
 void QDeckItemWidget::onItemChanged()
@@ -189,6 +202,8 @@ void QDeckItemWidget::onItemChanged()
 
 void QDeckItemWidget::hideEvent(QHideEvent *event)
 {
+    this->audio_list_widget->stopAudio();
+    
     if (this->item_changed)
     {
         this->item_changed = false;

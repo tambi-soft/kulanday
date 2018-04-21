@@ -196,30 +196,31 @@ void QAudioListTable::deleteButtonClicked(int row)
 void QAudioListTable::importButtonClicked(int row)
 {
     QString audio_url = QFileDialog::getOpenFileName(this, "Import Audio", QDir::homePath());
-    qDebug() << audio_url;
-    QFile filepath(audio_url);
-    QString filename = QUrl(audio_url).fileName();
-    
-    // copy the image to the deck.
-    // if there is already a file with this name, just append an undersore to it (probably before the extension)
-    // and try again
-    bool success = false;
-    while (! success)
+    if (audio_url != NULL)
     {
-        success = filepath.copy(QDir::homePath() + "/.tambi/decks/" + this->deck_name + "/" + filename);
-        if (! success)
+        QFile filepath(audio_url);
+        QString filename = QUrl(audio_url).fileName();
+        
+        // copy the image to the deck.
+        // if there is already a file with this name, just append an undersore to it (probably before the extension)
+        // and try again
+        bool success = false;
+        while (! success)
         {
-            filename = filename.replace(".", "_.");
+            success = filepath.copy(QDir::homePath() + "/.tambi/decks/" + this->deck_name + "/" + filename);
+            if (! success)
+            {
+                filename = filename.replace(".", "_.");
+            }
         }
+        
+        qDebug() << "filename:" << filename;
+        
+        this->database->insertAudioFilename(this->deck_rowid, this->audio_rowid[row], filename, itemAt(row, DESCRIPTION_COLUMN)->text());
+        
+        clear();
+        drawAudioTable();
     }
-    
-    qDebug() << "filename:" << filename;
-    
-    this->database->insertAudioFilename(this->deck_rowid, this->audio_rowid[row], filename, itemAt(row, DESCRIPTION_COLUMN)->text());
-    
-    clear();
-    drawAudioTable();
-    
 }
 
 void QAudioListTable::editButtonClicked(int row)
@@ -276,4 +277,9 @@ QString QAudioListTable::randomString(int length)
            randomString.append(nextChar);
        }
        return randomString;
+}
+
+void QAudioListTable::stopAudio()
+{
+    this->player->stop();
 }

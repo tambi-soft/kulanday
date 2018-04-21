@@ -189,6 +189,7 @@ void QDeckOverviewWidget::deleteRowButtonClicked(int rowid)
 void QDeckOverviewWidget::hideEvent(QHideEvent *event)
 {
     //table->clear();
+    this->player->stop();
 }
 
 void QDeckOverviewWidget::showEvent(QShowEvent *event)

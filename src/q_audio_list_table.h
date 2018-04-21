@@ -32,6 +32,7 @@ public:
     explicit QAudioListTable(QString deck_name, qlonglong deck_rowid,  QTableWidget *parent = nullptr);
     
     void newAudioLine();
+    void stopAudio();
     
 private:
     QString deck_name;

@@ -39,6 +39,7 @@ private:
     QLineEdit *translation_line;
     QAudioListTable *audio_list_widget;
     DbAdapter *database = nullptr;
+    QPushButton *import_image_button;
     
     bool ignore_item_changes;
     bool item_changed = false;
