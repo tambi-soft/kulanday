@@ -69,6 +69,7 @@ private:
     QString randomString(int length);
     
 signals:
+    void changed();
     
 private slots:
     void onItemChanged();

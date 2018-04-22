@@ -65,6 +65,9 @@ public slots:
     
     void newAudioButtonClicked();
     void onItemChanged();
+    
+private slots:
+    void onAudioListChanged();
 };
 
 #endif // Q_DECK_ITEM_WIDGET_H

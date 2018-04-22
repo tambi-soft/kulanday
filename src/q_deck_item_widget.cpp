@@ -75,6 +75,8 @@ void QDeckItemWidget::initializeGui(QString deck_name, int rowid)
     this->translation_line = new QLineEdit();
     this->audio_list_widget = new QAudioListTable(deck_name, rowid);
     
+    connect(this->audio_list_widget, &QAudioListTable::changed, this, &QDeckItemWidget::onAudioListChanged);
+    
     connect(this->name_line, &QLineEdit::textChanged, this, &QDeckItemWidget::onItemChanged);
     connect(this->word_line, &QLineEdit::textChanged, this, &QDeckItemWidget::onItemChanged);
     connect(this->phonetical_line, &QLineEdit::textChanged, this, &QDeckItemWidget::onItemChanged);
@@ -198,6 +200,11 @@ void QDeckItemWidget::onItemChanged()
         this->database->updateDeckItem(rowid, name, word, phonetical, translation);
         this->item_changed = true;
     }
+}
+
+void QDeckItemWidget::onAudioListChanged()
+{
+    this->item_changed = true;
 }
 
 void QDeckItemWidget::hideEvent(QHideEvent *event)

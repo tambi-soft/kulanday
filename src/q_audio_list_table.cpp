@@ -190,6 +190,7 @@ void QAudioListTable::deleteButtonClicked(int row)
         this->database->deleteAudio(this->data.at(row)["rowid"].toLongLong());
         this->clear();
         drawAudioTable();
+        emit changed();
     }
 }
 
@@ -220,6 +221,7 @@ void QAudioListTable::importButtonClicked(int row)
         
         clear();
         drawAudioTable();
+        emit changed();
     }
 }
 
@@ -242,6 +244,7 @@ void QAudioListTable::newAudioLine()
     
     clear();
     drawAudioTable();
+    emit changed();
 }
 
 void QAudioListTable::onItemChanged()
@@ -261,6 +264,7 @@ void QAudioListTable::onItemChanged()
     }
     
     resizeColumnsToContents();
+    emit changed();
 }
 
 QString QAudioListTable::randomString(int length)
