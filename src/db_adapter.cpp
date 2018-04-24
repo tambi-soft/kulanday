@@ -96,6 +96,7 @@ QList<QMap<QString,QVariant>> DbAdapter::selectDeckDirtyDozenItems()
             JOIN audio ON deck.rowid=audio.deck_rowid\
             ORDER BY RANDOM()\
         ) AS T\
+        WHERE T.filename IS NOT NULL\
         GROUP BY rowid\
         ORDER BY RANDOM()\
         LIMIT 12", this->db);

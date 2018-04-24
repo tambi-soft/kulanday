@@ -57,7 +57,6 @@ void QDirtyDozenWidget::update()
     // (after it is hard to know wich one is the new)
     playNextAudio();
     QMap<QString,QVariant> new_item = this->dataset.last();
-    qDebug() << new_item;
     this->dataset = shuffleList(this->dataset);
     
     for (int i = 0; i < this->dataset.length(); ++i)
