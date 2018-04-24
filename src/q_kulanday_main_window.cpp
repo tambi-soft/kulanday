@@ -6,7 +6,7 @@ QKulandayMainWindow::QKulandayMainWindow(QWidget *parent)
     , tab_widget (new QTabWidget)
     , menu_bar (new QKulandayMenuBar)
 {
-    resize(600, 600);
+    resize(800, 700);
     
     setCentralWidget(tab_widget);
     tab_widget->setTabsClosable(true);
