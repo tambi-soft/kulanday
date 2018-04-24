@@ -13,8 +13,12 @@ QDirtyDozenWidget::QDirtyDozenWidget(QString deck_name, QWidget *parent)
     this->deck_name = deck_name;
     
     initialize(deck_name);
-    update();
-    playNextAudio();
+    // to avoid crash with empty index
+    if (this->full_dataset.length() > 0)
+    {
+        update();
+        playNextAudio();
+    }
 }
 
 void QDirtyDozenWidget::initialize(QString deck_name)
