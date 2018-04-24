@@ -14,6 +14,7 @@
 #include <QFile>
 #include <QUrl>
 #include <QFont>
+#include <QIcon>
 
 #include "db_adapter.h"
 #include "q_click_label.h"

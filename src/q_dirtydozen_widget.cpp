@@ -34,6 +34,7 @@ void QDirtyDozenWidget::initialize(QString deck_name)
     this->grid->addWidget(select_display_combo, 0, 0);
     
     QPushButton *replay_audio_button = new QPushButton("replay audio");
+    replay_audio_button->setIcon(QIcon::fromTheme("media-playback-start"));
     connect(replay_audio_button, &QPushButton::clicked, this, &QDirtyDozenWidget::replayAudioClicked);
     this->grid->addWidget(replay_audio_button, 0, this->COLUMNS-1);
     
@@ -42,6 +43,7 @@ void QDirtyDozenWidget::initialize(QString deck_name)
     this->grid->addWidget(show_all_button, int(12 / this->COLUMNS +2), 0);
     
     QPushButton *shuffle_button = new QPushButton("shuffle");
+    shuffle_button->setIcon(QIcon::fromTheme("media-playlist-shuffle"));
     connect(shuffle_button, &QPushButton::clicked, this, &QDirtyDozenWidget::onShuffleButtonClicked);
     this->grid->addWidget(shuffle_button, int(12 / this->COLUMNS +2), this->COLUMNS-1);
 }
