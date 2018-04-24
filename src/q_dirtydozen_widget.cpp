@@ -113,8 +113,6 @@ void QDirtyDozenWidget::update()
         this->grid->addWidget(label, int(row / COLUMNS), row % COLUMNS);
         
     }
-    
-    //playRandomAudio();
 }
 
 void QDirtyDozenWidget::clear()
@@ -123,7 +121,6 @@ void QDirtyDozenWidget::clear()
     {
         QWidget *widget = layout()->itemAt(i)->widget();
         QString class_name = widget->metaObject()->className();
-        //if (class_name != "QLabel" && class_name != "QComboBox" && class_name != "QPushButton")
         if (class_name == "QClickLabel")
         {
             widget->setVisible(false);
@@ -152,7 +149,6 @@ void QDirtyDozenWidget::showAllButtonClicked()
         this->counter = this->full_dataset.length();
         
         this->show_all_button->setText("start over");
-        
     }
     else
     {
