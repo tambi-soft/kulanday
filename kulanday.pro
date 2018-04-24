@@ -51,7 +51,8 @@ HEADERS += \
     src/q_deck_widget.h \
     src/q_decks_widget.h \
     src/q_audio_list_table.h \
-    src/q_click_label.h
+    src/q_click_label.h\
+    src/unicode_fonts.h
 
 SOURCES += \
     src/kulanday.cpp\
@@ -64,7 +65,8 @@ SOURCES += \
     src/q_deck_widget.cpp \
     src/q_decks_widget.cpp \
     src/q_audio_list_table.cpp \
-    src/q_click_label.cpp
+    src/q_click_label.cpp\
+    src/unicode_fonts.cpp
 
 RESOURCES += \
     resources.qrc
