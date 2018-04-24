@@ -32,7 +32,7 @@ private:
     QGridLayout *grid;
     UnicodeFonts *unicodeFonts;
     
-    int COLUMNS = 3;
+    int COLUMNS = 4;
     QList<QString> DISPLAY_COMBO_ITEMS;
     QString learn_mode = "image";
     
