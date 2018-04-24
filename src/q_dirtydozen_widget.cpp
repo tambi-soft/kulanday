@@ -56,6 +56,8 @@ void QDirtyDozenWidget::update()
     // we want to play the new item before shuffle
     // (after it is hard to know wich one is the new)
     playNextAudio();
+    QMap<QString,QVariant> new_item = this->dataset.last();
+    qDebug() << new_item;
     this->dataset = shuffleList(this->dataset);
     
     for (int i = 0; i < this->dataset.length(); ++i)
@@ -97,6 +99,11 @@ void QDirtyDozenWidget::update()
             label->setText(dataset.at(i)["translation"].toString());
         }
         
+        if (dataset.at(i) == new_item)
+        {
+            label->setStyleSheet("QLabel { background-color : #00a194; }");
+        }
+        
         QFont font = unicodeFonts->getFontAndSize(label->text());
         label->setFont(font);
         
@@ -126,6 +133,19 @@ void QDirtyDozenWidget::clear()
     }
 }
 
+void QDirtyDozenWidget::clearStyteSheet()
+{
+    for (int i = 0; i < layout()->count(); ++i)
+    {
+        QWidget *widget = layout()->itemAt(i)->widget();
+        QString class_name = widget->metaObject()->className();
+        if (class_name == "QClickLabel")
+        {
+            widget->setStyleSheet("");
+        }
+    }
+}
+
 void QDirtyDozenWidget::showAllButtonClicked()
 {
     if (this->show_all_button->text() == "show all")
@@ -151,6 +171,8 @@ void QDirtyDozenWidget::showAllButtonClicked()
 
 void QDirtyDozenWidget::labelClicked(int rowid)
 {
+    clearStyteSheet();
+    
     // only proceed if answer was correct
     if (rowid == this->current_audio_deck_id)
     {

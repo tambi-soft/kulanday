@@ -27,6 +27,7 @@ public:
     
     void initialize(QString deck_name);
     void clear();
+    void clearStyteSheet();
     
 private:
     QGridLayout *grid;
