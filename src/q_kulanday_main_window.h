@@ -9,6 +9,7 @@
 #include "q_dirtydozen_widget.h"
 #include "q_deck_item_widget.h"
 #include "db_adapter.h"
+#include "config.h"
 
 class QKulandayMainWindow : public QMainWindow
 {

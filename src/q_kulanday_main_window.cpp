@@ -8,7 +8,8 @@ QKulandayMainWindow::QKulandayMainWindow(QWidget *parent)
 {
     resize(800, 700);
     
-    this->deckpath = new QDir(QDir::homePath() + "/.tambi/decks/");
+    Config *config = new Config();
+    this->deckpath = config->getDecksPath();
     
     setCentralWidget(tab_widget);
     tab_widget->setTabsClosable(true);
