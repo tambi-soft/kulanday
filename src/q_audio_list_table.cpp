@@ -11,7 +11,7 @@ QAudioListTable::QAudioListTable(QDir *decks_path, QString deck_name, qlonglong 
     this->decks_path = decks_path;
     this->deck_name = deck_name;
     this->deck_rowid = deck_rowid;
-    this->database = new DbAdapter(deck_name);
+    this->database = new DbAdapter(this->decks_path, deck_name);
     
     QAudioEncoderSettings settings;
     settings.setCodec("audio/vorbis");

@@ -24,7 +24,7 @@ QDirtyDozenWidget::QDirtyDozenWidget(QDir *decks_path, QString deck_name, QWidge
 
 void QDirtyDozenWidget::initialize(QString deck_name)
 {
-    DbAdapter *db_adapter = new DbAdapter(deck_name);
+    DbAdapter *db_adapter = new DbAdapter(this->decks_path, deck_name);
     this->full_dataset = db_adapter->selectDeckDirtyDozenItems();
     
     //QLabel *select_display_combo_label = new QLabel("select display:");

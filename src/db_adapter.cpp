@@ -1,6 +1,6 @@
 #include "db_adapter.h"
 
-DbAdapter::DbAdapter(QString deck_name, QObject *parent) : QObject(parent)
+DbAdapter::DbAdapter(QDir *decks_path, QString deck_name, QObject *parent) : QObject(parent)
 {
     this->deck_name = deck_name;
     
@@ -11,7 +11,7 @@ DbAdapter::DbAdapter(QString deck_name, QObject *parent) : QObject(parent)
     
     this->db = QSqlDatabase::database(deck_name);
     
-    QDir path = QDir(QDir::homePath() + "/.tambi/decks/" + deck_name + "/database.sqlite");
+    QDir path = QDir(decks_path->absolutePath() + "/" + deck_name + "/database.sqlite");
     this->db.setDatabaseName(path.path());
     
     if (! db.open())

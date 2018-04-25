@@ -19,7 +19,7 @@ private:
     
     void initializeTables();
 public:
-    explicit DbAdapter(QString deck_name, QObject *parent = nullptr);
+    explicit DbAdapter(QDir *decks_path, QString deck_name, QObject *parent = nullptr);
     
     qlonglong newDeckRow();
     qlonglong newAudioRow(int deck_rowid);

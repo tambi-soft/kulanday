@@ -27,7 +27,7 @@ QDeckOverviewWidget::QDeckOverviewWidget(QDir *decks_path, QString deck_name, QW
 
 void QDeckOverviewWidget::initTableWidget(QString deck_name)
 {
-    DbAdapter *db_adapter = new DbAdapter(deck_name);
+    DbAdapter *db_adapter = new DbAdapter(this->decks_path, deck_name);
     this->database = db_adapter;
     
     QList<QMap<QString,QVariant>> data = db_adapter->selectDeckItems();

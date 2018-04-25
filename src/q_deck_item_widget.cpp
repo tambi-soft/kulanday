@@ -4,7 +4,7 @@ QDeckItemWidget::QDeckItemWidget(QDir *decks_path, QString deck_name, QWidget *p
 {
     if (this->database == nullptr)
     {
-        this->database = new DbAdapter(deck_name);
+        this->database = new DbAdapter(this->decks_path, deck_name);
     }
     // create an empty row and return the id
     int rowid = this->database->newDeckRow();
@@ -28,7 +28,7 @@ void QDeckItemWidget::populateGui(QString deck_name, int rowid)
     
     if (this->database == nullptr)
     {
-        this->database = new DbAdapter(deck_name);
+        this->database = new DbAdapter(this->decks_path, deck_name);
     }
     QList<QMap<QString,QVariant>> data = database->selectDeckItem(rowid);
     
