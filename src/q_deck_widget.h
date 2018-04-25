@@ -9,6 +9,7 @@
 #include <QHeaderView>
 #include <QMessageBox>
 #include <QIcon>
+#include <QFont>
 #include <QLabel>
 #include <QPixmap>
 #include <QSvgWidget>
@@ -21,6 +22,7 @@
 #include <QFile>
 
 #include "db_adapter.h"
+#include "unicode_fonts.h"
 
 class QDeckOverviewWidget : public QWidget
 {
@@ -38,6 +40,7 @@ private:
     QMediaPlayer *player;
     QPushButton *playing_button = nullptr;
     DbAdapter *database;
+    UnicodeFonts *unicodeFonts;
     
     int COLUMN_OFFSET = 9;
     

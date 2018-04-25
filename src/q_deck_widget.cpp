@@ -6,6 +6,7 @@ QDeckOverviewWidget::QDeckOverviewWidget(QDir *decks_path, QString deck_name, QW
     , layout (new QVBoxLayout)
     , table (new QTableWidget)
     , player (new QMediaPlayer)
+    , unicodeFonts (new UnicodeFonts)
 {
     setLayout(layout);
     this->decks_path = decks_path;
@@ -85,6 +86,18 @@ void QDeckOverviewWidget::initTableWidget(QString deck_name)
             table->setItem(i, 4, new QTableWidgetItem(word));
             table->setItem(i, 5, new QTableWidgetItem(phonetical));
             table->setItem(i, 6, new QTableWidgetItem(translation));
+            
+            // apply unicode fonst to cells
+            for (int j = 3; j <= 6; ++j)
+            {
+                QFont font = unicodeFonts->getFontAndSize(table->item(i, j)->text());
+                if (font.pointSize() > 20)
+                {
+                    font.setPointSize(20);
+                }
+                QTableWidgetItem *item = table->item(i, j);
+                item->setFont(font);
+            }
             
             table->setCellWidget(i, 7, svg_widget);
             table->setCellWidget(i, 8, image_widget);
