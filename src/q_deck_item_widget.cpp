@@ -4,23 +4,22 @@ QDeckItemWidget::QDeckItemWidget(QDir *decks_path, QString deck_name, QWidget *p
 {
     if (this->database == nullptr)
     {
-        this->database = new DbAdapter(this->decks_path, deck_name);
+        this->database = new DbAdapter(decks_path, deck_name);
     }
     // create an empty row and return the id
     int rowid = this->database->newDeckRow();
     
-    this->decks_path = decks_path;
-    populateGui(deck_name, rowid);
+    populateGui(decks_path, deck_name, rowid);
 }
 
 QDeckItemWidget::QDeckItemWidget(QDir *decks_path, QString deck_name, int rowid, QWidget *parent) : QWidget(parent)
 {
-    this->decks_path = decks_path;
-    populateGui(deck_name, rowid);
+    populateGui(decks_path, deck_name, rowid);
 }
 
-void QDeckItemWidget::populateGui(QString deck_name, int rowid)
+void QDeckItemWidget::populateGui(QDir *decks_path, QString deck_name, int rowid)
 {
+    this->decks_path = decks_path;
     this->rowid = rowid;
     this->deck_name = deck_name;
     

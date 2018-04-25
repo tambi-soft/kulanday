@@ -2,8 +2,6 @@
 
 DbAdapter::DbAdapter(QDir *decks_path, QString deck_name, QObject *parent) : QObject(parent)
 {
-    this->deck_name = deck_name;
-    
     if (! QSqlDatabase::contains(deck_name))
     {
         QSqlDatabase::addDatabase("QSQLITE", deck_name);
@@ -11,8 +9,8 @@ DbAdapter::DbAdapter(QDir *decks_path, QString deck_name, QObject *parent) : QOb
     
     this->db = QSqlDatabase::database(deck_name);
     
-    QDir path = QDir(decks_path->absolutePath() + "/" + deck_name + "/database.sqlite");
-    this->db.setDatabaseName(path.path());
+    QString path = decks_path->absolutePath() + "/" + deck_name + "/database.sqlite";
+    this->db.setDatabaseName(path);
     
     if (! db.open())
     {
