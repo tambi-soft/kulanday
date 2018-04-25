@@ -1,6 +1,6 @@
 #include "q_audio_list_table.h"
 
-QAudioListTable::QAudioListTable(QString deck_name, qlonglong deck_rowid, QTableWidget *parent)
+QAudioListTable::QAudioListTable(QDir *decks_path, QString deck_name, qlonglong deck_rowid, QTableWidget *parent)
     : QTableWidget(parent)
     , player (new QMediaPlayer)
     //, recorder (new QAudioRecorder)
@@ -8,6 +8,7 @@ QAudioListTable::QAudioListTable(QString deck_name, qlonglong deck_rowid, QTable
     connect(this->player, &QMediaPlayer::stateChanged, this, &QAudioListTable::mediaPlayerStateChanged);
     connect(this, &QAudioListTable::itemChanged, this, &QAudioListTable::onItemChanged);
     
+    this->decks_path = decks_path;
     this->deck_name = deck_name;
     this->deck_rowid = deck_rowid;
     this->database = new DbAdapter(deck_name);
@@ -111,7 +112,7 @@ void QAudioListTable::audioButtonClicked(QPushButton *button, QString audio_file
         
         this->playing_button = button;
         
-        QString audio_path = QDir::homePath() + "/.tambi/decks/" + this->deck_name + "/" + audio_filename;
+        QString audio_path = this->decks_path->absolutePath() + "/" + this->deck_name + "/" + audio_filename;
         QUrl audio_url = QUrl::fromLocalFile(audio_path);
         this->player->setMedia(QMediaContent(audio_url));
         this->player->play();
@@ -144,7 +145,7 @@ void QAudioListTable::recordButtonClicked(int row, QPushButton *button, QString 
         QString filename_stmp = QString::number((int) filename_stmp_int);
         QString filename_rnd = randomString(5);
         QString filename = filename_stmp + "_" + filename_rnd;
-        QUrl record_url = QUrl::fromLocalFile(QDir::homePath() + "/.tambi/decks/" + this->deck_name + "/" + filename + ".ogg");
+        QUrl record_url = QUrl::fromLocalFile(this->decks_path->absolutePath() + "/" + this->deck_name + "/" + filename + ".ogg");
         
         //this->recorder->setOutputLocation(record_url);
         //this->recorder->record();
@@ -182,7 +183,7 @@ void QAudioListTable::deleteButtonClicked(int row)
         QString filename = this->item(row, FILE_NAME_COLUMN)->text();
         if (filename != "")
         {
-            QString filepath = QDir::homePath() + "/.tambi/decks/" + this->deck_name + "/" + filename;
+            QString filepath = this->decks_path->absolutePath() + "/" + this->deck_name + "/" + filename;
             QFile file(filepath);
             file.remove();
         }
@@ -208,7 +209,7 @@ void QAudioListTable::importButtonClicked(int row)
         bool success = false;
         while (! success)
         {
-            success = filepath.copy(QDir::homePath() + "/.tambi/decks/" + this->deck_name + "/" + filename);
+            success = filepath.copy(this->decks_path->absolutePath() + "/" + this->deck_name + "/" + filename);
             if (! success)
             {
                 filename = filename.replace(".", "_.");
@@ -230,7 +231,7 @@ void QAudioListTable::editButtonClicked(int row)
     qDebug() << "edit:" << row;
     
     QString filename = item(row, FILE_NAME_COLUMN)->text();
-    QString filepath = QDir::homePath() + "/.tambi/decks/" + this->deck_name + "/" + filename;
+    QString filepath = this->decks_path->absolutePath() + "/" + this->deck_name + "/" + filename;
     
     QProcess *pro = new QProcess();
     pro->startDetached("audacity " + filepath);

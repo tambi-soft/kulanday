@@ -22,12 +22,13 @@ class QDeckItemWidget : public QWidget
 {
     Q_OBJECT
 public:
-    explicit QDeckItemWidget(QString deck_name, QWidget *parent = nullptr);
-    explicit QDeckItemWidget(QString deck_name, int rowid, QWidget *parent = nullptr);
+    explicit QDeckItemWidget(QDir *decks_path, QString deck_name, QWidget *parent = nullptr);
+    explicit QDeckItemWidget(QDir *decks_path, QString deck_name, int rowid, QWidget *parent = nullptr);
     
     int rowid;
     
 private:
+    QDir *decks_path;
     QString deck_name;
     QString image_path;
     

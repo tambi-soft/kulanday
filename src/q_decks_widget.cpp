@@ -1,7 +1,7 @@
 
 #include <src/q_decks_widget.h>
 
-QDecksOverviewWidget :: QDecksOverviewWidget(QWidget *parent)
+QDecksOverviewWidget :: QDecksOverviewWidget(QDir *decks_path, QWidget *parent)
     : layout (new QVBoxLayout)
     , combo (new QComboBox)
     , table (new QTableWidget)
@@ -9,6 +9,8 @@ QDecksOverviewWidget :: QDecksOverviewWidget(QWidget *parent)
 {
     resize(600, 400);
     setLayout(layout);
+    
+    this->decks_path = decks_path;
     
     connect(combo, &QComboBox::currentTextChanged, this, &QDecksOverviewWidget::onComboTextChanged);
     
@@ -20,7 +22,7 @@ QDecksOverviewWidget :: QDecksOverviewWidget(QWidget *parent)
     
     connect(new_deck_button, &QPushButton::clicked, this, &QDecksOverviewWidget::createNewDeckClicked);
     
-    decks_path = new QDir(QDir::homePath() + "/.tambi/decks");
+    //decks_path = new QDir(QDir::homePath() + "/.tambi/decks");
     
     table->horizontalHeader()->hide();
     //table->verticalHeader()->hide();

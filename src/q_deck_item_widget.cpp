@@ -1,6 +1,6 @@
 #include "q_deck_item_widget.h"
 
-QDeckItemWidget::QDeckItemWidget(QString deck_name, QWidget *parent) : QWidget(parent)
+QDeckItemWidget::QDeckItemWidget(QDir *decks_path, QString deck_name, QWidget *parent) : QWidget(parent)
 {
     if (this->database == nullptr)
     {
@@ -9,11 +9,13 @@ QDeckItemWidget::QDeckItemWidget(QString deck_name, QWidget *parent) : QWidget(p
     // create an empty row and return the id
     int rowid = this->database->newDeckRow();
     
+    this->decks_path = decks_path;
     populateGui(deck_name, rowid);
 }
 
-QDeckItemWidget::QDeckItemWidget(QString deck_name, int rowid, QWidget *parent) : QWidget(parent)
+QDeckItemWidget::QDeckItemWidget(QDir *decks_path, QString deck_name, int rowid, QWidget *parent) : QWidget(parent)
 {
+    this->decks_path = decks_path;
     populateGui(deck_name, rowid);
 }
 
@@ -39,7 +41,7 @@ void QDeckItemWidget::populateGui(QString deck_name, int rowid)
     
     if (! data[0]["image"].isNull())
     {
-        this->image_path = QDir::homePath() + "/.tambi/decks/" + deck_name + "/" + data[0]["image"].toString();
+        this->image_path = this->decks_path->absolutePath() + "/" + deck_name + "/" + data[0]["image"].toString();
         QPixmap pixmap;
         pixmap.load(this->image_path);
         QPixmap scaled = pixmap.scaled(IMAGE_SIZE, Qt::KeepAspectRatio);
@@ -53,7 +55,7 @@ void QDeckItemWidget::populateGui(QString deck_name, int rowid)
     {
         QSvgWidget *svg_widget = new QSvgWidget();
         
-        svg_widget->load(QDir::homePath() + "/.tambi/decks/" + deck_name + "/" + data[0]["svg_filename"].toString());
+        svg_widget->load(this->decks_path->absolutePath() + "/" + deck_name + "/" + data[0]["svg_filename"].toString());
         svg_widget->setFixedSize(IMAGE_SIZE);
         
         QPixmap pixmap(svg_widget->size());
@@ -73,7 +75,7 @@ void QDeckItemWidget::initializeGui(QString deck_name, int rowid)
     this->word_line = new QLineEdit();
     this->phonetical_line = new QLineEdit();
     this->translation_line = new QLineEdit();
-    this->audio_list_widget = new QAudioListTable(deck_name, rowid);
+    this->audio_list_widget = new QAudioListTable(this->decks_path, deck_name, rowid);
     
     connect(this->audio_list_widget, &QAudioListTable::changed, this, &QDeckItemWidget::onAudioListChanged);
     
@@ -146,7 +148,7 @@ void QDeckItemWidget::importImageClicked()
         bool success = false;
         while (! success)
         {
-            success = filepath.copy(QDir::homePath() + "/.tambi/decks/" + this->deck_name + "/" + filename);
+            success = filepath.copy(this->decks_path->absolutePath() + "/" + this->deck_name + "/" + filename);
             if (! success)
             {
                 filename = filename.replace(".", "_.");

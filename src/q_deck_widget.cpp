@@ -1,13 +1,14 @@
 
 #include "q_deck_widget.h"
 
-QDeckOverviewWidget::QDeckOverviewWidget(QString deck_name, QWidget *parent)
+QDeckOverviewWidget::QDeckOverviewWidget(QDir *decks_path, QString deck_name, QWidget *parent)
     : QWidget(parent)
     , layout (new QVBoxLayout)
     , table (new QTableWidget)
     , player (new QMediaPlayer)
 {
     setLayout(layout);
+    this->decks_path = decks_path;
     this->deck_name = deck_name;
     
     //setFocusPolicy(Qt::StrongFocus);
@@ -63,7 +64,7 @@ void QDeckOverviewWidget::initTableWidget(QString deck_name)
             QLabel *image_widget = new QLabel(this);
             if (image_filename != "")
             {
-                QPixmap pixmap(QDir::homePath() + "/.tambi/decks/" + deck_name + "/" + image_filename);
+                QPixmap pixmap(this->decks_path->absolutePath() + "/" + deck_name + "/" + image_filename);
                 pixmap = pixmap.scaled(QSize(60, 30), Qt::KeepAspectRatio);
                 image_widget->setPixmap(pixmap);
             }
@@ -72,7 +73,7 @@ void QDeckOverviewWidget::initTableWidget(QString deck_name)
             svg_widget->setFixedSize(0, 0);
             if (svg_filename != "")
             {
-                svg_widget->load(QDir::homePath() + "/.tambi/decks/" + deck_name + "/" + svg_filename);
+                svg_widget->load(this->decks_path->absolutePath() + "/" + deck_name + "/" + svg_filename);
                 svg_widget->setFixedSize(60, 30);
             }
             
@@ -131,7 +132,7 @@ void QDeckOverviewWidget::audioButtonClicked(QPushButton *button, QString audio_
         
         this->playing_button = button;
         
-        QString audio_path = QDir::homePath() + "/.tambi/decks/" + this->deck_name + "/" + audio_filename;
+        QString audio_path = this->decks_path->absolutePath() + "/" + this->deck_name + "/" + audio_filename;
         QUrl audio_url = QUrl::fromLocalFile(audio_path);
         player->setMedia(QMediaContent(audio_url));
         player->play();
@@ -175,7 +176,7 @@ void QDeckOverviewWidget::deleteRowButtonClicked(int rowid)
             QString filename = data_to_delete.at(i)["filename"].toString();
             if (filename != "")
             {
-                QString filepath = QDir::homePath() + "/.tambi/decks/" + this->deck_name + "/" + filename;
+                QString filepath = this->decks_path->absolutePath() + "/" + this->deck_name + "/" + filename;
                 QFile file(filepath);
                 file.remove();
             }

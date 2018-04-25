@@ -1,6 +1,7 @@
 
 #include <QMainWindow>
 #include <QTabWidget>
+#include <QDir>
 
 #include "q_kulanday_menubar.h"
 #include "q_decks_widget.h"
@@ -19,6 +20,8 @@ public:
 private:
     QTabWidget *tab_widget;
     QKulandayMenuBar *menu_bar;
+    
+    QDir *deckpath;
     
     int SELECT_DECK_INDEX = 0;
     int DECK_OVERVIEW_INDEX = 1;

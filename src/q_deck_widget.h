@@ -26,13 +26,14 @@ class QDeckOverviewWidget : public QWidget
 {
     Q_OBJECT
 public:
-    explicit QDeckOverviewWidget(QString deck_name, QWidget *parent = nullptr);
+    explicit QDeckOverviewWidget(QDir *decks_path, QString deck_name, QWidget *parent = nullptr);
     
     void refresh();
     
 private:
     QLayout *layout;
     QTableWidget *table;
+    QDir *decks_path;
     QString deck_name;
     QMediaPlayer *player;
     QPushButton *playing_button = nullptr;

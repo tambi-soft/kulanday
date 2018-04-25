@@ -6,6 +6,7 @@
 #include <QHeaderView> // for hiding headers
 #include <QPushButton>
 #include <QIcon>
+#include <QDir>
 
 #include <QDateTime>
 
@@ -29,12 +30,13 @@ class QAudioListTable : public QTableWidget
 {
     Q_OBJECT
 public:
-    explicit QAudioListTable(QString deck_name, qlonglong deck_rowid,  QTableWidget *parent = nullptr);
+    explicit QAudioListTable(QDir *decks_path, QString deck_name, qlonglong deck_rowid,  QTableWidget *parent = nullptr);
     
     void newAudioLine();
     void stopAudio();
     
 private:
+    QDir *decks_path;
     QString deck_name;
     qlonglong deck_rowid;
     QMap<int,int> audio_rowid; // table row -> db row

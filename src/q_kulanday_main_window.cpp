@@ -8,6 +8,8 @@ QKulandayMainWindow::QKulandayMainWindow(QWidget *parent)
 {
     resize(800, 700);
     
+    this->deckpath = new QDir(QDir::homePath() + "/.tambi/decks/");
+    
     setCentralWidget(tab_widget);
     tab_widget->setTabsClosable(true);
     tab_widget->setMovable(true);
@@ -19,7 +21,7 @@ QKulandayMainWindow::QKulandayMainWindow(QWidget *parent)
     
     QTabBar *tab_bar = tab_widget->tabBar();
     connect(tab_bar, &QTabBar::tabMoved, this, &QKulandayMainWindow::onTabMoved);
- 
+    
     showDecksOverviewTab();
     
     deactivateDecksOverviewCloseButton();
@@ -27,7 +29,7 @@ QKulandayMainWindow::QKulandayMainWindow(QWidget *parent)
 
 void QKulandayMainWindow::showDecksOverviewTab()
 {
-    QDecksOverviewWidget *decks = new QDecksOverviewWidget();
+    QDecksOverviewWidget *decks = new QDecksOverviewWidget(this->deckpath);
     tab_widget->addTab(decks, "decks");
     connect(decks, &QDecksOverviewWidget::deckDirtyDozenClicked, this, &QKulandayMainWindow::showDirtyDozenWidget);
     connect(decks, &QDecksOverviewWidget::deckViewClicked, this, &QKulandayMainWindow::showDeckWidget);
@@ -38,7 +40,7 @@ void QKulandayMainWindow::showDecksOverviewTab()
 
 void QKulandayMainWindow::showDirtyDozenWidget(QString deck_name)
 {
-    QDirtyDozenWidget *dd = new QDirtyDozenWidget(deck_name);
+    QDirtyDozenWidget *dd = new QDirtyDozenWidget(this->deckpath, deck_name);
     tab_widget->addTab(dd, "dirty dozen: " + deck_name);
     
     activateNewTab();
@@ -53,7 +55,7 @@ void QKulandayMainWindow::showDeckWidget(QString deck_name)
     }
     else
     {
-        QDeckOverviewWidget *deck = new QDeckOverviewWidget(deck_name);
+        QDeckOverviewWidget *deck = new QDeckOverviewWidget(this->deckpath, deck_name);
         connect(deck, &QDeckOverviewWidget::newDeckItemRequested, this, &QKulandayMainWindow::createNewDeckItem);
         connect(deck, &QDeckOverviewWidget::showDeckItemRequested, this, &QKulandayMainWindow::showDeckItem);
         
@@ -74,7 +76,7 @@ void QKulandayMainWindow::createNewDeck(QUrl deck_url)
 
 void QKulandayMainWindow::createNewDeckItem(QString deck_name)
 {
-    QDeckItemWidget *deck_item = new QDeckItemWidget(deck_name);
+    QDeckItemWidget *deck_item = new QDeckItemWidget(this->deckpath, deck_name);
     connect(deck_item, &QDeckItemWidget::contentsUpdated, this, &QKulandayMainWindow::onDeckItemContentsUpdated);
     tab_widget->addTab(deck_item, "item: " + deck_name);
     
@@ -93,7 +95,7 @@ void QKulandayMainWindow::showDeckItem(QString deck_name, int rowid)
     }
     else
     {
-        QDeckItemWidget *deck_item = new QDeckItemWidget(deck_name, rowid);
+        QDeckItemWidget *deck_item = new QDeckItemWidget(this->deckpath, deck_name, rowid);
         connect(deck_item, &QDeckItemWidget::contentsUpdated, this, &QKulandayMainWindow::onDeckItemContentsUpdated);
         tab_widget->addTab(deck_item, "item: " + deck_name);
         

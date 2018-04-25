@@ -1,12 +1,13 @@
 #include "q_dirtydozen_widget.h"
 
-QDirtyDozenWidget::QDirtyDozenWidget(QString deck_name, QWidget *parent)
+QDirtyDozenWidget::QDirtyDozenWidget(QDir *decks_path, QString deck_name, QWidget *parent)
     : QWidget(parent)
     , grid (new QGridLayout)
     , audioPlayer (new QMediaPlayer)
     , unicodeFonts (new UnicodeFonts)
 {
     DISPLAY_COMBO_ITEMS << "image" << "name" << "word" << "translation";
+    this->decks_path = decks_path;
     
     setLayout(grid);
     
@@ -70,7 +71,7 @@ void QDirtyDozenWidget::update()
         if (this->select_display_combo->currentText() == "image")
         {
             QPixmap *pixmap = new QPixmap();
-            QString image_path = QDir::homePath() + "/.tambi/decks/" + deck_name + "/" + dataset.at(i)["image"].toString();
+            QString image_path = this->decks_path->absolutePath() + "/" + deck_name + "/" + dataset.at(i)["image"].toString();
             QFile image_file(image_path);
             if (image_file.exists() && dataset.at(i)["image"].toString() != "")
             {
@@ -78,7 +79,7 @@ void QDirtyDozenWidget::update()
             }
             else
             {
-                QString svg_path = QDir::homePath() + "/.tambi/decks/" + deck_name + "/" + dataset.at(i)["svg_filename"].toString();
+                QString svg_path = this->decks_path->absolutePath() + "/" + deck_name + "/" + dataset.at(i)["svg_filename"].toString();
                 QFile svg_file(svg_path);
                 if (svg_file.exists())
                 {
@@ -250,7 +251,7 @@ void QDirtyDozenWidget::playAudio(int selector)
     QString audio_filename = this->dataset.at(selector)["filename"].toString();
     this->current_audio_deck_id = this->dataset.at(selector)["rowid"].toInt();
     
-    QString audio_path = QDir::homePath() + "/.tambi/decks/" + this->deck_name + "/" + audio_filename;
+    QString audio_path = this->decks_path->absolutePath() + "/" + this->deck_name + "/" + audio_filename;
     QUrl audio_url = QUrl::fromLocalFile(audio_path);
     this->audioPlayer->setMedia(QMediaContent(audio_url));
     this->audioPlayer->play();

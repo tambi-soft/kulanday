@@ -11,6 +11,7 @@
 #include <QMediaPlayer>
 #include <QPixmap>
 #include <QSize>
+#include <QDir>
 #include <QFile>
 #include <QUrl>
 #include <QFont>
@@ -23,7 +24,7 @@ class QDirtyDozenWidget : public QWidget
 {
     Q_OBJECT
 public:
-    explicit QDirtyDozenWidget(QString deck_name, QWidget *parent = nullptr);
+    explicit QDirtyDozenWidget(QDir *decks_path, QString deck_name, QWidget *parent = nullptr);
     
     void initialize(QString deck_name);
     void clear();
@@ -32,6 +33,8 @@ public:
 private:
     QGridLayout *grid;
     UnicodeFonts *unicodeFonts;
+    
+    QDir *decks_path;
     
     int COLUMNS = 4;
     QList<QString> DISPLAY_COMBO_ITEMS;

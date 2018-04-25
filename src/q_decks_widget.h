@@ -16,7 +16,7 @@ class QDecksOverviewWidget : public QWidget
     Q_OBJECT
 
 public:
-    QDecksOverviewWidget(QWidget *parent = 0);
+    QDecksOverviewWidget(QDir *decks_path, QWidget *parent = 0);
 
 private:
     QVBoxLayout *layout;
