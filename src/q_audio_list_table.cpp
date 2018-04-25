@@ -101,15 +101,6 @@ void QAudioListTable::audioButtonClicked(QPushButton *button, QString audio_file
     }
     else
     {
-        /*
-        if (this->playing_button != nullptr)
-        {
-            qDebug() << "button1:" << this->playing_button;
-            qDebug() << "button2:" << button;
-            //this->playing_button->setIcon(QIcon::fromTheme("media-playback-start"));
-        }
-        */
-        
         this->playing_button = button;
         
         QString audio_path = this->decks_path->absolutePath() + "/" + this->deck_name + "/" + audio_filename;
@@ -125,7 +116,6 @@ void QAudioListTable::recordButtonClicked(int row, QPushButton *button, QString 
 {
     if (this->recording_row == row)
     {
-        qDebug() << "stop recording";
         this->recording_row = -1;
         
         this->arec->recStop();
@@ -135,7 +125,6 @@ void QAudioListTable::recordButtonClicked(int row, QPushButton *button, QString 
     }
     else
     {
-        qDebug() << "recording";
         this->recording_row = row;
         
         button->setIcon(QIcon::fromTheme("media-playback-stop"));
@@ -155,7 +144,6 @@ void QAudioListTable::recordButtonClicked(int row, QPushButton *button, QString 
         
         this->arec = new AudioRecorder(record_url.path());
         this->arec->recStart();
-        
     }   
 }
 
@@ -216,8 +204,6 @@ void QAudioListTable::importButtonClicked(int row)
             }
         }
         
-        qDebug() << "filename:" << filename;
-        
         this->database->insertAudioFilename(this->deck_rowid, this->audio_rowid[row], filename, itemAt(row, DESCRIPTION_COLUMN)->text());
         
         clear();
@@ -228,8 +214,6 @@ void QAudioListTable::importButtonClicked(int row)
 
 void QAudioListTable::editButtonClicked(int row)
 {
-    qDebug() << "edit:" << row;
-    
     QString filename = item(row, FILE_NAME_COLUMN)->text();
     QString filepath = this->decks_path->absolutePath() + "/" + this->deck_name + "/" + filename;
     
@@ -252,8 +236,6 @@ void QAudioListTable::onItemChanged()
 {
     if (! this->ignore_item_changes)
     {
-        qDebug() << "item changed";
-        
         for (int i = 0; i < this->rowCount(); ++i)
         {
             QString description = item(i, DESCRIPTION_COLUMN)->text();
