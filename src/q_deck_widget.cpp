@@ -93,7 +93,7 @@ void QDeckOverviewWidget::initTableWidget(QString deck_name)
                 QFont font = unicodeFonts->getFontAndSize(table->item(i, j)->text());
                 if (font.pointSize() > 20)
                 {
-                    font.setPointSize(20);
+                    font.setPointSize(25);
                 }
                 QTableWidgetItem *item = table->item(i, j);
                 item->setFont(font);
