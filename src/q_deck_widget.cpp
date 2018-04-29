@@ -93,7 +93,7 @@ void QDeckOverviewWidget::initTableWidget(QString deck_name)
                 QFont font = unicodeFonts->getFontAndSize(table->item(i, j)->text());
                 if (font.pointSize() > 20)
                 {
-                    font.setPointSize(25);
+                    font.setPointSize(20);
                 }
                 QTableWidgetItem *item = table->item(i, j);
                 item->setFont(font);
@@ -140,7 +140,7 @@ void QDeckOverviewWidget::audioButtonClicked(QPushButton *button, QString audio_
     {
         if (this->playing_button != nullptr)
         {
-            this->playing_button->setIcon(QIcon::fromTheme("media-playback-start"));
+            //this->playing_button->setIcon(QIcon::fromTheme("media-playback-start"));
         }
         
         this->playing_button = button;
