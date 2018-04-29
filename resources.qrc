@@ -2,6 +2,7 @@
 <RCC version="1.0">
 <qresource>
     <file alias="audacity_icon">./assets/icons/audacity.jpg</file>
+    <file alias="default_config">./assets/default_config.ini</file>    
     
     <!-- fonts -->
     <file alias="ttf_sheharazade">./assets/fonts/Scheherazade-Regular.ttf</file>

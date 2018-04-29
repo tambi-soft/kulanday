@@ -3,6 +3,11 @@
 
 #include <QObject>
 #include <QDir>
+#include <QFile>
+#include <QSysInfo>
+#include <QSettings>
+
+#include <QDebug>
 
 class Config : public QObject
 {
@@ -12,6 +17,8 @@ public:
     
     QDir *getDecksPath();
     
+private:
+    QDir *deckpath;
 signals:
     
 public slots:
