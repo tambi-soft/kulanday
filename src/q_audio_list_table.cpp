@@ -200,7 +200,14 @@ void QAudioListTable::importButtonClicked(int row)
             success = filepath.copy(this->decks_path->absolutePath() + "/" + this->deck_name + "/" + filename);
             if (! success)
             {
-                filename = filename.replace(".", "_.");
+                if (filename.contains("."))
+                {
+                    filename = filename.replace(".", "_.");
+                }
+                else
+                {
+                    filename = filename.append("_");
+                }
             }
         }
         
