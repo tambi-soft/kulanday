@@ -121,7 +121,9 @@ void QKulandayMainWindow::activateNewTab()
 
 void QKulandayMainWindow::closeTab(int tab_id)
 {
+    QWidget *tab_to_delete = tab_widget->widget(tab_id);
     tab_widget->removeTab(tab_id);
+    tab_to_delete->deleteLater();
     
     for (auto k : this->deck_item_widgets.keys())
     {
