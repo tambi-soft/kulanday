@@ -50,6 +50,8 @@ void QKulandayMainWindow::showDirtyDozenWidget(QString deck_name)
 
 void QKulandayMainWindow::showLearnWidget(QString deck_name)
 {
+    qDebug() << deck_name;
+    qDebug() << this->deckpath->absolutePath();
     QLearnWidget *learn = new QLearnWidget(this->deckpath, deck_name);
     tab_widget->addTab(learn, "learn: " + deck_name);
     
