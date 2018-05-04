@@ -188,7 +188,7 @@ void QDirtyDozenWidget::labelClicked(int rowid)
                 }
                 else if (this->delay_counter == 2)
                 {
-                    this->delay = 5;
+                    this->delay = 8;
                 }
                 else
                 {
