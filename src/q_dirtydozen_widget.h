@@ -1,8 +1,6 @@
 #ifndef Q_DIRTYDOZEN_WIDGET_H
 #define Q_DIRTYDOZEN_WIDGET_H
 
-#include "unicode_fonts.h"
-
 #include <QWidget>
 #include <QGridLayout>
 #include <QComboBox>
@@ -18,7 +16,7 @@
 #include <QIcon>
 
 #include "db_adapter.h"
-#include "q_click_label.h"
+#include "unicode_fonts.h"
 
 class QDirtyDozenWidget : public QWidget
 {
@@ -39,6 +37,7 @@ private:
     int COLUMNS = 4;
     QList<QString> DISPLAY_COMBO_ITEMS;
     QString learn_mode = "image";
+    QList<QPushButton*> button_list;
     
     QString deck_name;
     QList<QMap<QString,QVariant>> dataset;
