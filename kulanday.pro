@@ -54,7 +54,7 @@ HEADERS += \
     src/q_click_label.h\
     src/unicode_fonts.h \
     src/config.h \
-    src/q_learn_widget.h
+    src/q_inv_dirty_dozen_widget.h
 
 SOURCES += \
     src/kulanday.cpp\
@@ -70,7 +70,7 @@ SOURCES += \
     src/q_click_label.cpp\
     src/unicode_fonts.cpp \
     src/config.cpp \
-    src/q_learn_widget.cpp
+    src/q_inv_dirty_dozen_widget.cpp
 
 RESOURCES += \
     resources.qrc

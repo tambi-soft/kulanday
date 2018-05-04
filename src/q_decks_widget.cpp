@@ -82,17 +82,17 @@ void QDecksOverviewWidget::populateDecksOverview()
             this->table->setItem(i, 0, item);
             item->setFlags(Qt::ItemIsEnabled);
             
-            QPushButton *button_learn_deck = new QPushButton("learn");
             QPushButton *button_dirty_dozen = new QPushButton("dirty dozen");
+            QPushButton *button_inv_dirty_dozen = new QPushButton("inv. dirty dozen");
             QPushButton *button_view_deck = new QPushButton("view deck");
             
             this->table->setCellWidget(i, 1, button_dirty_dozen);
-            this->table->setCellWidget(i, 2, button_learn_deck);
+            this->table->setCellWidget(i, 2, button_inv_dirty_dozen);
             this->table->setCellWidget(i, 3, button_view_deck);
             
             connect(button_dirty_dozen, &QPushButton::clicked, this, [this, deck_name]{  tableButtonDirtyDozenClicked(deck_name); });
             
-            connect(button_learn_deck, &QPushButton::clicked, this, [this, deck_name]{ tableButtonLearnClicked(deck_name); });
+            connect(button_inv_dirty_dozen, &QPushButton::clicked, this, [this, deck_name]{ tableButtonLearnClicked(deck_name); });
             
             connect(button_view_deck, &QPushButton::clicked, this, [this, deck_name]{ tableButtonViewDeckClicked(deck_name); });
         }

@@ -18,11 +18,11 @@
 #include "db_adapter.h"
 #include "unicode_fonts.h"
 
-class QLearnWidget : public QWidget
+class QInvDirtyDozenWidget : public QWidget
 {
     Q_OBJECT
 public:
-    explicit QLearnWidget(QDir *decks_path, QString deck_name, QWidget *parent = nullptr);
+    explicit QInvDirtyDozenWidget(QDir *decks_path, QString deck_name, QWidget *parent = nullptr);
     void initialize(QString deck_name);
         void clear();
         

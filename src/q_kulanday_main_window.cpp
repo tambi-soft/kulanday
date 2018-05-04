@@ -43,17 +43,15 @@ void QKulandayMainWindow::showDecksOverviewTab()
 void QKulandayMainWindow::showDirtyDozenWidget(QString deck_name)
 {
     QDirtyDozenWidget *dd = new QDirtyDozenWidget(this->deckpath, deck_name);
-    tab_widget->addTab(dd, "dirty dozen: " + deck_name);
+    tab_widget->addTab(dd, "[dirty dozen]: " + deck_name);
     
     activateNewTab();
 }
 
 void QKulandayMainWindow::showLearnWidget(QString deck_name)
 {
-    qDebug() << deck_name;
-    qDebug() << this->deckpath->absolutePath();
-    QLearnWidget *learn = new QLearnWidget(this->deckpath, deck_name);
-    tab_widget->addTab(learn, "learn: " + deck_name);
+    QInvDirtyDozenWidget *learn = new QInvDirtyDozenWidget(this->deckpath, deck_name);
+    tab_widget->addTab(learn, "[inv dd]: " + deck_name);
     
     activateNewTab();
 }

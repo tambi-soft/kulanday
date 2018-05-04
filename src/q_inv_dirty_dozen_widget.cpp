@@ -1,6 +1,6 @@
-#include "q_learn_widget.h"
+#include "q_inv_dirty_dozen_widget.h"
 
-QLearnWidget::QLearnWidget(QDir *decks_path, QString deck_name, QWidget *parent)
+QInvDirtyDozenWidget::QInvDirtyDozenWidget(QDir *decks_path, QString deck_name, QWidget *parent)
     : QWidget(parent)
     , grid (new QGridLayout)
     , audioPlayer (new QMediaPlayer)
@@ -17,7 +17,7 @@ QLearnWidget::QLearnWidget(QDir *decks_path, QString deck_name, QWidget *parent)
     update();
 }
 
-void QLearnWidget::initialize(QString deck_name)
+void QInvDirtyDozenWidget::initialize(QString deck_name)
 {
     DbAdapter *db_adapter = new DbAdapter(this->decks_path, deck_name);
     this->dataset = db_adapter->selectDeckDirtyDozenItems();
@@ -26,17 +26,17 @@ void QLearnWidget::initialize(QString deck_name)
     select_display_combo->addItems(DISPLAY_COMBO_ITEMS);
     select_display_combo->setCurrentText(this->learn_mode);
     
-    connect(select_display_combo, &QComboBox::currentTextChanged, this, &QLearnWidget::selectDisplayCurrentTextChanged);
+    connect(select_display_combo, &QComboBox::currentTextChanged, this, &QInvDirtyDozenWidget::selectDisplayCurrentTextChanged);
     
     this->grid->addWidget(select_display_combo, 0, 0);
     
     QPushButton *shuffle_button = new QPushButton("shuffle");
     shuffle_button->setIcon(QIcon::fromTheme("media-playlist-shuffle"));
-    connect(shuffle_button, &QPushButton::clicked, this, &QLearnWidget::onShuffleButtonClicked);
+    connect(shuffle_button, &QPushButton::clicked, this, &QInvDirtyDozenWidget::onShuffleButtonClicked);
     this->grid->addWidget(shuffle_button, int(12 / this->COLUMNS +2), this->COLUMNS-1);
 }
 
-void QLearnWidget::update()
+void QInvDirtyDozenWidget::update()
 {
     clear();
     
@@ -93,7 +93,7 @@ void QLearnWidget::update()
     }
 }
 
-void QLearnWidget::clear()
+void QInvDirtyDozenWidget::clear()
 {
     /*
     for (int i = 0; i < layout()->count(); ++i)
@@ -115,12 +115,12 @@ void QLearnWidget::clear()
     this->button_list.clear();
 }
 
-void QLearnWidget::displayButtonClicked(int rowid)
+void QInvDirtyDozenWidget::displayButtonClicked(int rowid)
 {
     playAudio(rowid);
 }
 
-void QLearnWidget::playAudio(int selector)
+void QInvDirtyDozenWidget::playAudio(int selector)
 {
     QString audio_filename = this->dataset.at(selector)["filename"].toString();
     
@@ -130,21 +130,21 @@ void QLearnWidget::playAudio(int selector)
     this->audioPlayer->play();
 }
 
-void QLearnWidget::selectDisplayCurrentTextChanged(QString text)
+void QInvDirtyDozenWidget::selectDisplayCurrentTextChanged(QString text)
 {
     clear();
     this->learn_mode = text;
     update();
 }
 
-void QLearnWidget::onShuffleButtonClicked()
+void QInvDirtyDozenWidget::onShuffleButtonClicked()
 {
     clear();
     this->dataset = shuffleList(this->dataset);
     update();
 }
 
-QList<QMap<QString,QVariant>> QLearnWidget::shuffleList(QList<QMap<QString,QVariant>> list)
+QList<QMap<QString,QVariant>> QInvDirtyDozenWidget::shuffleList(QList<QMap<QString,QVariant>> list)
 {
     qDebug() << "shuffle";
     for (int i = 0; i < 100; ++i)
@@ -159,7 +159,7 @@ QList<QMap<QString,QVariant>> QLearnWidget::shuffleList(QList<QMap<QString,QVari
     return list;
 }
 
-void QLearnWidget::hideEvent(QHideEvent *event)
+void QInvDirtyDozenWidget::hideEvent(QHideEvent *event)
 {
     audioPlayer->stop();
 }

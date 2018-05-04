@@ -6,7 +6,7 @@
 #include "q_kulanday_menubar.h"
 #include "q_decks_widget.h"
 #include "q_deck_widget.h"
-#include "q_learn_widget.h"
+#include "q_inv_dirty_dozen_widget.h"
 #include "q_dirtydozen_widget.h"
 #include "q_deck_item_widget.h"
 #include "db_adapter.h"
