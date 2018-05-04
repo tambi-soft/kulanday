@@ -26,7 +26,7 @@ public:
     
     void initialize(QString deck_name);
     void clear();
-    void clearStyteSheet();
+    void clearStyleSheet();
     
 private:
     QGridLayout *grid;
@@ -63,7 +63,7 @@ public slots:
     
 private slots:
     void showAllButtonClicked();
-    void labelClicked(int rowid);
+    void displayButtonClicked(int rowid, QPushButton *button);
     void playNextAudio();
     void playRandomAudio();
     void playAudio(int selector);

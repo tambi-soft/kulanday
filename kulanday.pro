@@ -53,7 +53,8 @@ HEADERS += \
     src/q_audio_list_table.h \
     src/q_click_label.h\
     src/unicode_fonts.h \
-    src/config.h
+    src/config.h \
+    src/q_learn_widget.h
 
 SOURCES += \
     src/kulanday.cpp\
@@ -68,7 +69,8 @@ SOURCES += \
     src/q_audio_list_table.cpp \
     src/q_click_label.cpp\
     src/unicode_fonts.cpp \
-    src/config.cpp
+    src/config.cpp \
+    src/q_learn_widget.cpp
 
 RESOURCES += \
     resources.qrc

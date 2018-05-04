@@ -6,6 +6,7 @@
 #include "q_kulanday_menubar.h"
 #include "q_decks_widget.h"
 #include "q_deck_widget.h"
+#include "q_learn_widget.h"
 #include "q_dirtydozen_widget.h"
 #include "q_deck_item_widget.h"
 #include "db_adapter.h"
@@ -35,6 +36,7 @@ private:
     
 private slots:
     void showDecksOverviewTab();
+    void showLearnWidget(QString deck_name);
     void showDirtyDozenWidget(QString deck_name);
     void showDeckWidget(QString deck_name);
     void createNewDeck(QUrl deck_url);

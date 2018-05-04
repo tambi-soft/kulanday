@@ -112,7 +112,7 @@ void QDirtyDozenWidget::update()
         QFont font = unicodeFonts->getFontAndSize(button->text());
         button->setFont(font);
         
-        connect(button, &QPushButton::clicked, this, [this, i]{ labelClicked(dataset.at(i)["rowid"].toInt()); });
+        connect(button, &QPushButton::clicked, this, [this, i, button]{ displayButtonClicked(dataset.at(i)["rowid"].toInt(), button); });
         
         int row = i + this->COLUMNS;
         this->grid->addWidget(button, int(row / COLUMNS), row % COLUMNS);
@@ -143,7 +143,7 @@ void QDirtyDozenWidget::clear()
     this->button_list.clear();
 }
 
-void QDirtyDozenWidget::clearStyteSheet()
+void QDirtyDozenWidget::clearStyleSheet()
 {
     for (int i = 0; i < layout()->count(); ++i)
     {
@@ -179,9 +179,9 @@ void QDirtyDozenWidget::showAllButtonClicked()
     update();
 }
 
-void QDirtyDozenWidget::labelClicked(int rowid)
+void QDirtyDozenWidget::displayButtonClicked(int rowid, QPushButton *button)
 {
-    clearStyteSheet();
+    clearStyleSheet();
     
     // only proceed if answer was correct
     if (rowid == this->current_audio_deck_id)
@@ -222,6 +222,11 @@ void QDirtyDozenWidget::labelClicked(int rowid)
         {
             playRandomAudio();
         }
+    }
+    // if wrong image was clicked
+    else
+    {
+        button->setStyleSheet("QPushButton { background-color : #ff0000; }");
     }
 }
 
@@ -282,9 +287,7 @@ void QDirtyDozenWidget::selectDisplayCurrentTextChanged(QString text)
 void QDirtyDozenWidget::onShuffleButtonClicked()
 {
     clear();
-    
     this->full_dataset = shuffleList(this->full_dataset);
-    
     update();
 }
 

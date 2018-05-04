@@ -32,11 +32,13 @@ private:
 private slots:
     void createNewDeckClicked();
     void tableButtonDirtyDozenClicked(QString deck_name);
+    void tableButtonLearnClicked(QString deck_name);
     void tableButtonViewDeckClicked(QString deck_name);
     void onComboTextChanged(QString text);
     
 signals:
     void deckDirtyDozenClicked(QString deck_name);
+    void deckLearnClicked(QString deck_name);
     void deckViewClicked(QString deck_name);
     void createNewDeck(QUrl url);
 };
