@@ -66,7 +66,8 @@ void QDirtyDozenWidget::update()
     
     for (int i = 0; i < this->dataset.length(); ++i)
     {
-        QClickLabel *label = new QClickLabel();
+        //QClickLabel *label = new QClickLabel();
+        QPushButton *button = new QPushButton();
         
         if (this->select_display_combo->currentText() == "image")
         {
@@ -87,35 +88,47 @@ void QDirtyDozenWidget::update()
                 }
             }
             QPixmap scaled_pixmap = pixmap->scaled(QSize(200, 200), Qt::KeepAspectRatio);
-            label->setGeometry(scaled_pixmap.rect());
-            label->setPixmap(scaled_pixmap);
+            //label->setGeometry(scaled_pixmap.rect());
+            //label->setPixmap(scaled_pixmap);
+            QIcon icon(scaled_pixmap);
+            button->setIcon(icon);
+            button->setIconSize(scaled_pixmap.size());
         }
         else if (this->select_display_combo->currentText() == "name")
         {
-            label->setText(dataset.at(i)["name"].toString());
+            //label->setText(dataset.at(i)["name"].toString());
+            button->setText(dataset.at(i)["name"].toString());
         }
         else if (this->select_display_combo->currentText() == "word")
         {
-            label->setText(dataset.at(i)["word"].toString());
+            //label->setText(dataset.at(i)["word"].toString());
+            button->setText(dataset.at(i)["word"].toString());
         }
         else if (this->select_display_combo->currentText() == "translation")
         {
-            label->setText(dataset.at(i)["translation"].toString());
+            //label->setText(dataset.at(i)["translation"].toString());
+            button->setText(dataset.at(i)["translation"].toString());
         }
         
         if (dataset.at(i) == new_item)
         {
-            label->setStyleSheet("QLabel { background-color : #00a194; }");
+            //label->setStyleSheet("QLabel { background-color : #00a194; }");
+            button->setStyleSheet("QLabel { background-color : #00a194; }");
         }
         
-        QFont font = unicodeFonts->getFontAndSize(label->text());
-        label->setFont(font);
+        //QFont font = unicodeFonts->getFontAndSize(label->text());
+        QFont font = unicodeFonts->getFontAndSize(button->text());
+        //label->setFont(font);
+        button->setFont(font);
         
-        label->setAlignment(Qt::AlignCenter);
-        connect(label, &QClickLabel::clicked, this, [this, i]{ labelClicked(dataset.at(i)["rowid"].toInt()); });
+        //label->setAlignment(Qt::AlignCenter);
+        //button->setAlignment(Qt::AlignCenter);
+        //connect(label, &QClickLabel::clicked, this, [this, i]{ labelClicked(dataset.at(i)["rowid"].toInt()); });
+        connect(button, &QPushButton::clicked, this, [this, i]{ labelClicked(dataset.at(i)["rowid"].toInt()); });
         
         int row = i + this->COLUMNS;
-        this->grid->addWidget(label, int(row / COLUMNS), row % COLUMNS);
+        //this->grid->addWidget(label, int(row / COLUMNS), row % COLUMNS);
+        this->grid->addWidget(button, int(row / COLUMNS), row % COLUMNS);
         
     }
 }

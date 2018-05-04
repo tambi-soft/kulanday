@@ -1,0 +1,658 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+bread نان&nbsp;(نان‌ها)  142
+
+cheese پٓنیر (پٓنیرها)  381
+
+meat گوشْت /guːʃt/<br> 304
+
+chick جوجهِ (جوجه‌ِها)  210
+
+fish ماهی (ماهیان or ماهی‌ها)  383
+
+sandwich سانْدِویچ  233
+
+salad سالاد  307
+
+salt نَمَک  409
+
+candy آبْنٓبات  61
+
+fruit میوهِ (میوه‌ِجات or میوه‌ِها) mive, meyve (mivejât or mive, meyve-hâ) 31
+
+apple سیب sib 412
+
+banana مُوز (موزْها) mowz 74
+
+orange (fruit) پُرْتُقال [pʰoɾtʰoˈɣɒːl], [pʰoɾtʰeˈɣɒːl] 187
+
+grape آنْگور angur 62
+
+strawberry توت فَرَنْگی tut-farangi 209
+
+vegetable سَبْزی&nbsp;(سَبْزیجات or سَبْزی‌ها) sabzi 120
+
+carrot هَویج havij 342
+
+onion پیاز (پیازها) piyâz 402
+
+potato سیب زَمینی sib-zamini 56
+
+tomato گوجهِ فَرَنْگی goje farangi 223
+
+breakfast صُبْحانهِ sobhâne 327
+
+lunch ناهار nâhâr 408
+
+dinner شام šâm 352
+
+cat گُرْبه (گُرْبه‌ها or گُرْبگان) gorbe (gorbe-hâ or gorbegân) 326
+
+dog سَگ (سَگ‌ها or سّگان) sag (sag-hâ or sagân) 319
+
+mouse موش (موش‌ها) muš 155
+
+cow گاو (گاوها)  289
+
+horse اَسْب (اسب‌ها or اسبان) asb (asb-hâ or asbân) 114
+
+alligator تِمْساح (تِمساح‌ها) temsâh 90
+
+rabbit خَرْگوش (خرگوش‌ها) [xæɾˈɡuːʃ] 212
+
+bird پَرٓنْده (پَرنْدگان or پَرٓنْده‌ها) parande (parandegân or parande-hâ) 263
+
+bear خِرْس (خرس‌ها) xers 48
+
+eagle عُقاب (عُقابان or عُقاب‌ها) 'oqâb (oqâbân or oqâb-hâ) [oˈɣɒːb] 400
+
+elephant فیل (فیل‌ها or فیلان) fil (fil-hâ or filân) 398
+
+giraffe زَرافه (زرافه‌ها) zarâfe (zarâfe-hâ) 34
+
+lion شیر (شیرها or شیران) šir (šir-hâ or širân) 198
+
+monkey مِیْمون meymun, maymun 268
+
+snake مار (مارها) mâr 343
+
+tiger بَبْر (ببرها or ببران) babr (babr-hâ or babrân) 75
+
+head سَر (سرها) sar 166
+
+hair مو (موها) mu 413
+
+eye چِشْم (چشمان or چشم‌ها) češm (češmân or češm-hâ) 340
+
+ear گوش (گوش‌ها) /ɡuːʃ/ 103
+
+nose بینی bini 317
+
+mouth دَهان (دهان‌ها) dahân 16
+
+tooth دَندان (دندان‌ها) dandân 176
+
+arm بازو (بازوها or بازوان) bâzu (bâzu-hâ or bâzovân) 109
+
+hand دَسْت (دستان or دست‌ها) dast (dastân or dast-hâ) 217
+
+heart قَلْب [ɢælb] 94
+
+stomach مِعده me'de 63
+
+pharmacy داروخانه (داروخانه‌ها) dâruxâne 64
+
+house خانه (خانه‌ها) xâne 283
+
+room اُتاق (اتاق‌ها) otâq 302
+
+bathroom حَمّام hammâm 271
+
+toilet توالِت tualet 26
+
+kitchen آشْپَزْخانه âšpaz-xâne 397
+
+roof بام bâm 186
+
+ceiling سَقْف saqf 385
+
+wall دیوار ( دیوارها) divâr 261
+
+window پَنْجِره (پنجره‌ها) panjere 159
+
+shampoo شامْپو shâmpoo 154
+
+soap صابون sâbun 418
+
+toothbrush مِسْواک mesvâk 203
+
+bed تَخْت taxt 232
+
+refrigerator یَخْچال (یخچال‌ها) yaxčâl 58
+
+table میز (میزها) miz 417
+
+cup فِنْجان (فناجين) fenjân (fenajeen) 69
+
+fork چَنْگال (چنگال‌ها) čangâl&nbsp;[t͡ʃʰæŋˈɡɒːl] 226
+
+knife چاقو (چاقوها) čâqu 382
+
+spoon قاشُق qâšoq, qâšeq 140
+
+plate بُشْقاب bošqâb 215
+
+furniture مُبْل (مبل‌ها)  41
+
+chair صَنْدلی (صندلی‌ها) [sændæˈliː] 102
+
+telephone تِلِفُن telefon 388
+
+newspaper روزْنامه (روزنامه‌ها) ruz-nâme 38
+
+pen (writing) خودْکار xod-kâr 410
+
+pencil مِداد medâd 138
+
+paper کاغَذ (کاغذها) kâğaz 157
+
+scissors قِیْچی qeyči 394
+
+photograph عَکْس (عکس‌ها) 'aks 367
+
+clothing لِباس (لباس‌ها)  153
+
+jacket ژاکَت (ژاکت‌ها) žâkat 424
+
+pants شَلْوار (شلوارها) šalvâr 273
+
+umbrella چَتر čatr 245
+
+sock جوراب (جوراب‌ها) jurâb 396
+
+yellow (adj) زَرْد zard 53
+
+white (adj) سِفید [seˈfiːd̪] 335
+
+pink (adj) صورَتی sorati 386
+
+black (adj) سیاه /sijɒːh/ 320
+
+blue (adj) آبی [ɒːˈbiː] 143
+
+brown (adj) قهوه‌ای qahve'i 260
+
+gray (adj) خاکِسْتَری [xɒːkʲestʰæˈɾiː] 239
+
+ash خاکستر (خاکسترها) [xɒːkʲesˈt̪ʰæɾ] 152
+
+coffee قهوه (قهوه‌ها) [ɢæhˈve] 354
+
+green (adj) سٓبْز sabz 67
+
+violet (adj) بنفش banafš 290
+
+one یِک [je(k)] 267
+
+two دو do 390
+
+three سه se 206
+
+four چهار [tʃɒˈhɒːɾ] 216
+
+five پَنْج [pʰændʒ] 134
+
+six شِش šeš 92
+
+seven هَفْت [hæft̪], [hæːft̪] 373
+
+eight هَشْت hašt 119
+
+nine نه [noʰ] 344
+
+ten ده dah 169
+
+back (Anat) پشْت [pʰoʃt̪ʰ] 333
+
+blood خون [xuːn] 421
+
+body بَدَن (بدن‌ها) [bæˈdæn] 18
+
+bone اُسْتُخوان /ostoxɒn/ 311
+
+brain مَغْز (مغزها) [mæɣz] 49
+
+breath بازْدَم  149
+
+chest سینه (سینه‌ها) [siːˈne] 101
+
+chin چانه  2
+
+face صورَت surat 40
+
+finger انْگُشْت (انگشت‌ها ‎or انگشتان) [æŋˈɡoʃt̪ʰ] 192
+
+forehead پيشانی pišâni 292
+
+knee زانو (زانوها) [zɒːˈnuː] 135
+
+lip لَب (لبان or لب‌ها) /læb/ 136
+
+fingernail ناخُن /nɒːxon/ 104
+
+neck گَرْدَن /ɡærdæn/ 6
+
+skin پوسْت (پوست‌ها) [puːst̪ʰ] 163
+
+tail دُم dom 362
+
+tongue زَبان (زبان‌ها) [zæˈba(ː)n] 30
+
+wing بال bâl 139
+
+ant مورْچه (مورچگان ‎or مورچه‌ها) [muːɾˈtʃʰe] 194
+
+honeybee زَنْبورِ عَسَل (زنبورهای عسل) (zanbur-e 'asal) (zanbur-hâ-ye 'asal) 235
+
+fly مَگَس (مگس‌ها) [mæˈɡæs] 121
+
+goat بُز (بزها) /boz/ 193
+
+insect حَشَره (حشرات or حشره‌ها) [hæʃæˈɾe] 9
+
+pig خوک (خوک‌ها or خوکان) /xuːk/ 29
+
+sheep گوسفند (گوسفندها or گوسفندان) /ɡuːsˈfænd/ 303
+
+January ژانویه Žânviye 87
+
+February فِوْریه Fevriye 174
+
+March مارْس Mârs 301
+
+April آوْریل âvrîl 242
+
+May مه /me/ 346
+
+June ژوئن Žu'an 22
+
+July ژوئیه Žu'iye 47
+
+August اوت Ut 231
+
+September سِپْتامْبْر Septâmbr 406
+
+October اکْتُبْر Oktobr 85
+
+November نُوامْبْر Novâmbr 330
+
+December دِسامْبْر Desâmbr 190
+
+afternoon بِعد اَز ظُهْر ba'd az zohr 246
+
+century سَده (سده‌ها) [sæˈd̪e] 83
+
+day روز (روزها or روزان) /ɾuːz/ 179
+
+evening عَصْر (عصرها) [ʔæsɾ], [ʔæːsɾ] 420
+
+future آیَنْده âyande 59
+
+hour ساعَت (ساعت‌ها or ساعات) [sɒːˈʔæt̪] 10
+
+minute دَقیقه (دقائق or دقیقه‌ها) [dæɣiːˈɣe] 366
+
+Friday آدینه [ɒːd̪iːˈne] 240
+
+Monday دوشَنْبه [d̪oʃæmˈbe] 213
+
+month ماه (ماه‌ها) mâh 11
+
+morning بامداد bâmdâd 168
+
+night شِب (شب‌ها or  شبان) /ʃæb/ 403
+
+now حالا hâlâ 113
+
+Saturday شَنْبه [ʃæmˈbe] 285
+
+second (unit of time) ثانیه (ثانیه‌ها) /sɒːniːje/ 147
+
+spring (season) بهار [bɒˈhɒːɾ] 229
+
+summer تابِسْتان (تابستان‌ها) [tʰɒːbesˈtʰun], [tʰɒːbesˈtʰuːn] 284
+
+Sunday یک‌ْشَنْبه yek-šanbe 8
+
+Thursday پَنْج‌شَنْبه panj-šanbe 377
+
+Tuesday سه‌شَنْبه [seʃæmˈbe] 278
+
+Wednesday چٰهارْشَنْبه [tʃʰɒˌhɒːɾʃæmˈbe] 122
+
+week هَفْته (هفته‌ها) [hæfˈt̪ʰe] 299
+
+winter زِمِسْتان (زمستان‌ها) [zemesˈt̪ʰun], [zemesˈt̪ʰuːn] 347
+
+year سال (سال‌ها or سالیان) /sɒːl/ 428
+
+butter کَره kare /kaɾa/ 415
+
+cake کِیک [keɪ̯k] 321
+
+chocolate شُکُلات [ʃokʰoˈlɒːtʰ] 42
+
+chicken egg تُخْمِ مُرْغ (toxm-e morq) 247
+
+oil روغَن (Iranian Persian) IPA(key): [roʊ̯ˈɣæn] (colloquial) IPA(key): [roːˈɣæn] 378
+
+rice بِرِنْج [beˈɾend͡ʒ] 24
+
+soup سوپ sup 167
+
+sugar شِکَر ‎(šakar, šakkar, šekar) 295
+
+beer آبْجُو ‎(âb-jow) 202
+
+tea چای (چای‌ها) [t͡ʃʰɒːj] 205
+
+wine شَراب [ʃæˈɾɒːb] 78
+
+apricot زٓرْدآلو ‎(zard-âlu) 272
+
+cherry گيلاس (گیلاس‌ها) [ɡʲiːˈlɒːs] 1
+
+lemon لیمو (لیموها) /liːˈmuː/ 405
+
+nut آجیل âjil 222
+
+peach هُلو (هلوها) /hoˈluː/, [hʊˈlu(ː)] 375
+
+pear گُلابی (گلابی‌ها) /ɡolɒːˈbiː/ 248
+
+pineapple آناناس (ânânâs) 0
+
+plum آلو (âlu) 363
+
+raspberry تَمِشْک (تمشک‌ها) [tʰæˈmeʃk] 351
+
+bean باقِلا ‎(bâqelâ) 5
+
+cabbage کَلَم kalam 338
+
+cucumber خیار xiyâr 118
+
+garlic سیر [siːɾ] 334
+
+olive زِیْتون ‎(zeytun) 300
+
+baby کودَک (کودکان) [kʰuːˈd̪ækʲ] 322
+
+brother بَرادَر (برادران or برادرها) [bæɾɒːˈdæɾ] 282
+
+daughter دُخْتَر (دختران or دخترها) /doxˈtʰæɾ/ 19
+
+death مَرْگ (مرگ‌ها) [mæɾɡ] 161
+
+father پِدَر (پدران or پدرها) [pʰeˈd̪æɾ] 218
+
+friend دوسْت (دوستان or دوست‌ها) [duːstʰ] 353
+
+son پِسَر (پسران or پسرها) [pʰeˈsæɾ] 357
+
+grandfather پِدَرْبُزُرْگ (pedar-bozorg) 411
+
+human اِنْسان (انسان‌ها) (ensân) 236
+
+husband شوهَر (شوهران or شوهرها) [ʃoˈhæɾ] 37
+
+marriage اِزْدِواج (ازدواج‌ها) (ezdevâj) 7
+
+mother مادَر (مادران) [mɒːˈd̪æɾ] 164
+
+sister خواهَر (خواهران or خواهرها) /xɒːhæɾ/ 265
+
+wife زَن (زنان or زن‌ها) zan 93
+
+brick آجُر (آجرها) âjor 392
+
+door در (درها) dar 123
+
+garage گاراژ /ɡɒːɾɒːʒ/ 191
+
+garden باغْچه (باغچه‌ها) [bɒːxˈtʃe] 43
+
+gate دَرْوازه (دروازه‌ها) darvâze 185
+
+shower (bathing) دوش [duːʃ] 298
+
+well (hole in ground) چاه čâh 404
+
+carpet فرش farš 339
+
+cupboard قَفَسه (قفسه‌ها) /ɢæfæse/ 225
+
+curtain پَرْده (پرده‌ها) parde 20
+
+boot چَکْمه (چکمه‌ها) [t͡ʃʰækˈme] 314
+
+coat پالتو (پالتوها) pâlto 399
+
+hat کُلاه (کلاه‌ها) kolâh 137
+
+jewel گوهَر (گوهرها) /ɡoːˈhæɾ/ 269
+
+ring حَلْقه halqe 184
+
+shirt پیراهَن pirâhan 249
+
+shoe کٓفْش (کفش‌ها) [kʲæfʃ] 39
+
+skirt دامَن dâman 325
+
+suitcase چَمِدان [tʃʰæmeˈd̪uːn] 379
+
+tie (clothing) کراوات krāvāt 182
+
+air هَوا [hæˈvɒː] 266
+
+animal جانْوَر (جانوران or جانور‌ها) /dʒɒːnˈvæɾ/ 234
+
+branch شاخه (شاخه‌ها) [ʃɒːˈxe] 45
+
+evolution تٓکامُل  115
+
+fire آتَش  197
+
+flower گُل (گل‌ها) [ɡol] 50
+
+forest جٓنْگَل (جنگل‌ها) /dʒænɡæl/ 195
+
+grass عَلَف (علف‌ها) /ʔælæf/ 393
+
+leaf بَرْگ (برگ‌ها)  360
+
+life زِنْدِگی [zɪndɪˈɡʲiː] 348
+
+lightning صاعِقه (صاعقه‌ها) /sɒːʔeɣe/ 262
+
+nature طَبیعَت tabiy'at 77
+
+root ریشه (ریشه‌ها) /ɾiːʃe/ 251
+
+sex (male or female) جِنْس (اجناس) jens; ajnâs 156
+
+sky آسِمان (آسمان‌ها) âsemân, âsmân; âsemân-hâ, âsmân-hâ 97
+
+sleep خواب /xɒːb/ 224
+
+tree دِرخْت (درختا‌ن or درخت‌ها) deraxt, daraxt 129
+
+wave مُوْج mowj 427
+
+weather هَوا [hæˈvɒː] 266
+
+world جَهان (جهان‌ها) [d͡ʒæˈhɑn] 355
+
+airport فُرودْگاه (forudgâh) 86
+
+bank بانْک (بانک‌ها) bânk 54
+
+bridge پُل pol 72
+
+building ساخْتِمان (ساختمان‌ها) [sɒːxtʰeˈmɒːn] 323
+
+capital city پایْتَخْت pâytaxt 275
+
+church کِلیسا [kʲeliːˈsɒː] 189
+
+city شَهْر (شهرها) [ʃæhɾ], [ʃæːhɾ], [ʃæːɾ] 305
+
+apartment آپارْتِمان [ɒːpʰɒːɾt̪ʰeˈmɒn] 308
+
+library کِتابْخانه (کتابخانه‌ها) ketâbxâne 133
+
+jail زِنْدان zendân 220
+
+road راه râh 423
+
+school مَدْرِسه (مدرسه‌ها or مدارس) madrese; madrese-hâ or madâres 105
+
+metro مِتْرو metro 60
+
+theater تِئاتْر te'âtr 23
+
+town شَهْرَک (شهرک‌ها)  145
+
+university دانِشْگاه  17
+
+bus اُتوبوس otobus 131
+
+car خودْرو (خودروها) [xod̪ˈɾoʊ] 324
+
+flight پَرْواز [pʰæɾˈvɒːz] 207
+
+train قَطار (قطارها) [ɢæˈtɒːɾ] 146
+
+chapter فَصْل (فصول or فصل‌ها) fasl; fosul 211
+
+noun اِسْم (اسم‌ها or اسامی) [ʔesm]; asâmi 204
+
+adjective صِفَت (صفات or صفت‌ها) /seˈfæt/ 150
+
+singular (Gram) (n) مُفْرَد  407
+
+plural (n) جَمْع jam' 389
+
+kasra (the vowel) کَسْره kasre 108
+
+ezafe (n) اِضافه (اضافه‌ها) ezâfe 148
+
+Mrs. خانُم (خانم‌ها) xânom 160
+
+هوا air weather 266
