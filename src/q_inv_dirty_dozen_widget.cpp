@@ -42,7 +42,6 @@ void QInvDirtyDozenWidget::update()
     
     for (int i = 0; i < this->dataset.length(); ++i)
     {
-        qDebug() << i;
         QPushButton *button = new QPushButton();
         
         if (this->select_display_combo->currentText() == "image")
@@ -146,7 +145,6 @@ void QInvDirtyDozenWidget::onShuffleButtonClicked()
 
 QList<QMap<QString,QVariant>> QInvDirtyDozenWidget::shuffleList(QList<QMap<QString,QVariant>> list)
 {
-    qDebug() << "shuffle";
     for (int i = 0; i < 100; ++i)
     {
         int rnd = qrand() % list.length();

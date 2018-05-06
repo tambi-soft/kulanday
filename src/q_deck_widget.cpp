@@ -35,7 +35,6 @@ void QDeckOverviewWidget::initTableWidget(QString deck_name)
     
     if (data.length() > 0)
     {
-        //table->setColumnCount(data.at(0).count());
         table->setRowCount(data.length());
         
         int max_audio_count = db_adapter->getMaxAudioCount();
@@ -203,13 +202,12 @@ void QDeckOverviewWidget::deleteRowButtonClicked(int rowid)
 
 void QDeckOverviewWidget::hideEvent(QHideEvent *event)
 {
-    //table->clear();
     this->player->stop();
 }
 
 void QDeckOverviewWidget::showEvent(QShowEvent *event)
 {
-    //initTableWidget(this->deck_name);
+    
 }
 
 void QDeckOverviewWidget::refresh()

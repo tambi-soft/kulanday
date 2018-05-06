@@ -120,7 +120,6 @@ void QKulandayMainWindow::onDeckItemContentsUpdated(QString deck_name)
     int deck_id = this->deck_item_widgets[deck_name];
     QDeckOverviewWidget *deck = (QDeckOverviewWidget*) tab_widget->widget(deck_id);
     deck->refresh();
-    
 }
 
 void QKulandayMainWindow::activateNewTab()
