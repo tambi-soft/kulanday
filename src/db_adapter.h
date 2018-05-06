@@ -7,6 +7,7 @@
 #include <QSqlQuery>
 #include <QSqlRecord>
 #include <QDir>
+#include <QDateTime>
 
 class DbAdapter : public QObject
 {

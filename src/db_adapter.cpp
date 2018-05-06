@@ -57,7 +57,12 @@ void DbAdapter::initializeTables()
 //void DbAdapter::saveDeckItem(QString name, QString word, QString phonetical, QString translation)
 qlonglong DbAdapter::newDeckRow()
 {
-    QSqlQuery query("INSERT INTO deck (name) VALUES ('')", this->db);
+    QDateTime *dtime = new QDateTime();
+    
+    QSqlQuery query(this->db);
+    query.prepare("INSERT INTO deck (created) VALUES (:created)");
+    query.bindValue(":created", dtime->currentDateTime().toTime_t());
+    query.exec();
     
     return query.lastInsertId().toLongLong();
 }
