@@ -28,6 +28,8 @@ QDeckOverviewWidget::QDeckOverviewWidget(QDir *decks_path, QString deck_name, QW
 
 void QDeckOverviewWidget::initTableWidget(QString deck_name)
 {
+    this->playing_button = nullptr;
+    
     DbAdapter *db_adapter = new DbAdapter(this->decks_path, deck_name);
     this->database = db_adapter;
     
@@ -131,6 +133,7 @@ void QDeckOverviewWidget::appendPlayButtons(int table_rowid, QList<QMap<QString,
 }
 void QDeckOverviewWidget::audioButtonClicked(QPushButton *button, QString audio_filename)
 {
+    qDebug() << this->playing_button;
     if (this->player->state() == QMediaPlayer::PlayingState && this->playing_button == button)
     {
         this->player->stop();
