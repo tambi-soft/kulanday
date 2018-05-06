@@ -28,6 +28,7 @@ QDeckOverviewWidget::QDeckOverviewWidget(QDir *decks_path, QString deck_name, QW
 
 void QDeckOverviewWidget::initTableWidget(QString deck_name)
 {
+    // to avoid pointing to a deleted object after reinitializing
     this->playing_button = nullptr;
     
     DbAdapter *db_adapter = new DbAdapter(this->decks_path, deck_name);
