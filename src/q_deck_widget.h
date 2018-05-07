@@ -61,7 +61,7 @@ public slots:
 private slots:
     void newItemButtonClicked();
     void editRowButtonClicked(QString deck_name, int rowid);
-    void deleteRowButtonClicked(int rowid);
+    void deleteRowButtonClicked(int rowid, QMap<QString, QVariant> data_row);
     void mediaPlayerStateChanged(int state);
 };
 

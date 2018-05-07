@@ -53,7 +53,7 @@ void QDeckOverviewWidget::initTableWidget(QString deck_name)
             
             QPushButton *delete_button = new QPushButton();
             delete_button->setIcon(QIcon::fromTheme("edit-delete"));
-            connect(delete_button, &QPushButton::clicked, this, [this, rowid]{ deleteRowButtonClicked(rowid); });
+            connect(delete_button, &QPushButton::clicked, this, [this, rowid, data, i]{ deleteRowButtonClicked(rowid, data.at(i)); });
             
             QString order_index = data.at(i)["order_index"].toString();
             QString name = data.at(i)["name"].toString();
@@ -89,7 +89,7 @@ void QDeckOverviewWidget::initTableWidget(QString deck_name)
             table->setItem(i, 5, new QTableWidgetItem(phonetical));
             table->setItem(i, 6, new QTableWidgetItem(translation));
             
-            // apply unicode fonst to cells
+            // apply unicode fonts to cells
             for (int j = 3; j <= 6; ++j)
             {
                 QFont font = unicodeFonts->getFontAndSize(table->item(i, j)->text());
@@ -134,7 +134,6 @@ void QDeckOverviewWidget::appendPlayButtons(int table_rowid, QList<QMap<QString,
 }
 void QDeckOverviewWidget::audioButtonClicked(QPushButton *button, QString audio_filename)
 {
-    qDebug() << this->playing_button;
     if (this->player->state() == QMediaPlayer::PlayingState && this->playing_button == button)
     {
         this->player->stop();
@@ -143,7 +142,6 @@ void QDeckOverviewWidget::audioButtonClicked(QPushButton *button, QString audio_
     {
         if (this->playing_button != nullptr)
         {
-            qDebug() << this->playing_button;
             this->playing_button->setIcon(QIcon::fromTheme("media-playback-start"));
         }
         
@@ -180,9 +178,10 @@ void QDeckOverviewWidget::editRowButtonClicked(QString deck_name, int rowid)
     emit showDeckItemRequested(deck_name, rowid);
 }
 
-void QDeckOverviewWidget::deleteRowButtonClicked(int rowid)
+void QDeckOverviewWidget::deleteRowButtonClicked(int rowid, QMap<QString,QVariant> data_row)
 {
-    int reply = QMessageBox::question(this, "Delete", "really?", QMessageBox::Yes, QMessageBox::No);
+    QString message = "delete " + data_row["name"].toString() + "|" + data_row["word"].toString() + "|" + data_row["phonetical"].toString() + "|" + data_row["translation"].toString() + "?";
+    int reply = QMessageBox::question(this, "Delete", message, QMessageBox::Yes, QMessageBox::No);
     
     if (reply == QMessageBox::Yes)
     {
