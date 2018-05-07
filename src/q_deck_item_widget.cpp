@@ -163,6 +163,8 @@ void QDeckItemWidget::importImageClicked()
         
         this->import_image_button->setEnabled(false);
         this->item_changed = true;
+        
+        this->image_path = this->decks_path->absolutePath() + "/" + this->deck_name + "/" + QUrl(image_url).fileName();
     }
 }
 
@@ -171,6 +173,7 @@ void QDeckItemWidget::deleteImageClicked()
     int reply = QMessageBox::question(this, "Delete Image", "sure?", QMessageBox::Yes, QMessageBox::No);
     if (reply == QMessageBox::Yes)
     {
+        qDebug() << this->image_path;
         QFile file(this->image_path);
         file.remove();
         
