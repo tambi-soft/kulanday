@@ -4,6 +4,7 @@
 #include <QWidget>
 #include <QVBoxLayout>
 #include <QPushButton>
+#include <QCheckBox>
 #include <QTableWidget>
 #include <QTableWidgetItem>
 #include <QHeaderView>
@@ -43,6 +44,11 @@ private:
     UnicodeFonts *unicodeFonts;
     
     int COLUMN_OFFSET = 9;
+    
+    QCheckBox *chk_name;
+    QCheckBox *chk_word;
+    QCheckBox *chk_phonetical;
+    QCheckBox *chk_translation;
     
     void initTableWidget(QString deck_name);
     void appendPlayButtons(int table_rowid, QList<QMap<QString,QVariant>> audio_filenames, int max_audio_count);

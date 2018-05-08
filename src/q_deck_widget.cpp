@@ -7,6 +7,10 @@ QDeckOverviewWidget::QDeckOverviewWidget(QDir *decks_path, QString deck_name, QW
     , table (new QTableWidget)
     , player (new QMediaPlayer)
     , unicodeFonts (new UnicodeFonts)
+    , chk_name (new QCheckBox)
+    , chk_word (new QCheckBox)
+    , chk_phonetical (new QCheckBox)
+    , chk_translation (new QCheckBox)
 {
     setLayout(layout);
     this->decks_path = decks_path;
@@ -19,6 +23,29 @@ QDeckOverviewWidget::QDeckOverviewWidget(QDir *decks_path, QString deck_name, QW
     
     connect (player, &QMediaPlayer::stateChanged, this, &QDeckOverviewWidget::mediaPlayerStateChanged);
     
+    QWidget *chk_widget = new QWidget();
+    QHBoxLayout *chk_layout = new QHBoxLayout();
+    chk_widget->setLayout(chk_layout);
+    chk_layout->addWidget(new QLabel("name:"), 0, Qt::AlignRight);
+    chk_layout->addWidget(chk_name, 0, Qt::AlignLeft);
+    chk_layout->addWidget(new QLabel("word:"), 1, Qt::AlignRight);
+    chk_layout->addWidget(chk_word, 0, Qt::AlignLeft);
+    chk_layout->addWidget(new QLabel("phonetical:"), 1, Qt::AlignRight);
+    chk_layout->addWidget(chk_phonetical, 0, Qt::AlignLeft);
+    chk_layout->addWidget(new QLabel("translation:"), 1, Qt::AlignRight);
+    chk_layout->addWidget(chk_translation, 0, Qt::AlignLeft);
+    
+    chk_name->setChecked(true);
+    chk_word->setChecked(true);
+    chk_phonetical->setChecked(true);
+    chk_translation->setChecked(true);
+    
+    connect(chk_name, &QCheckBox::clicked, this, &QDeckOverviewWidget::refresh);
+    connect(chk_word, &QCheckBox::clicked, this, &QDeckOverviewWidget::refresh);
+    connect(chk_phonetical, &QCheckBox::clicked, this, &QDeckOverviewWidget::refresh);
+    connect(chk_translation, &QCheckBox::clicked, this, &QDeckOverviewWidget::refresh);
+    
+    layout->addWidget(chk_widget);
     layout->addWidget(table);
     layout->addWidget(new_item_button);
     
@@ -43,6 +70,8 @@ void QDeckOverviewWidget::initTableWidget(QString deck_name)
         int max_audio_count = db_adapter->getMaxAudioCount();
         table->setColumnCount(COLUMN_OFFSET + max_audio_count);
         
+        // insert data
+        int i = 0;
         for (int i = 0; i < data.length(); ++i)
         {
             int rowid = data.at(i)["rowid"].toInt(); // needed for SELECTing audio files
@@ -84,21 +113,38 @@ void QDeckOverviewWidget::initTableWidget(QString deck_name)
             table->setCellWidget(i, 1, delete_button);
             
             table->setItem(i, 2, new QTableWidgetItem(order_index));
-            table->setItem(i, 3, new QTableWidgetItem(name));
-            table->setItem(i, 4, new QTableWidgetItem(word));
-            table->setItem(i, 5, new QTableWidgetItem(phonetical));
-            table->setItem(i, 6, new QTableWidgetItem(translation));
+            if (chk_name->isChecked())
+            {
+                table->setItem(i, 3, new QTableWidgetItem(name));
+            }
+            if (chk_word->isChecked())
+            {
+                table->setItem(i, 4, new QTableWidgetItem(word));
+            }
+            if (chk_phonetical->isChecked())
+            {
+                table->setItem(i, 5, new QTableWidgetItem(phonetical));
+            }
+            if (chk_translation->isChecked())
+            {
+                table->setItem(i, 6, new QTableWidgetItem(translation));
+            }
             
             // apply unicode fonts to cells
             for (int j = 3; j <= 6; ++j)
             {
-                QFont font = unicodeFonts->getFontAndSize(table->item(i, j)->text());
-                if (font.pointSize() > 20)
-                {
-                    font.setPointSize(20);
-                }
                 QTableWidgetItem *item = table->item(i, j);
-                item->setFont(font);
+                
+                if (item != nullptr)
+                {
+                    QFont font = unicodeFonts->getFontAndSize(item->text());
+                    if (font.pointSize() > 20)
+                    {
+                        font.setPointSize(20);
+                    }
+                    
+                    item->setFont(font);
+                }
             }
             
             table->setCellWidget(i, 7, svg_widget);
@@ -110,6 +156,7 @@ void QDeckOverviewWidget::initTableWidget(QString deck_name)
     }
     
     table->resizeColumnsToContents();
+    table->resizeRowsToContents();
 }
 
 void QDeckOverviewWidget::appendPlayButtons(int table_rowid, QList<QMap<QString,QVariant>> audio_filenames, int max_audio_count)
