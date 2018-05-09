@@ -1,0 +1,15 @@
+#!/usr/bin/env xdg-open
+[Desktop Entry]
+
+Type=Application
+
+Version=1.0
+
+Name=kulanday
+
+Comment=a software for collecting words and phrases for learning languages
+Path=/usr/bin/kulanday
+Exec=kulanday
+Icon=/usr/share/pixmaps/kulanday.ico
+Terminal=false
+Categories=Education
