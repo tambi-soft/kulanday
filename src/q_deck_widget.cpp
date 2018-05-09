@@ -11,6 +11,8 @@ QDeckOverviewWidget::QDeckOverviewWidget(QDir *decks_path, QString deck_name, QW
     , chk_word (new QCheckBox)
     , chk_phonetical (new QCheckBox)
     , chk_translation (new QCheckBox)
+    , chk_svg (new QCheckBox)
+    , chk_image (new QCheckBox)
 {
     setLayout(layout);
     this->decks_path = decks_path;
@@ -34,16 +36,24 @@ QDeckOverviewWidget::QDeckOverviewWidget(QDir *decks_path, QString deck_name, QW
     chk_layout->addWidget(chk_phonetical, 0, Qt::AlignLeft);
     chk_layout->addWidget(new QLabel("translation:"), 1, Qt::AlignRight);
     chk_layout->addWidget(chk_translation, 0, Qt::AlignLeft);
+    chk_layout->addWidget(new QLabel("svg:"), 1, Qt::AlignRight);
+    chk_layout->addWidget(chk_svg, 0, Qt::AlignLeft);
+    chk_layout->addWidget(new QLabel("image:"), 1, Qt::AlignRight);
+    chk_layout->addWidget(chk_image, 0, Qt::AlignLeft);
     
     chk_name->setChecked(true);
     chk_word->setChecked(true);
     chk_phonetical->setChecked(true);
     chk_translation->setChecked(true);
+    chk_svg->setChecked(true);
+    chk_image->setChecked(true);
     
     connect(chk_name, &QCheckBox::clicked, this, &QDeckOverviewWidget::refresh);
     connect(chk_word, &QCheckBox::clicked, this, &QDeckOverviewWidget::refresh);
     connect(chk_phonetical, &QCheckBox::clicked, this, &QDeckOverviewWidget::refresh);
     connect(chk_translation, &QCheckBox::clicked, this, &QDeckOverviewWidget::refresh);
+    connect(chk_svg, &QCheckBox::clicked, this, &QDeckOverviewWidget::refresh);
+    connect(chk_image, &QCheckBox::clicked, this, &QDeckOverviewWidget::refresh);
     
     layout->addWidget(chk_widget);
     layout->addWidget(table);
@@ -94,7 +104,7 @@ void QDeckOverviewWidget::initTableWidget(QString deck_name)
             QString svg_filename = data.at(i)["svg_filename"].toString();
             
             QLabel *image_widget = new QLabel(this);
-            if (image_filename != "")
+            if (image_filename != "" && chk_image->isChecked())
             {
                 QPixmap pixmap(this->decks_path->absolutePath() + "/" + deck_name + "/" + image_filename);
                 pixmap = pixmap.scaled(QSize(60, 30), Qt::KeepAspectRatio);
@@ -103,7 +113,7 @@ void QDeckOverviewWidget::initTableWidget(QString deck_name)
             
             QSvgWidget *svg_widget = new QSvgWidget();
             svg_widget->setFixedSize(0, 0);
-            if (svg_filename != "")
+            if (svg_filename != "" && chk_svg->isChecked())
             {
                 svg_widget->load(this->decks_path->absolutePath() + "/" + deck_name + "/" + svg_filename);
                 svg_widget->setFixedSize(60, 30);
@@ -131,6 +141,7 @@ void QDeckOverviewWidget::initTableWidget(QString deck_name)
             }
             
             // apply unicode fonts to cells
+            /*
             for (int j = 3; j <= 6; ++j)
             {
                 QTableWidgetItem *item = table->item(i, j);
@@ -146,7 +157,7 @@ void QDeckOverviewWidget::initTableWidget(QString deck_name)
                     item->setFont(font);
                 }
             }
-            
+            */
             table->setCellWidget(i, 7, svg_widget);
             table->setCellWidget(i, 8, image_widget);
             

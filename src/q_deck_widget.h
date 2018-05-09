@@ -49,6 +49,8 @@ private:
     QCheckBox *chk_word;
     QCheckBox *chk_phonetical;
     QCheckBox *chk_translation;
+    QCheckBox *chk_svg;
+    QCheckBox *chk_image;
     
     void initTableWidget(QString deck_name);
     void appendPlayButtons(int table_rowid, QList<QMap<QString,QVariant>> audio_filenames, int max_audio_count);
