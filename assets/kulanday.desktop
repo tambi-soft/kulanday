@@ -10,6 +10,6 @@ Name=kulanday
 Comment=a software for collecting words and phrases for learning languages
 Path=/usr/bin/kulanday
 Exec=kulanday
-Icon=/usr/share/pixmaps/kulanday.ico
+Icon=/usr/share/icons/hicolor/128x128/apps/kulanday_logo.ico
 Terminal=false
 Categories=Education
