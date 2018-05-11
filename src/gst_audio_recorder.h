@@ -7,11 +7,11 @@
 #include <gst/gst.h>
 #include <glib.h>
 
-class AudioRecorder : public QObject
+class GstAudioRecorder : public QObject
 {
     Q_OBJECT
 public:
-    explicit AudioRecorder(QString record_url, QObject *parent = nullptr);
+    explicit GstAudioRecorder(QString record_url, QObject *parent = nullptr);
     void recStart();
     void recStop();
     

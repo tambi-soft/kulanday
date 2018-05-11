@@ -13,18 +13,14 @@
 #include <QMessageBox>
 #include <QFileDialog>
 
+#include <QSysInfo>
 #include <QMediaPlayer>
-#include <QAudioRecorder>
 #include <QAudioEncoderSettings>
 
 #include <QProcess>
 
 #include "db_adapter.h"
 #include "audio_recorder.h"
-
-#ifdef __linux__
-
-#endif
 
 class QAudioListTable : public QTableWidget
 {
@@ -60,7 +56,7 @@ private:
     
     DbAdapter *database = nullptr;
     QMediaPlayer *player;
-    QAudioRecorder *recorder;
+    //QAudioRecorder *recorder;
     AudioRecorder *arec;
     QPushButton *playing_button = nullptr;
     

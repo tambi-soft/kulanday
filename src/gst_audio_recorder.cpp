@@ -1,16 +1,16 @@
 
 // == recording audio on linux with gstreamer ==
-// on mac and windows QAudioRecorder can be used,
+// on mac and windows QGstAudioRecorder can be used,
 // which is sadly broken on (arch) linux for more than a year now.
 
-#include "audio_recorder.h"
+#include "gst_audio_recorder.h"
 
-AudioRecorder::AudioRecorder(QString record_url, QObject *parent) : QObject(parent)
+GstAudioRecorder::GstAudioRecorder(QString record_url, QObject *parent) : QObject(parent)
 {
     this->record_url = record_url;
 }
 
-void AudioRecorder::recStart()
+void GstAudioRecorder::recStart()
 {
     GstElement *source, *muxer, *encoder, *conv, *filesink;
     GError **gerror;
@@ -39,7 +39,7 @@ void AudioRecorder::recStart()
     gst_element_set_state(pipeline, GST_STATE_PLAYING);
 }
 
-void AudioRecorder::recStop()
+void GstAudioRecorder::recStop()
 {
     gst_element_set_state(pipeline, GST_STATE_NULL);
 }

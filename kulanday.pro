@@ -16,11 +16,16 @@ linux-g++ | linux-g++-64 | linux-g++-32 {
     LIBS += -lgobject-2.0
     #LIBS += -lglib-2.0
     
-    HEADERS += src/audio_recorder.h
-    SOURCES += src/audio_recorder.cpp
+    HEADERS += gst_audio_recorder.h
+    SOURCES += gst_audio_recorder.cpp
 }
 win32 {
     # QAudioRecorder works here properly
+    INCLUDEPATH += "assets/windows/"
+    INCLUDEPATH += "assets/windows/"
+    
+    #LIBS += -lqminimal
+    #LIBS += -lqwindows
 }
 
 # The following define makes your compiler warn you if you use any
@@ -54,7 +59,8 @@ HEADERS += \
     src/q_click_label.h\
     src/unicode_fonts.h \
     src/config.h \
-    src/q_inv_dirty_dozen_widget.h
+    src/q_inv_dirty_dozen_widget.h \
+    src/audio_recorder.h
 
 SOURCES += \
     src/kulanday.cpp\
@@ -70,7 +76,8 @@ SOURCES += \
     src/q_click_label.cpp\
     src/unicode_fonts.cpp \
     src/config.cpp \
-    src/q_inv_dirty_dozen_widget.cpp
+    src/q_inv_dirty_dozen_widget.cpp \
+    src/audio_recorder.cpp
 
 RESOURCES += \
     resources.qrc

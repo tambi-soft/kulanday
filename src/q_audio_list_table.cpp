@@ -118,7 +118,7 @@ void QAudioListTable::recordButtonClicked(int row, QPushButton *button, QString 
     {
         this->recording_row = -1;
         
-        this->arec->recStop();
+        this->arec->stop();
         
         clear();
         drawAudioTable();
@@ -142,8 +142,9 @@ void QAudioListTable::recordButtonClicked(int row, QPushButton *button, QString 
         QTableWidgetItem *item = new QTableWidgetItem(record_url.fileName());
         setItem(row, FILE_NAME_COLUMN, item);
         
-        this->arec = new AudioRecorder(record_url.path());
-        this->arec->recStart();
+        this->arec = new AudioRecorder();
+        this->arec->setOutputLocation(record_url.path());
+        this->arec->record();
     }   
 }
 

@@ -4,6 +4,7 @@
 #include <QObject>
 #include <QDir>
 #include <QFile>
+#include <QStandardPaths>
 #include <QSysInfo>
 #include <QSettings>
 
