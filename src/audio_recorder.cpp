@@ -3,7 +3,7 @@
 AudioRecorder::AudioRecorder(QObject *parent)
     : QObject(parent)
     #ifdef __linux__
-    , recorder (new GstAudioRecorder)
+    , recorder (new QAudioRecorder)
     #else
     , recorder (new QAudioRecorder)
     #endif

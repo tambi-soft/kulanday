@@ -14,9 +14,11 @@ int main(int argc, char *argv[])
     
     QKulandayMainWindow mainWin;
     
-    
-        QIcon::setThemeSearchPaths(QStringList("./assets/icons"));
+#ifdef __linux__:
+#else:
+        QIcon::setThemeSearchPaths(QStringList("../assets/icons"));
         QIcon::setThemeName("oxygen");
+#endif
     
     qDebug() << QIcon::themeSearchPaths();
     

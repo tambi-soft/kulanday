@@ -3,7 +3,7 @@
 
 #include <QObject>
 
-
+#include <QAudioRecorder>
 
 #ifdef __linux__
 #include "gst_audio_recorder.h"
@@ -25,7 +25,7 @@ public:
 
 private:
 #ifdef __linux__
-    GstAudioRecorder *recorder;
+    QAudioRecorder *recorder;
 #else
     QAudioRecorder *recorder;
 #endif

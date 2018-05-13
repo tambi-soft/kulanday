@@ -16,8 +16,8 @@ linux-g++ | linux-g++-64 | linux-g++-32 {
     LIBS += -lgobject-2.0
     #LIBS += -lglib-2.0
     
-    HEADERS += gst_audio_recorder.h
-    SOURCES += gst_audio_recorder.cpp
+    HEADERS += src/gst_audio_recorder.h
+    SOURCES += src/gst_audio_recorder.cpp
 }
 win32 {
     # QAudioRecorder works here properly
