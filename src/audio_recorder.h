@@ -25,7 +25,7 @@ public:
 
 private:
 #ifdef __linux__
-    AudioRecorder *recorder;
+    GstAudioRecorder *recorder;
 #else
     QAudioRecorder *recorder;
 #endif

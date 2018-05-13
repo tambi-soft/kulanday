@@ -3,6 +3,7 @@
 QAudioListTable::QAudioListTable(QDir *decks_path, QString deck_name, qlonglong deck_rowid, QTableWidget *parent)
     : QTableWidget(parent)
     , player (new QMediaPlayer)
+    , arec (new AudioRecorder)
     //, recorder (new QAudioRecorder)
 {
     connect(this->player, &QMediaPlayer::stateChanged, this, &QAudioListTable::mediaPlayerStateChanged);
@@ -134,16 +135,17 @@ void QAudioListTable::recordButtonClicked(int row, QPushButton *button, QString 
         QString filename_stmp = QString::number((int) filename_stmp_int);
         QString filename_rnd = randomString(5);
         QString filename = filename_stmp + "_" + filename_rnd;
-        QUrl record_url = QUrl::fromLocalFile(this->decks_path->absolutePath() + "/" + this->deck_name + "/" + filename + ".ogg");
-        
-        //this->recorder->setOutputLocation(record_url);
-        //this->recorder->record();
+#ifdef __linux__
+        QString extension = ".ogg";
+#else
+        QString extension = ".wav";
+#endif
+        QUrl record_url = QUrl::fromLocalFile(this->decks_path->absolutePath() + "/" + this->deck_name + "/" + filename + extension);
         
         QTableWidgetItem *item = new QTableWidgetItem(record_url.fileName());
         setItem(row, FILE_NAME_COLUMN, item);
         
-        this->arec = new AudioRecorder();
-        this->arec->setOutputLocation(record_url.path());
+        this->arec->setOutputLocation(record_url);
         this->arec->record();
     }   
 }

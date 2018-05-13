@@ -1,6 +1,12 @@
 #include "audio_recorder.h"
 
-AudioRecorder::AudioRecorder(QObject *parent) : QObject(parent)
+AudioRecorder::AudioRecorder(QObject *parent)
+    : QObject(parent)
+    #ifdef __linux__
+    , recorder (new GstAudioRecorder)
+    #else
+    , recorder (new QAudioRecorder)
+    #endif
 {
     
 }
