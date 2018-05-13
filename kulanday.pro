@@ -5,22 +5,21 @@
 TEMPLATE = app
 TARGET = kulanday
 
-linux-g++ | linux-g++-64 | linux-g++-32 {
-    # on linux we have to use gstreamer for audio recording directly
-    # because QAudioRecorder is broken here for over a year now
-    INCLUDEPATH += "/usr/include/gstreamer-1.0/"
-    INCLUDEPATH += "/usr/include/glib-2.0/"
-    INCLUDEPATH += "/usr/lib/glib-2.0/include/"
-    
-    LIBS += -lgstreamer-1.0
-    LIBS += -lgobject-2.0
-    #LIBS += -lglib-2.0
-    
-    HEADERS += src/gst_audio_recorder.h
-    SOURCES += src/gst_audio_recorder.cpp
-}
+#linux-g++ | linux-g++-64 | linux-g++-32 {
+#    # on linux we have to use gstreamer for audio recording directly
+#    # because QAudioRecorder is broken here for over a year now
+#    INCLUDEPATH += "/usr/include/gstreamer-1.0/"
+#    INCLUDEPATH += "/usr/include/glib-2.0/"
+#    INCLUDEPATH += "/usr/lib/glib-2.0/include/"
+#    
+#    LIBS += -lgstreamer-1.0
+#    LIBS += -lgobject-2.0
+#    #LIBS += -lglib-2.0
+#
+#    HEADERS += src/gst_audio_recorder.h
+#    SOURCES += src/gst_audio_recorder.cpp
+#}
 win32 {
-    # QAudioRecorder works here properly
     INCLUDEPATH += "assets/windows/"
     INCLUDEPATH += "assets/windows/"
     

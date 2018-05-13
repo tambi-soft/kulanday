@@ -2,11 +2,7 @@
 
 AudioRecorder::AudioRecorder(QObject *parent)
     : QObject(parent)
-    #ifdef __linux__
     , recorder (new QAudioRecorder)
-    #else
-    , recorder (new QAudioRecorder)
-    #endif
 {
     
 }

@@ -3,13 +3,11 @@
 
 #include <QObject>
 
-#include <QAudioRecorder>
+/*
+ * We had some trouble with QAudioRecorder on linux, so we used this abstraction of QAudioRecorder to use gstreamer directly on linux and QAudioRecorder on windows and mac. Now this class seems to be deprecated.
+ */
 
-#ifdef __linux__
-#include "gst_audio_recorder.h"
-#else
 #include <QAudioRecorder>
-#endif
 
 class AudioRecorder : public QObject
 {
@@ -24,11 +22,7 @@ public:
     void stop();
 
 private:
-#ifdef __linux__
     QAudioRecorder *recorder;
-#else
-    QAudioRecorder *recorder;
-#endif
     
 signals:
     

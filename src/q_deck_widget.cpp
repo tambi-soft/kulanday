@@ -59,7 +59,6 @@ QDeckOverviewWidget::QDeckOverviewWidget(QDir *decks_path, QString deck_name, QW
     layout->addWidget(table);
     layout->addWidget(new_item_button);
     
-    table->horizontalHeader()->hide();
     initTableWidget(deck_name);
 }
 
@@ -166,8 +165,13 @@ void QDeckOverviewWidget::initTableWidget(QString deck_name)
         }
     }
     
+    //table->horizontalHeader()->hide();
+    QStringList labels;
+    labels << "" << "" << "" << "name" << "word" << "phon." << "trans." << "svg" << "image" << "" << "" << "" << "" << "" << "" << "" << "" << "" << "";
+    table->setHorizontalHeaderLabels(labels);
+    
     table->resizeColumnsToContents();
-    table->resizeRowsToContents();
+    //table->resizeRowsToContents();
 }
 
 void QDeckOverviewWidget::appendPlayButtons(int table_rowid, QList<QMap<QString,QVariant>> audio_filenames, int max_audio_count)
