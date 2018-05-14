@@ -14,15 +14,15 @@ int main(int argc, char *argv[])
     
     QKulandayMainWindow mainWin;
     
-#ifdef __linux__:
-#else:
-        QIcon::setThemeSearchPaths(QStringList("../assets/icons"));
+#ifdef __linux__
+#else
+        QIcon::setThemeSearchPaths(QStringList("./oxygen"));
         QIcon::setThemeName("oxygen");
 #endif
     
     qDebug() << QIcon::themeSearchPaths();
     
-    mainWin.setWindowIcon(QIcon("./assets/logo2.png"));
+    mainWin.setWindowIcon(QIcon(":logo"));
     mainWin.show();
     return app.exec();
 }

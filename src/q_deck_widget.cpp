@@ -189,6 +189,7 @@ void QDeckOverviewWidget::appendPlayButtons(int table_rowid, QList<QMap<QString,
             audio_button->setIcon(QIcon::fromTheme("media-record"));
             audio_button->setEnabled(false);
         }
+        
         connect(audio_button, &QPushButton::clicked, this, [this, audio_button, audio_filename]{ audioButtonClicked(audio_button, audio_filename); });
         
         table->setCellWidget(table_rowid, column + COLUMN_OFFSET, audio_button);
@@ -209,8 +210,10 @@ void QDeckOverviewWidget::audioButtonClicked(QPushButton *button, QString audio_
         
         this->playing_button = button;
         
+        qDebug() << audio_filename;
         QString audio_path = this->decks_path->absolutePath() + "/" + this->deck_name + "/" + audio_filename;
         QUrl audio_url = QUrl::fromLocalFile(audio_path);
+        qDebug() << audio_url;
         player->setMedia(QMediaContent(audio_url));
         player->play();
     }
