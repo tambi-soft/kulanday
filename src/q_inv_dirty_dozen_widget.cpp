@@ -89,7 +89,9 @@ void QInvDirtyDozenWidget::update()
         QFont font = unicodeFonts->getFontAndSize(button->text());
         button->setFont(font);
         
-        connect(button, &QPushButton::clicked, this, [this, i]{ displayButtonClicked(i); });
+        connect(button, &QPushButton::clicked, this, [this, i, button]{ displayButtonClicked(i, button); });
+        
+        connect(button, &QPushButton::released, this, [this, i, button]{ displayButtonReleased(i, button); });
         
         int row = i + this->COLUMNS;
         this->grid->addWidget(button, int(row / COLUMNS), row % COLUMNS);
@@ -120,9 +122,21 @@ void QInvDirtyDozenWidget::clear()
     this->button_list.clear();
 }
 
-void QInvDirtyDozenWidget::displayButtonClicked(int rowid)
+void QInvDirtyDozenWidget::displayButtonClicked(int rowid, QPushButton *button)
 {
-    playAudio(rowid);
+    if (audioPlayer->state() == QMediaPlayer::PlayingState)
+    {
+        audioPlayer->stop();
+    }
+    else
+    {
+        playAudio(rowid);
+    }
+}
+
+void QInvDirtyDozenWidget::displayButtonReleased(int rowid, QPushButton *button)
+{
+    
 }
 
 void QInvDirtyDozenWidget::playAudio(int selector)

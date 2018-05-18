@@ -58,7 +58,8 @@ public:
     public slots:
         
     private slots:
-        void displayButtonClicked(int rowid);
+        void displayButtonClicked(int rowid, QPushButton *button);
+        void displayButtonReleased(int rowid, QPushButton *button);
         void playAudio(int selector);
         void selectDisplayCurrentTextChanged(QString text);
         void onShuffleButtonClicked();
