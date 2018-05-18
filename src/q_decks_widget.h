@@ -20,12 +20,12 @@ public:
 
 private:
     QGridLayout *layout;
-    QComboBox *combo;
+    QComboBox *combo_name_filter;
     QTableWidget *table;
     
     QDir *decks_path;
     
-    void populateComboBox();
+    void populatecombo_name_filterBox();
     void populateDecksOverview();
     
 private slots:
@@ -34,7 +34,7 @@ private slots:
     void tableButtonDirtyDozenClicked(QString deck_name);
     void tableButtonLearnClicked(QString deck_name);
     void tableButtonViewDeckClicked(QString deck_name);
-    void onComboTextChanged(QString text);
+    void oncombo_name_filterTextChanged(QString text);
     
 signals:
     void deckDirtyDozenClicked(QString deck_name);

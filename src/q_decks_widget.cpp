@@ -3,7 +3,7 @@
 
 QDecksOverviewWidget :: QDecksOverviewWidget(QDir *decks_path, QWidget *parent)
     : layout (new QGridLayout)
-    , combo (new QComboBox)
+    , combo_name_filter (new QComboBox)
     , table (new QTableWidget)
 {
     resize(600, 400);
@@ -11,7 +11,7 @@ QDecksOverviewWidget :: QDecksOverviewWidget(QDir *decks_path, QWidget *parent)
     
     this->decks_path = decks_path;
     
-    connect(combo, &QComboBox::currentTextChanged, this, &QDecksOverviewWidget::onComboTextChanged);
+    connect(combo_name_filter, &QComboBox::currentTextChanged, this, &QDecksOverviewWidget::oncombo_name_filterTextChanged);
     
     QPushButton *refresh_button = new QPushButton("refresh");
     connect(refresh_button, &QPushButton::clicked, this, &QDecksOverviewWidget::refreshTable);
@@ -19,7 +19,7 @@ QDecksOverviewWidget :: QDecksOverviewWidget(QDir *decks_path, QWidget *parent)
     QPushButton *new_deck_button = new QPushButton("create new deck");
     connect(new_deck_button, &QPushButton::clicked, this, &QDecksOverviewWidget::createNewDeckClicked);
     
-    layout->addWidget(combo, 0, 0);
+    layout->addWidget(combo_name_filter, 0, 0);
     layout->addWidget(table, 1, 0, 1, 2);
     layout->addWidget(refresh_button, 2, 0);
     layout->addWidget(new_deck_button, 2, 1);
@@ -27,7 +27,7 @@ QDecksOverviewWidget :: QDecksOverviewWidget(QDir *decks_path, QWidget *parent)
     table->horizontalHeader()->hide();
     //table->verticalHeader()->hide();
     
-    populateComboBox();
+    populatecombo_name_filterBox();
     populateDecksOverview();
 }
 
@@ -53,7 +53,7 @@ void QDecksOverviewWidget::refreshTable()
     populateDecksOverview();
 }
 
-void QDecksOverviewWidget::populateComboBox()
+void QDecksOverviewWidget::populatecombo_name_filterBox()
 {
     QStringList decks_names = decks_path->entryList(QDir::NoDotAndDotDot | QDir::Dirs, QDir::Name);
     
@@ -66,9 +66,9 @@ void QDecksOverviewWidget::populateComboBox()
             items.append(item + "_");
         }
     }
-    this->combo->blockSignals(true);
-    this->combo->addItems(items);
-    this->combo->blockSignals(false);
+    this->combo_name_filter->blockSignals(true);
+    this->combo_name_filter->addItems(items);
+    this->combo_name_filter->blockSignals(false);
 }
 
 void QDecksOverviewWidget::populateDecksOverview()
@@ -82,7 +82,7 @@ void QDecksOverviewWidget::populateDecksOverview()
     int i = -1;
     foreach (QString deck_name, decks_names)
     {
-        if (this->combo->currentText() == "[all]" || deck_name.startsWith(this->combo->currentText()))
+        if (this->combo_name_filter->currentText() == "[all]" || deck_name.startsWith(this->combo_name_filter->currentText()))
         {
             i++;
             
@@ -125,7 +125,7 @@ void QDecksOverviewWidget::tableButtonViewDeckClicked(QString deck_name)
     emit deckViewClicked(deck_name);
 }
 
-void QDecksOverviewWidget::onComboTextChanged(QString text)
+void QDecksOverviewWidget::oncombo_name_filterTextChanged(QString text)
 {
     this->table->clear();
     populateDecksOverview();
