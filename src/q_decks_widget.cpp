@@ -103,7 +103,7 @@ void QDecksOverviewWidget::populateDecksOverview()
             connect(button_inv_dirty_dozen, &QPushButton::clicked, this, [this, deck_name]{ tableButtonLearnClicked(deck_name); });
             
             QPushButton *button_view_deck = new QPushButton();
-            button_view_deck->setIcon(QIcon::fromTheme("document-properties"));
+            button_view_deck->setIcon(QIcon::fromTheme("folder-open"));
             connect(button_view_deck, &QPushButton::clicked, this, [this, deck_name]{ tableButtonViewDeckClicked(deck_name); });
             
             QPushButton *button_delete_deck = new QPushButton();
