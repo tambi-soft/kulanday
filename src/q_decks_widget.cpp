@@ -97,12 +97,18 @@ void QDecksOverviewWidget::populateDecksOverview()
             item_name->setFlags(Qt::ItemIsEnabled);
             
             QPushButton *button_dirty_dozen = new QPushButton("dirty dozen");
+            connect(button_dirty_dozen, &QPushButton::clicked, this, [this, deck_name]{  tableButtonDirtyDozenClicked(deck_name); });
+            
             QPushButton *button_inv_dirty_dozen = new QPushButton("inv. dirty dozen");
+            connect(button_inv_dirty_dozen, &QPushButton::clicked, this, [this, deck_name]{ tableButtonLearnClicked(deck_name); });
+            
             QPushButton *button_view_deck = new QPushButton();
             button_view_deck->setIcon(QIcon::fromTheme("document-properties"));
+            connect(button_view_deck, &QPushButton::clicked, this, [this, deck_name]{ tableButtonViewDeckClicked(deck_name); });
             
             QPushButton *button_delete_deck = new QPushButton();
             button_delete_deck->setIcon(QIcon::fromTheme("edit-delete"));
+            connect(button_delete_deck, &QPushButton::clicked, this, [this, deck_name]{ tableButtonDeleteDeckClicked(deck_name); });
             
             QComboBox *combo_status = new QComboBox();
             
@@ -117,11 +123,6 @@ void QDecksOverviewWidget::populateDecksOverview()
             this->table->setCellWidget(i, 5, combo_status);
             this->table->setItem(i, 6, item_last_learned);
             
-            connect(button_dirty_dozen, &QPushButton::clicked, this, [this, deck_name]{  tableButtonDirtyDozenClicked(deck_name); });
-            
-            connect(button_inv_dirty_dozen, &QPushButton::clicked, this, [this, deck_name]{ tableButtonLearnClicked(deck_name); });
-            
-            connect(button_view_deck, &QPushButton::clicked, this, [this, deck_name]{ tableButtonViewDeckClicked(deck_name); });
         }
     }
     
@@ -142,6 +143,21 @@ void QDecksOverviewWidget::tableButtonDirtyDozenClicked(QString deck_name)
 void QDecksOverviewWidget::tableButtonViewDeckClicked(QString deck_name)
 {
     emit deckViewClicked(deck_name);
+}
+
+void QDecksOverviewWidget::tableButtonDeleteDeckClicked(QString deck_name)
+{
+    QString message = "delete deck \"" + deck_name + "\"?";
+    
+    int reply = QMessageBox::question(this, "Delete", message, QMessageBox::Yes, QMessageBox::No);
+    
+    if (reply == QMessageBox::Yes)
+    {
+        emit deleteDeck(deck_name);
+    }
+    
+    this->table->clear();
+    populateDecksOverview();
 }
 
 void QDecksOverviewWidget::onComboNameFilterTextChanged(QString text)

@@ -36,6 +36,7 @@ void QKulandayMainWindow::showDecksOverviewTab()
     connect(decks, &QDecksOverviewWidget::deckLearnClicked, this, &QKulandayMainWindow::showLearnWidget);
     connect(decks, &QDecksOverviewWidget::deckViewClicked, this, &QKulandayMainWindow::showDeckWidget);
     connect(decks, &QDecksOverviewWidget::createNewDeck, this, &QKulandayMainWindow::createNewDeck);
+    connect(decks, &QDecksOverviewWidget::deleteDeck, this, &QKulandayMainWindow::deleteDeck);
     
     activateNewTab();
 }
@@ -82,6 +83,13 @@ void QKulandayMainWindow::createNewDeck(QUrl deck_url)
     {
         showDeckWidget(deck_url.fileName());
     }
+}
+
+void QKulandayMainWindow::deleteDeck(QString deck_name)
+{
+    QString delpath = this->deckpath->absolutePath() + "/" + deck_name;
+    QDir *dir = new QDir(delpath);
+    dir->removeRecursively();
 }
 
 void QKulandayMainWindow::createNewDeckItem(QString deck_name)

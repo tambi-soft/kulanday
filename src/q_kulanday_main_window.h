@@ -41,6 +41,7 @@ private slots:
     void showDeckWidget(QString deck_name);
     void createNewDeck(QUrl deck_url);
     void createNewDeckItem(QString deck_name);
+    void deleteDeck(QString deck_name);
     void showDeckItem(QString deck_name, int rowid);
     void onDeckItemContentsUpdated(QString deck_name);
     

@@ -9,6 +9,7 @@
 #include <QFileDialog>
 #include <QComboBox>
 #include <QIcon>
+#include <QMessageBox>
 
 #include "q_create_new_deck_dialog.h"
 
@@ -37,6 +38,7 @@ private slots:
     void tableButtonDirtyDozenClicked(QString deck_name);
     void tableButtonLearnClicked(QString deck_name);
     void tableButtonViewDeckClicked(QString deck_name);
+    void tableButtonDeleteDeckClicked(QString deck_name);
     void onComboNameFilterTextChanged(QString text);
     
 signals:
@@ -44,4 +46,5 @@ signals:
     void deckLearnClicked(QString deck_name);
     void deckViewClicked(QString deck_name);
     void createNewDeck(QUrl url);
+    void deleteDeck(QString deck_name);
 };
