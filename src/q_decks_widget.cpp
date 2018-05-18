@@ -116,13 +116,12 @@ void QDecksOverviewWidget::populateDecksOverview()
             item_last_learned->setFlags(Qt::ItemIsEnabled);
             
             this->table->setCellWidget(i, 0, button_view_deck);
-            this->table->setCellWidget(i, 1, button_delete_deck);
-            this->table->setItem(i, 2, item_name);
-            this->table->setCellWidget(i, 3, button_dirty_dozen);
-            this->table->setCellWidget(i, 4, button_inv_dirty_dozen);
-            this->table->setCellWidget(i, 5, combo_status);
-            this->table->setItem(i, 6, item_last_learned);
-            
+            this->table->setItem(i, 1, item_name);
+            this->table->setCellWidget(i, 2, button_dirty_dozen);
+            this->table->setCellWidget(i, 3, button_inv_dirty_dozen);
+            this->table->setCellWidget(i, 4, combo_status);
+            this->table->setItem(i, 5, item_last_learned);
+            this->table->setCellWidget(i, 6, button_delete_deck);
         }
     }
     
