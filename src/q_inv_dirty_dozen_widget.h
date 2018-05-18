@@ -23,8 +23,8 @@ class QInvDirtyDozenWidget : public QWidget
     Q_OBJECT
 public:
     explicit QInvDirtyDozenWidget(QDir *decks_path, QString deck_name, QWidget *parent = nullptr);
-    void initialize(QString deck_name);
-        void clear();
+    void initialize();
+    void clear();
         
     private:
         QGridLayout *grid;
@@ -62,6 +62,7 @@ public:
         void playAudio(int selector);
         void selectDisplayCurrentTextChanged(QString text);
         void onShuffleButtonClicked();
+        void onNewSetButtonClicked();
     };
 
 #endif // Q_LEARN_WIDGET_H

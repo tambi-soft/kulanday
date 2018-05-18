@@ -13,13 +13,13 @@ QInvDirtyDozenWidget::QInvDirtyDozenWidget(QDir *decks_path, QString deck_name, 
     
     this->deck_name = deck_name;
     
-    initialize(deck_name);
+    initialize();
     update();
 }
 
-void QInvDirtyDozenWidget::initialize(QString deck_name)
+void QInvDirtyDozenWidget::initialize()
 {
-    DbAdapter *db_adapter = new DbAdapter(this->decks_path, deck_name);
+    DbAdapter *db_adapter = new DbAdapter(this->decks_path, this->deck_name);
     this->dataset = db_adapter->selectDeckDirtyDozenItems();
     
     this->select_display_combo = new QComboBox();
@@ -30,9 +30,15 @@ void QInvDirtyDozenWidget::initialize(QString deck_name)
     
     this->grid->addWidget(select_display_combo, 0, 0);
     
+    QPushButton *button_new_set = new QPushButton("new set");
+    connect(button_new_set, &QPushButton::clicked, this, &QInvDirtyDozenWidget::onNewSetButtonClicked);
+    
+    this->grid->addWidget(button_new_set, int(12 / this->COLUMNS +2), 0);
+    
     QPushButton *shuffle_button = new QPushButton("shuffle");
     shuffle_button->setIcon(QIcon::fromTheme("media-playlist-shuffle"));
     connect(shuffle_button, &QPushButton::clicked, this, &QInvDirtyDozenWidget::onShuffleButtonClicked);
+    
     this->grid->addWidget(shuffle_button, int(12 / this->COLUMNS +2), this->COLUMNS-1);
 }
 
@@ -140,6 +146,13 @@ void QInvDirtyDozenWidget::onShuffleButtonClicked()
 {
     clear();
     this->dataset = shuffleList(this->dataset);
+    update();
+}
+
+void QInvDirtyDozenWidget::onNewSetButtonClicked()
+{
+    clear();
+    initialize();
     update();
 }
 
