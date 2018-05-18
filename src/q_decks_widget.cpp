@@ -4,6 +4,7 @@
 QDecksOverviewWidget :: QDecksOverviewWidget(QDir *decks_path, QWidget *parent)
     : layout (new QGridLayout)
     , combo_name_filter (new QComboBox)
+    , combo_status_filter (new QComboBox)
     , table (new QTableWidget)
 {
     resize(600, 400);
@@ -11,7 +12,7 @@ QDecksOverviewWidget :: QDecksOverviewWidget(QDir *decks_path, QWidget *parent)
     
     this->decks_path = decks_path;
     
-    connect(combo_name_filter, &QComboBox::currentTextChanged, this, &QDecksOverviewWidget::oncombo_name_filterTextChanged);
+    connect(combo_name_filter, &QComboBox::currentTextChanged, this, &QDecksOverviewWidget::onComboNameFilterTextChanged);
     
     QPushButton *refresh_button = new QPushButton("refresh");
     connect(refresh_button, &QPushButton::clicked, this, &QDecksOverviewWidget::refreshTable);
@@ -20,6 +21,7 @@ QDecksOverviewWidget :: QDecksOverviewWidget(QDir *decks_path, QWidget *parent)
     connect(new_deck_button, &QPushButton::clicked, this, &QDecksOverviewWidget::createNewDeckClicked);
     
     layout->addWidget(combo_name_filter, 0, 0);
+    layout->addWidget(combo_status_filter, 0, 1);
     layout->addWidget(table, 1, 0, 1, 2);
     layout->addWidget(refresh_button, 2, 0);
     layout->addWidget(new_deck_button, 2, 1);
@@ -27,7 +29,7 @@ QDecksOverviewWidget :: QDecksOverviewWidget(QDir *decks_path, QWidget *parent)
     table->horizontalHeader()->hide();
     //table->verticalHeader()->hide();
     
-    populatecombo_name_filterBox();
+    populateComboNameFilterBox();
     populateDecksOverview();
 }
 
@@ -53,7 +55,7 @@ void QDecksOverviewWidget::refreshTable()
     populateDecksOverview();
 }
 
-void QDecksOverviewWidget::populatecombo_name_filterBox()
+void QDecksOverviewWidget::populateComboNameFilterBox()
 {
     QStringList decks_names = decks_path->entryList(QDir::NoDotAndDotDot | QDir::Dirs, QDir::Name);
     
@@ -71,12 +73,17 @@ void QDecksOverviewWidget::populatecombo_name_filterBox()
     this->combo_name_filter->blockSignals(false);
 }
 
+void QDecksOverviewWidget::populateComboStatusFilterBox()
+{
+    
+}
+
 void QDecksOverviewWidget::populateDecksOverview()
 {
     
     QStringList decks_names = decks_path->entryList(QDir::NoDotAndDotDot | QDir::Dirs, QDir::Name);
     
-    this->table->setColumnCount(4);
+    this->table->setColumnCount(7);
     this->table->setRowCount(decks_names.length());
     
     int i = -1;
@@ -86,17 +93,29 @@ void QDecksOverviewWidget::populateDecksOverview()
         {
             i++;
             
-            QTableWidgetItem *item = new QTableWidgetItem(deck_name);
-            this->table->setItem(i, 0, item);
-            item->setFlags(Qt::ItemIsEnabled);
+            QTableWidgetItem *item_name = new QTableWidgetItem(deck_name);
+            item_name->setFlags(Qt::ItemIsEnabled);
             
             QPushButton *button_dirty_dozen = new QPushButton("dirty dozen");
             QPushButton *button_inv_dirty_dozen = new QPushButton("inv. dirty dozen");
-            QPushButton *button_view_deck = new QPushButton("view deck");
+            QPushButton *button_view_deck = new QPushButton();
+            button_view_deck->setIcon(QIcon::fromTheme("document-properties"));
             
-            this->table->setCellWidget(i, 1, button_dirty_dozen);
-            this->table->setCellWidget(i, 2, button_inv_dirty_dozen);
-            this->table->setCellWidget(i, 3, button_view_deck);
+            QPushButton *button_delete_deck = new QPushButton();
+            button_delete_deck->setIcon(QIcon::fromTheme("edit-delete"));
+            
+            QComboBox *combo_status = new QComboBox();
+            
+            QTableWidgetItem *item_last_learned = new QTableWidgetItem("never");
+            item_last_learned->setFlags(Qt::ItemIsEnabled);
+            
+            this->table->setCellWidget(i, 0, button_view_deck);
+            this->table->setCellWidget(i, 1, button_delete_deck);
+            this->table->setItem(i, 2, item_name);
+            this->table->setCellWidget(i, 3, button_dirty_dozen);
+            this->table->setCellWidget(i, 4, button_inv_dirty_dozen);
+            this->table->setCellWidget(i, 5, combo_status);
+            this->table->setItem(i, 6, item_last_learned);
             
             connect(button_dirty_dozen, &QPushButton::clicked, this, [this, deck_name]{  tableButtonDirtyDozenClicked(deck_name); });
             
@@ -125,7 +144,7 @@ void QDecksOverviewWidget::tableButtonViewDeckClicked(QString deck_name)
     emit deckViewClicked(deck_name);
 }
 
-void QDecksOverviewWidget::oncombo_name_filterTextChanged(QString text)
+void QDecksOverviewWidget::onComboNameFilterTextChanged(QString text)
 {
     this->table->clear();
     populateDecksOverview();
