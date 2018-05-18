@@ -1,7 +1,7 @@
 
 #include <QDebug>
 #include <QWidget>
-#include <QVBoxLayout>
+#include <QGridLayout>
 #include <QTableWidget>
 #include <QHeaderView> // for hiding headers
 #include <QPushButton>
@@ -19,10 +19,9 @@ public:
     QDecksOverviewWidget(QDir *decks_path, QWidget *parent = 0);
 
 private:
-    QVBoxLayout *layout;
+    QGridLayout *layout;
     QComboBox *combo;
     QTableWidget *table;
-    QPushButton *new_deck_button;
     
     QDir *decks_path;
     
@@ -31,6 +30,7 @@ private:
     
 private slots:
     void createNewDeckClicked();
+    void refreshTable();
     void tableButtonDirtyDozenClicked(QString deck_name);
     void tableButtonLearnClicked(QString deck_name);
     void tableButtonViewDeckClicked(QString deck_name);

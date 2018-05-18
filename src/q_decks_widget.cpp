@@ -2,10 +2,9 @@
 #include <src/q_decks_widget.h>
 
 QDecksOverviewWidget :: QDecksOverviewWidget(QDir *decks_path, QWidget *parent)
-    : layout (new QVBoxLayout)
+    : layout (new QGridLayout)
     , combo (new QComboBox)
     , table (new QTableWidget)
-    , new_deck_button (new QPushButton)
 {
     resize(600, 400);
     setLayout(layout);
@@ -14,13 +13,16 @@ QDecksOverviewWidget :: QDecksOverviewWidget(QDir *decks_path, QWidget *parent)
     
     connect(combo, &QComboBox::currentTextChanged, this, &QDecksOverviewWidget::onComboTextChanged);
     
-    layout->addWidget(combo);
-    layout->addWidget(table);
-    layout->addWidget(new_deck_button);
+    QPushButton *refresh_button = new QPushButton("refresh");
+    connect(refresh_button, &QPushButton::clicked, this, &QDecksOverviewWidget::refreshTable);
     
-    new_deck_button->setText("create new deck");
-    
+    QPushButton *new_deck_button = new QPushButton("create new deck");
     connect(new_deck_button, &QPushButton::clicked, this, &QDecksOverviewWidget::createNewDeckClicked);
+    
+    layout->addWidget(combo, 0, 0);
+    layout->addWidget(table, 1, 0, 1, 2);
+    layout->addWidget(refresh_button, 2, 0);
+    layout->addWidget(new_deck_button, 2, 1);
     
     table->horizontalHeader()->hide();
     //table->verticalHeader()->hide();
@@ -41,6 +43,12 @@ void QDecksOverviewWidget::createNewDeckClicked()
     
     emit createNewDeck(QUrl(url_path));
     
+    table->clear();
+    populateDecksOverview();
+}
+
+void QDecksOverviewWidget::refreshTable()
+{
     table->clear();
     populateDecksOverview();
 }

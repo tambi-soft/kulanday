@@ -2,7 +2,7 @@
 #define Q_DECK_OVERVIEW_H
 
 #include <QWidget>
-#include <QVBoxLayout>
+#include <QGridLayout>
 #include <QPushButton>
 #include <QCheckBox>
 #include <QTableWidget>
@@ -34,7 +34,7 @@ public:
     void refresh();
     
 private:
-    QLayout *layout;
+    QGridLayout *layout;
     QTableWidget *table;
     QDir *decks_path;
     QString deck_name;
@@ -68,6 +68,7 @@ public slots:
     
 private slots:
     void newItemButtonClicked();
+    void refreshTable();
     void editRowButtonClicked(QString deck_name, int rowid);
     void deleteRowButtonClicked(int rowid, QMap<QString, QVariant> data_row);
     void mediaPlayerStateChanged(int state);

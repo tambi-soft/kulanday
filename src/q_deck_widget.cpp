@@ -3,7 +3,7 @@
 
 QDeckOverviewWidget::QDeckOverviewWidget(QDir *decks_path, QString deck_name, QWidget *parent)
     : QWidget(parent)
-    , layout (new QVBoxLayout)
+    , layout (new QGridLayout)
     , table (new QTableWidget)
     , player (new QMediaPlayer)
     , unicodeFonts (new UnicodeFonts)
@@ -19,6 +19,9 @@ QDeckOverviewWidget::QDeckOverviewWidget(QDir *decks_path, QString deck_name, QW
     this->deck_name = deck_name;
     
     //setFocusPolicy(Qt::StrongFocus);
+    
+    QPushButton *refresh_button = new QPushButton("refresh");
+    connect(refresh_button, &QPushButton::clicked, this, &QDeckOverviewWidget::refreshTable);
     
     QPushButton *new_item_button = new QPushButton("new item");
     connect (new_item_button, &QPushButton::clicked, this, &QDeckOverviewWidget::newItemButtonClicked);
@@ -55,9 +58,10 @@ QDeckOverviewWidget::QDeckOverviewWidget(QDir *decks_path, QString deck_name, QW
     connect(chk_svg, &QCheckBox::clicked, this, &QDeckOverviewWidget::refresh);
     connect(chk_image, &QCheckBox::clicked, this, &QDeckOverviewWidget::refresh);
     
-    layout->addWidget(chk_widget);
-    layout->addWidget(table);
-    layout->addWidget(new_item_button);
+    layout->addWidget(chk_widget, 0, 0, 1, 2);
+    layout->addWidget(table, 1, 0, 1, 2);
+    layout->addWidget(refresh_button, 2, 0);
+    layout->addWidget(new_item_button, 2, 1);
     
     initTableWidget(deck_name);
 }
@@ -234,6 +238,12 @@ void QDeckOverviewWidget::newItemButtonClicked()
 {
     emit newDeckItemRequested(deck_name);
     
+    table->clear();
+    initTableWidget(this->deck_name);
+}
+
+void QDeckOverviewWidget::refreshTable()
+{
     table->clear();
     initTableWidget(this->deck_name);
 }
