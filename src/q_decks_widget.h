@@ -26,6 +26,7 @@ private:
     QGridLayout *layout;
     QComboBox *combo_name_filter;
     QStringList COMBO_STATI;
+    QStringList COMBO_STATI_FILTER;
     QComboBox *combo_status_filter;
     QTableWidget *table;
     
@@ -35,6 +36,8 @@ private:
     void populateComboStatusFilterBox();
     void populateDecksOverview();
     QComboBox *populateComboStatus(QString deck_name);
+    void populateComboStatusFilter(QComboBox *combo);
+    void comboColorAdjust(QComboBox *combo);
     
 private slots:
     void createNewDeckClicked();
@@ -44,6 +47,7 @@ private slots:
     void tableButtonViewDeckClicked(QString deck_name);
     void tableButtonDeleteDeckClicked(QString deck_name);
     void onComboNameFilterTextChanged(QString text);
+    void onComboStatusFilterTextChanged(QString text);
     void onComboStatusTextChanged(QString deck_name, QComboBox *combo_status);
     
 signals:
