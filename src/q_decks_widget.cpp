@@ -15,6 +15,8 @@ QDecksOverviewWidget :: QDecksOverviewWidget(QDir *decks_path, QWidget *parent)
     COMBO_STATI << "ToDo" << "perfect" << "good" << "weak" << "poor" << "none";
     COMBO_STATI_FILTER << "[all]" << "ToDo" << "perfect" << "good" << "weak" << "poor" << "none";
     
+    this->database = new DbAdapterMeta(decks_path);
+    
     connect(combo_name_filter, &QComboBox::currentTextChanged, this, &QDecksOverviewWidget::onComboNameFilterTextChanged);
     
     populateComboStatusFilter(combo_status_filter);
@@ -86,8 +88,11 @@ void QDecksOverviewWidget::populateComboStatusFilterBox()
 
 void QDecksOverviewWidget::populateDecksOverview()
 {
-    
     QStringList decks_names = decks_path->entryList(QDir::NoDotAndDotDot | QDir::Dirs, QDir::Name);
+    
+    this->database->populateDecksTable(decks_names);
+    QMap<QString,QString> decks_meta = this->database->selectDecksStati();
+    QMap<QString,QString> decks_meta_learned = this->database->selectDecksLearned();
     
     this->table->setColumnCount(7);
     this->table->setRowCount(decks_names.length());
@@ -102,7 +107,7 @@ void QDecksOverviewWidget::populateDecksOverview()
             //QComboBox *combo_widget = this->table->cellWidget(0, 4);
             
             if (current_filter_text == "[all]"
-                    || current_filter_text == "none")
+                    || current_filter_text == decks_meta[deck_name])
             {
                 i++;
                 
@@ -124,8 +129,23 @@ void QDecksOverviewWidget::populateDecksOverview()
                 connect(button_delete_deck, &QPushButton::clicked, this, [this, deck_name]{ tableButtonDeleteDeckClicked(deck_name); });
                 
                 QComboBox *combo_status = populateComboStatus(deck_name);
+                if (decks_meta[deck_name] != "")
+                {
+                    combo_status->setCurrentText(decks_meta[deck_name]);
+                }
                 
-                QTableWidgetItem *item_last_learned = new QTableWidgetItem("never");
+                QTableWidgetItem *item_last_learned;
+                if (decks_meta_learned[deck_name] == "")
+                {
+                    item_last_learned = new QTableWidgetItem("never");
+                }
+                else
+                {
+                    QDateTime timestamp;
+                    timestamp.setTime_t(decks_meta_learned[deck_name].toInt());
+                    item_last_learned = new QTableWidgetItem(timestamp.toString("dd. MMM yy"));
+                }
+                
                 item_last_learned->setFlags(Qt::ItemIsEnabled);
                 
                 this->table->setCellWidget(i, 0, button_view_deck);
@@ -183,11 +203,15 @@ void QDecksOverviewWidget::populateComboStatusFilter(QComboBox *combo)
 
 void QDecksOverviewWidget::tableButtonLearnClicked(QString deck_name)
 {
+    this->database->updateLastLearned(deck_name);
+    
     emit deckLearnClicked(deck_name);
 }
 
 void QDecksOverviewWidget::tableButtonDirtyDozenClicked(QString deck_name)
 {
+    this->database->updateLastLearned(deck_name);
+    
     emit deckDirtyDozenClicked(deck_name);
 }
 
@@ -219,7 +243,7 @@ void QDecksOverviewWidget::onComboNameFilterTextChanged(QString text)
 
 void QDecksOverviewWidget::onComboStatusFilterTextChanged(QString text)
 {
-    comboColorAdjust(this->combo_status_filter);
+    comboFilterColorAdjust(this->combo_status_filter);
     
     this->table->clear();
     populateDecksOverview();
@@ -227,6 +251,7 @@ void QDecksOverviewWidget::onComboStatusFilterTextChanged(QString text)
 
 void QDecksOverviewWidget::onComboStatusTextChanged(QString deck_name, QComboBox *combo_status)
 {
+    this->database->updateDeckStatus(deck_name, combo_status->currentText());
     comboColorAdjust(combo_status);
 }
 
@@ -254,6 +279,39 @@ void QDecksOverviewWidget::comboColorAdjust(QComboBox *combo)
         combo->setStyleSheet("QComboBox { background-color: red; }");
     }
     else if (text == COMBO_STATI[5])
+    {
+        combo->setStyleSheet("QComboBox { background-color: lightgrey; }");
+    }
+}
+
+void QDecksOverviewWidget::comboFilterColorAdjust(QComboBox *combo)
+{
+    QString text = combo->currentText();
+    if (text == COMBO_STATI_FILTER[0])
+    {
+        combo->setStyleSheet("QComboBox { color: black; background-color: white; }");
+    }
+    else if (text == COMBO_STATI_FILTER[1])
+    {
+        combo->setStyleSheet("QComboBox { background-color: blue; }");
+    }
+    else if (text == COMBO_STATI_FILTER[2])
+    {
+        combo->setStyleSheet("QComboBox { background-color: rgb(0, 180, 0); }");
+    }
+    else if (text == COMBO_STATI_FILTER[3])
+    {
+        combo->setStyleSheet("QComboBox { background-color: rgb(0, 255, 0); }");
+    }
+    else if (text == COMBO_STATI_FILTER[4])
+    {
+        combo->setStyleSheet("QComboBox { background-color: yellow; }");
+    }
+    else if (text == COMBO_STATI_FILTER[5])
+    {
+        combo->setStyleSheet("QComboBox { background-color: red; }");
+    }
+    else if (text == COMBO_STATI_FILTER[6])
     {
         combo->setStyleSheet("QComboBox { background-color: lightgrey; }");
     }

@@ -14,6 +14,7 @@
 #include <QMessageBox>
 
 #include "q_create_new_deck_dialog.h"
+#include "db_adapter_meta.h"
 
 class QDecksOverviewWidget : public QWidget
 {
@@ -23,6 +24,7 @@ public:
     QDecksOverviewWidget(QDir *decks_path, QWidget *parent = 0);
 
 private:
+    DbAdapterMeta *database;
     QGridLayout *layout;
     QComboBox *combo_name_filter;
     QStringList COMBO_STATI;
@@ -38,6 +40,7 @@ private:
     QComboBox *populateComboStatus(QString deck_name);
     void populateComboStatusFilter(QComboBox *combo);
     void comboColorAdjust(QComboBox *combo);
+    void comboFilterColorAdjust(QComboBox *combo);
     
 private slots:
     void createNewDeckClicked();
