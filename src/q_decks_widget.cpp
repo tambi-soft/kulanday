@@ -176,7 +176,7 @@ QComboBox *QDecksOverviewWidget::populateComboStatus(QString deck_name)
     
     combo_status->setStyleSheet("QFrame { border: 4px solid black; }\
                                 QComboBox { background-color: lightgrey; }");
-                                
+    
     combo_status->setCurrentIndex(COMBO_STATI.length()-1);
     
     connect(combo_status, &QComboBox::currentTextChanged, this, [this, deck_name, combo_status]{ onComboStatusTextChanged(deck_name, combo_status); });
@@ -206,6 +206,9 @@ void QDecksOverviewWidget::tableButtonLearnClicked(QString deck_name)
     this->database->updateLastLearned(deck_name);
     
     emit deckLearnClicked(deck_name);
+    
+    this->table->clear();
+    populateDecksOverview();
 }
 
 void QDecksOverviewWidget::tableButtonDirtyDozenClicked(QString deck_name)
@@ -213,6 +216,9 @@ void QDecksOverviewWidget::tableButtonDirtyDozenClicked(QString deck_name)
     this->database->updateLastLearned(deck_name);
     
     emit deckDirtyDozenClicked(deck_name);
+    
+    this->table->clear();
+    populateDecksOverview();
 }
 
 void QDecksOverviewWidget::tableButtonViewDeckClicked(QString deck_name)
