@@ -8,7 +8,9 @@
 #include <QDir>
 #include <QFileDialog>
 #include <QComboBox>
+#include <QListView>
 #include <QIcon>
+#include <QColor>
 #include <QMessageBox>
 
 #include "q_create_new_deck_dialog.h"
@@ -23,6 +25,7 @@ public:
 private:
     QGridLayout *layout;
     QComboBox *combo_name_filter;
+    QStringList COMBO_STATI;
     QComboBox *combo_status_filter;
     QTableWidget *table;
     
@@ -31,6 +34,7 @@ private:
     void populateComboNameFilterBox();
     void populateComboStatusFilterBox();
     void populateDecksOverview();
+    QComboBox *populateComboStatus(QString deck_name);
     
 private slots:
     void createNewDeckClicked();
@@ -40,6 +44,7 @@ private slots:
     void tableButtonViewDeckClicked(QString deck_name);
     void tableButtonDeleteDeckClicked(QString deck_name);
     void onComboNameFilterTextChanged(QString text);
+    void onComboStatusTextChanged(QString deck_name, QComboBox *combo_status);
     
 signals:
     void deckDirtyDozenClicked(QString deck_name);

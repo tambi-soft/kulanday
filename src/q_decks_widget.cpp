@@ -12,6 +12,8 @@ QDecksOverviewWidget :: QDecksOverviewWidget(QDir *decks_path, QWidget *parent)
     
     this->decks_path = decks_path;
     
+    COMBO_STATI << "ToDo" << "perfect" << "good" << "weak" << "poor" << "none";
+    
     connect(combo_name_filter, &QComboBox::currentTextChanged, this, &QDecksOverviewWidget::onComboNameFilterTextChanged);
     
     QPushButton *refresh_button = new QPushButton("refresh");
@@ -110,7 +112,7 @@ void QDecksOverviewWidget::populateDecksOverview()
             button_delete_deck->setIcon(QIcon::fromTheme("edit-delete"));
             connect(button_delete_deck, &QPushButton::clicked, this, [this, deck_name]{ tableButtonDeleteDeckClicked(deck_name); });
             
-            QComboBox *combo_status = new QComboBox();
+            QComboBox *combo_status = populateComboStatus(deck_name);
             
             QTableWidgetItem *item_last_learned = new QTableWidgetItem("never");
             item_last_learned->setFlags(Qt::ItemIsEnabled);
@@ -127,6 +129,27 @@ void QDecksOverviewWidget::populateDecksOverview()
     
     this->table->setRowCount(i+1);
     this->table->resizeColumnsToContents();
+}
+
+QComboBox *QDecksOverviewWidget::populateComboStatus(QString deck_name)
+{
+    QComboBox *combo_status = new QComboBox();
+    combo_status->addItems(COMBO_STATI);
+    
+    combo_status->setItemData( 0, QColor( Qt::blue ), Qt::BackgroundRole );
+    combo_status->setItemData( 1, QColor( 0, 180, 0 ), Qt::BackgroundRole );
+    combo_status->setItemData( 2, QColor( 0, 255, 0 ), Qt::BackgroundRole );
+    combo_status->setItemData( 3, QColor( Qt::yellow ), Qt::BackgroundRole );
+    combo_status->setItemData( 4, QColor( Qt::red ), Qt::BackgroundRole );
+    
+    combo_status->setStyleSheet("QFrame { border: 4px solid black; }\
+                                QComboBox { background-color: lightgrey; }");
+                                
+    combo_status->setCurrentIndex(COMBO_STATI.length()-1);
+    
+    connect(combo_status, &QComboBox::currentTextChanged, this, [this, deck_name, combo_status]{ onComboStatusTextChanged(deck_name, combo_status); });
+    
+    return combo_status;
 }
 
 void QDecksOverviewWidget::tableButtonLearnClicked(QString deck_name)
@@ -163,4 +186,35 @@ void QDecksOverviewWidget::onComboNameFilterTextChanged(QString text)
 {
     this->table->clear();
     populateDecksOverview();
+}
+
+void QDecksOverviewWidget::onComboStatusTextChanged(QString deck_name, QComboBox *combo_status)
+{
+    QString text = combo_status->currentText();
+    if (text == COMBO_STATI[0])
+    {
+        combo_status->setStyleSheet("QComboBox { background-color: blue; }");
+    }
+    else if (text == COMBO_STATI[1])
+    {
+        combo_status->setStyleSheet("QComboBox { background-color: rgb(0, 180, 0); }");
+    }
+    else if (text == COMBO_STATI[2])
+    {
+        combo_status->setStyleSheet("QComboBox { background-color: rgb(0, 255, 0); }");
+    }
+    else if (text == COMBO_STATI[3])
+    {
+        combo_status->setStyleSheet("QComboBox { background-color: yellow; }");
+    }
+    else if (text == COMBO_STATI[4])
+    {
+        combo_status->setStyleSheet("QComboBox { background-color: red; }");
+    }
+    else if (text == COMBO_STATI[5])
+    {
+        combo_status->setStyleSheet("QComboBox { background-color: lightgrey; }");
+    }
+    
+    
 }
