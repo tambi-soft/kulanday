@@ -124,13 +124,14 @@ void QInvDirtyDozenWidget::clear()
 
 void QInvDirtyDozenWidget::displayButtonClicked(int rowid, QPushButton *button)
 {
-    if (audioPlayer->state() == QMediaPlayer::PlayingState)
+    if (audioPlayer->state() == QMediaPlayer::PlayingState && this->button_last_play == button)
     {
         audioPlayer->stop();
     }
     else
     {
         playAudio(rowid);
+        this->button_last_play = button;
     }
 }
 

@@ -49,6 +49,7 @@ public:
         
         void update();
         QList<QMap<QString, QVariant> > shuffleList(QList<QMap<QString, QVariant> > list);
+        QPushButton *button_last_play = nullptr;
         
     protected:
         void hideEvent(QHideEvent *event);

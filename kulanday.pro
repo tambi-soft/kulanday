@@ -63,7 +63,8 @@ HEADERS += \
     src/unicode_fonts.h \
     src/config.h \
     src/q_inv_dirty_dozen_widget.h \
-    src/audio_recorder.h
+    src/audio_recorder.h \
+    src/db_adapter_meta.h
 
 SOURCES += \
     src/kulanday.cpp\
@@ -80,7 +81,8 @@ SOURCES += \
     src/unicode_fonts.cpp \
     src/config.cpp \
     src/q_inv_dirty_dozen_widget.cpp \
-    src/audio_recorder.cpp
+    src/audio_recorder.cpp \
+    src/db_adapter_meta.cpp
 
 RESOURCES += \
     resources.qrc
