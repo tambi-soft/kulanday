@@ -23,8 +23,29 @@ QKulandayMainWindow::QKulandayMainWindow(QWidget *parent)
     QTabBar *tab_bar = tab_widget->tabBar();
     connect(tab_bar, &QTabBar::tabMoved, this, &QKulandayMainWindow::onTabMoved);
     
-    showDecksOverviewTab();
+    tab_bar->setStyleSheet("QTabBar::tab {\
+                           border-left: 1px solid #9B9B9B;\
+                           border-right: 1px solid #9B9B9B;\
+                           border-bottom: 1px solid #9B9B9B;\
+                           border-top-color: #5A5A5A;\
+                           /*min-width: 20ex;*/\
+                           max-width: 15ex;\
+                           font: 10px;\
+                           padding: 2px;\
+}\
+                           QTabBar::tab:selected, QTabBar::tab:hover {\
+                           background: #c0c0c0;\
+}\
+                           QTabBar::tab:selected {\
+                           border-color: #9B9B9B;\
+                           border-bottom-color: #C2C7CB; /* same as pane color */\
+                           }\
+                           QTabBar::tab:!selected {\
+                           margin-top: 2px;\
+background: #e7e7e7;\
+                           }");
     
+    showDecksOverviewTab();
     deactivateDecksOverviewCloseButton();
 }
 
