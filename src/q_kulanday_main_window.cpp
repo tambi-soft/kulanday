@@ -32,17 +32,18 @@ QKulandayMainWindow::QKulandayMainWindow(QWidget *parent)
                            max-width: 15ex;\
                            font: 10px;\
                            padding: 2px;\
-}\
-                           QTabBar::tab:selected, QTabBar::tab:hover {\
+                           }\
+                           QTabBar::tab:hover {\
                            background: #c0c0c0;\
-}\
+                           }\
                            QTabBar::tab:selected {\
+                           background: #fcfcfc;\
                            border-color: #9B9B9B;\
-                           border-bottom-color: #C2C7CB; /* same as pane color */\
+                           border-bottom: 0px;\
                            }\
                            QTabBar::tab:!selected {\
                            margin-top: 3px;\
-background: #e7e7e7;\
+                           background: #e7e7e7;\
                            }");
     
     showDecksOverviewTab();
