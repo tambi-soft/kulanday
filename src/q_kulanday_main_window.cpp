@@ -41,7 +41,7 @@ QKulandayMainWindow::QKulandayMainWindow(QWidget *parent)
                            border-bottom-color: #C2C7CB; /* same as pane color */\
                            }\
                            QTabBar::tab:!selected {\
-                           margin-top: 2px;\
+                           margin-top: 3px;\
 background: #e7e7e7;\
                            }");
     
