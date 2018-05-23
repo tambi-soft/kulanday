@@ -23,6 +23,9 @@ QKulandayMainWindow::QKulandayMainWindow(QWidget *parent)
     QTabBar *tab_bar = tab_widget->tabBar();
     connect(tab_bar, &QTabBar::tabMoved, this, &QKulandayMainWindow::onTabMoved);
     
+    tab_bar->setMouseTracking(true);
+    tab_bar->installEventFilter(this);
+    
     tab_bar->setStyleSheet("QTabBar::tab {\
                            border-left: 1px solid #9B9B9B;\
                            border-right: 1px solid #9B9B9B;\
@@ -30,8 +33,8 @@ QKulandayMainWindow::QKulandayMainWindow(QWidget *parent)
                            border-top-color: #5A5A5A;\
                            /*min-width: 20ex;*/\
                            max-width: 15ex;\
-                           font: 10px;\
-                           padding: 2px;\
+                           font: 8px;\
+                           padding: 1px;\
                            }\
                            QTabBar::tab:hover {\
                            background: #c0c0c0;\
@@ -98,9 +101,9 @@ void QKulandayMainWindow::showDeckWidget(QString deck_name)
         
         tab_widget->addTab(deck, deck_name);
         activateNewTab();
+        this->tab_widget->setTabIcon(this->tab_widget->currentIndex(), QIcon::fromTheme("folder-open"));
         
         this->deck_item_widgets[deck_name] = this->tab_widget->currentIndex();
-        this->tab_widget->setTabIcon(this->tab_widget->currentIndex(), QIcon::fromTheme("folder-open"));
     }
 }
 
@@ -123,9 +126,10 @@ void QKulandayMainWindow::createNewDeckItem(QString deck_name)
 {
     QDeckItemWidget *deck_item = new QDeckItemWidget(this->deckpath, deck_name);
     connect(deck_item, &QDeckItemWidget::contentsUpdated, this, &QKulandayMainWindow::onDeckItemContentsUpdated);
-    tab_widget->addTab(deck_item, "item: " + deck_name);
+    tab_widget->addTab(deck_item, deck_name);
     
     activateNewTab();
+    this->tab_widget->setTabIcon(this->tab_widget->currentIndex(), QIcon::fromTheme("document-properties"));
     
     int rowid = deck_item->rowid;
     this->deck_item_widgets[deck_name + "_" + QString::number(rowid)] = this->tab_widget->currentIndex();
@@ -142,9 +146,10 @@ void QKulandayMainWindow::showDeckItem(QString deck_name, int rowid)
     {
         QDeckItemWidget *deck_item = new QDeckItemWidget(this->deckpath, deck_name, rowid);
         connect(deck_item, &QDeckItemWidget::contentsUpdated, this, &QKulandayMainWindow::onDeckItemContentsUpdated);
-        tab_widget->addTab(deck_item, "item: " + deck_name);
+        tab_widget->addTab(deck_item, deck_name);
         
         activateNewTab();
+        this->tab_widget->setTabIcon(this->tab_widget->currentIndex(), QIcon::fromTheme("document-properties"));
         
         this->deck_item_widgets[deck_name + "_" + QString::number(rowid)] = this->tab_widget->currentIndex();
     }
@@ -207,4 +212,21 @@ void QKulandayMainWindow::deactivateDecksOverviewCloseButton()
 {
     QTabBar *tb = this->tab_widget->tabBar();
     tb->tabButton(0, QTabBar::RightSide)->hide();
+}
+
+bool QKulandayMainWindow::eventFilter(QObject *watched, QEvent *event)
+{
+    if (watched == this->tab_widget->tabBar())
+    {
+        if (event->type() == QEvent::MouseMove)
+        {
+            QMouseEvent* mev = static_cast<QMouseEvent*>(event);
+            int index = this->tab_widget->tabBar()->tabAt(mev->pos());
+            QString name = this->tab_widget->tabBar()->tabText(index);
+            
+            QToolTip::showText(mev->pos(), name);
+        }
+    }
+    
+    return QWidget::eventFilter(watched, event);
 }

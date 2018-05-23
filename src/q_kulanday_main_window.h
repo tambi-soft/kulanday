@@ -3,6 +3,8 @@
 #include <QTabWidget>
 #include <QDir>
 #include <QIcon>
+#include <QMouseEvent>
+#include<QToolTip>
 
 #include "q_kulanday_menubar.h"
 #include "q_decks_widget.h"
@@ -20,6 +22,7 @@ class QKulandayMainWindow : public QMainWindow
 public:
     QKulandayMainWindow(QWidget *parent = 0);
     
+    bool eventFilter(QObject *watched, QEvent *event);
 private:
     QTabWidget *tab_widget;
     QKulandayMenuBar *menu_bar;
