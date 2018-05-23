@@ -6,7 +6,7 @@ QInvDirtyDozenWidget::QInvDirtyDozenWidget(QDir *decks_path, QString deck_name, 
     , audioPlayer (new QMediaPlayer)
     , unicodeFonts (new UnicodeFonts)
 {
-    DISPLAY_COMBO_ITEMS << "image" << "name" << "word" << "translation";
+    DISPLAY_COMBO_ITEMS << "image" << "name" << "word" << "phonetical" << "translation";
     this->decks_path = decks_path;
     
     setLayout(grid);
@@ -80,6 +80,10 @@ void QInvDirtyDozenWidget::update()
         else if (this->select_display_combo->currentText() == "word")
         {
             button->setText(dataset.at(i)["word"].toString());
+        }
+        else if (this->select_display_combo->currentText() == "phonetical")
+        {
+            button->setText(dataset.at(i)["phonetical"].toString());
         }
         else if (this->select_display_combo->currentText() == "translation")
         {

@@ -91,10 +91,10 @@ QList<QVariant> DbAdapter::selectDeckItemsWithAudio()
 
 QList<QMap<QString,QVariant>> DbAdapter::selectDeckDirtyDozenItems()
 {
-    QSqlQuery query("SELECT image, rowid, name, word, translation, svg_filename, image, filename\
+    QSqlQuery query("SELECT image, rowid, name, word, phonetical, translation, svg_filename, image, filename\
         FROM\
         (\
-            SELECT image, deck.rowid AS rowid, name, word, translation, svg_filename, image, audio.filename\
+            SELECT image, deck.rowid AS rowid, name, word, phonetical, translation, svg_filename, image, audio.filename\
             FROM deck\
             JOIN audio ON deck.rowid=audio.deck_rowid\
             ORDER BY RANDOM()\
