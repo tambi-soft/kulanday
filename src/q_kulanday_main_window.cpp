@@ -222,9 +222,15 @@ bool QKulandayMainWindow::eventFilter(QObject *watched, QEvent *event)
         {
             QMouseEvent* mev = static_cast<QMouseEvent*>(event);
             int index = this->tab_widget->tabBar()->tabAt(mev->pos());
-            QString name = this->tab_widget->tabBar()->tabText(index);
             
-            QToolTip::showText(mev->pos(), name);
+            if (index != this->tooltip_last_index)
+            {
+                this->tooltip_last_index = index;
+                QString name = this->tab_widget->tabBar()->tabText(index);
+                
+                QPoint pos = QPoint(mev->x(), -20);
+                QToolTip::showText(this->mapToParent(pos), name);
+            }
         }
     }
     
