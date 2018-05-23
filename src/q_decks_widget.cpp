@@ -115,9 +115,11 @@ void QDecksOverviewWidget::populateDecksOverview()
                 item_name->setFlags(Qt::ItemIsEnabled);
                 
                 QPushButton *button_dirty_dozen = new QPushButton("dirty dozen");
+                button_dirty_dozen->setIcon(QIcon::fromTheme("image-loading"));
                 connect(button_dirty_dozen, &QPushButton::clicked, this, [this, deck_name]{  tableButtonDirtyDozenClicked(deck_name); });
                 
                 QPushButton *button_inv_dirty_dozen = new QPushButton("inv. dirty dozen");
+                button_inv_dirty_dozen->setIcon(QIcon::fromTheme("image-x-generic"));
                 connect(button_inv_dirty_dozen, &QPushButton::clicked, this, [this, deck_name]{ tableButtonLearnClicked(deck_name); });
                 
                 QPushButton *button_view_deck = new QPushButton();

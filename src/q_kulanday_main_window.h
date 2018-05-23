@@ -2,6 +2,7 @@
 #include <QMainWindow>
 #include <QTabWidget>
 #include <QDir>
+#include <QIcon>
 
 #include "q_kulanday_menubar.h"
 #include "q_decks_widget.h"

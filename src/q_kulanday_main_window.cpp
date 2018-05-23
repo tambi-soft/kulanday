@@ -66,17 +66,21 @@ void QKulandayMainWindow::showDecksOverviewTab()
 void QKulandayMainWindow::showDirtyDozenWidget(QString deck_name)
 {
     QDirtyDozenWidget *dd = new QDirtyDozenWidget(this->deckpath, deck_name);
-    tab_widget->addTab(dd, "[dirty dozen]: " + deck_name);
+    tab_widget->addTab(dd, deck_name);
     
     activateNewTab();
+    
+    this->tab_widget->setTabIcon(this->tab_widget->currentIndex(), QIcon::fromTheme("image-loading"));
 }
 
 void QKulandayMainWindow::showLearnWidget(QString deck_name)
 {
     QInvDirtyDozenWidget *learn = new QInvDirtyDozenWidget(this->deckpath, deck_name);
-    tab_widget->addTab(learn, "[inv dd]: " + deck_name);
+    tab_widget->addTab(learn, deck_name);
     
     activateNewTab();
+    
+    this->tab_widget->setTabIcon(this->tab_widget->currentIndex(), QIcon::fromTheme("image-x-generic"));
 }
 
 void QKulandayMainWindow::showDeckWidget(QString deck_name)
@@ -96,6 +100,7 @@ void QKulandayMainWindow::showDeckWidget(QString deck_name)
         activateNewTab();
         
         this->deck_item_widgets[deck_name] = this->tab_widget->currentIndex();
+        this->tab_widget->setTabIcon(this->tab_widget->currentIndex(), QIcon::fromTheme("folder-open"));
     }
 }
 
