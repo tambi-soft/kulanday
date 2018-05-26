@@ -38,6 +38,8 @@ private:
     void deactivateDecksOverviewCloseButton();
     QMap<QString,int> deck_item_widgets; // {deck_name} OR {deck_name}_{item_id} -> tab widget id
     
+    int tooltip_last_index;
+    
 private slots:
     void showDecksOverviewTab();
     void showLearnWidget(QString deck_name);
