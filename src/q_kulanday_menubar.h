@@ -12,6 +12,8 @@ class QKulandayMenuBar : public QMenuBar
 public:
     explicit QKulandayMenuBar(QMenuBar *parent = nullptr);
     
+private:
+    
 signals:
     void newDecksOverviewTab();
     
