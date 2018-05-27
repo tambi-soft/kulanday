@@ -1,4 +1,4 @@
-#include "q_create_new_deck_dialog.h"
+#include "create_new_deck_dialog.h"
 
 QCreateNewDeckDialog::QCreateNewDeckDialog(QDir *decks_path, QFileDialog *parent)
     : QFileDialog(parent)

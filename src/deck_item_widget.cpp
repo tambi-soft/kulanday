@@ -1,4 +1,4 @@
-#include "q_deck_item_widget.h"
+#include "deck_item_widget.h"
 
 QDeckItemWidget::QDeckItemWidget(QDir *decks_path, QString deck_name, QWidget *parent) : QWidget(parent)
 {

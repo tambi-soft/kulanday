@@ -4,16 +4,18 @@
 #include <QDir>
 #include <QIcon>
 #include <QMouseEvent>
-#include<QToolTip>
+#include <QToolTip>
 
-#include "q_kulanday_menubar.h"
-#include "q_decks_widget.h"
-#include "q_deck_widget.h"
-#include "q_inv_dirty_dozen_widget.h"
-#include "q_dirtydozen_widget.h"
-#include "q_deck_item_widget.h"
+#include "menubar.h"
+#include "decks_widget.h"
+#include "deck_widget.h"
+#include "inv_dirty_dozen_widget.h"
+#include "dirtydozen_widget.h"
+#include "deck_item_widget.h"
 #include "db_adapter.h"
 #include "config.h"
+#include "search_widget.h"
+#include "about_widget.h"
 
 class QKulandayMainWindow : public QMainWindow
 {
@@ -49,6 +51,9 @@ private slots:
     void createNewDeckItem(QString deck_name);
     void deleteDeck(QString deck_name);
     void showDeckItem(QString deck_name, int rowid);
+    void showSearchWidget();
+    void showAboutWidget();
+    
     void onDeckItemContentsUpdated(QString deck_name);
     
     void activateNewTab();

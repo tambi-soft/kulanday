@@ -1,4 +1,4 @@
-#include "q_audio_list_table.h"
+#include "audio_list_table.h"
 
 QAudioListTable::QAudioListTable(QDir *decks_path, QString deck_name, qlonglong deck_rowid, QTableWidget *parent)
     : QTableWidget(parent)

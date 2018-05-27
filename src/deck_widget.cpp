@@ -1,5 +1,5 @@
 
-#include "q_deck_widget.h"
+#include "deck_widget.h"
 
 QDeckOverviewWidget::QDeckOverviewWidget(QDir *decks_path, QString deck_name, QWidget *parent)
     : QWidget(parent)
@@ -221,10 +221,9 @@ void QDeckOverviewWidget::audioButtonClicked(QPushButton *button, QString audio_
         
         this->playing_button = button;
         
-        qDebug() << audio_filename;
         QString audio_path = this->decks_path->absolutePath() + "/" + this->deck_name + "/" + audio_filename;
         QUrl audio_url = QUrl::fromLocalFile(audio_path);
-        qDebug() << audio_url;
+        
         player->setMedia(QMediaContent(audio_url));
         player->play();
     }

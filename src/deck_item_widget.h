@@ -16,7 +16,7 @@
 #include <QFileDialog>
 
 #include "db_adapter.h"
-#include "q_audio_list_table.h"
+#include "audio_list_table.h"
 
 class QDeckItemWidget : public QWidget
 {

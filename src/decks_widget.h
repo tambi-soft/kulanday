@@ -13,7 +13,7 @@
 #include <QColor>
 #include <QMessageBox>
 
-#include "q_create_new_deck_dialog.h"
+#include "create_new_deck_dialog.h"
 #include "db_adapter_meta.h"
 
 class QDecksOverviewWidget : public QWidget

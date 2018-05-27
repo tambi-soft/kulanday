@@ -4,7 +4,7 @@
 #include <QDebug>
 #include <QIcon>
 
-#include <src/q_kulanday_main_window.h>
+#include <src/main_window.h>
 
 int main(int argc, char *argv[])
 {

@@ -1,5 +1,5 @@
 
-#include <src/q_decks_widget.h>
+#include <src/decks_widget.h>
 
 QDecksOverviewWidget :: QDecksOverviewWidget(QDir *decks_path, QWidget *parent)
     : layout (new QGridLayout)
@@ -34,7 +34,7 @@ QDecksOverviewWidget :: QDecksOverviewWidget(QDir *decks_path, QWidget *parent)
     layout->addWidget(refresh_button, 2, 0);
     layout->addWidget(new_deck_button, 2, 1);
     
-    table->horizontalHeader()->hide();
+    //table->horizontalHeader()->hide();
     //table->verticalHeader()->hide();
     
     populateComboNameFilterBox();
@@ -114,11 +114,11 @@ void QDecksOverviewWidget::populateDecksOverview()
                 QTableWidgetItem *item_name = new QTableWidgetItem(deck_name);
                 item_name->setFlags(Qt::ItemIsEnabled);
                 
-                QPushButton *button_dirty_dozen = new QPushButton("dirty dozen");
+                QPushButton *button_dirty_dozen = new QPushButton();
                 button_dirty_dozen->setIcon(QIcon::fromTheme("image-loading"));
                 connect(button_dirty_dozen, &QPushButton::clicked, this, [this, deck_name]{  tableButtonDirtyDozenClicked(deck_name); });
                 
-                QPushButton *button_inv_dirty_dozen = new QPushButton("inv. dirty dozen");
+                QPushButton *button_inv_dirty_dozen = new QPushButton();
                 button_inv_dirty_dozen->setIcon(QIcon::fromTheme("image-x-generic"));
                 connect(button_inv_dirty_dozen, &QPushButton::clicked, this, [this, deck_name]{ tableButtonLearnClicked(deck_name); });
                 
@@ -162,7 +162,28 @@ void QDecksOverviewWidget::populateDecksOverview()
     }
     
     this->table->setRowCount(i+1);
+    
+    
+    QStringList labels;
+    labels << "view" << "deck name" << "learn a" << "learn b" << "tag" << "last learned" << "";
+    table->setHorizontalHeaderLabels(labels);
+    
+    QTableWidgetItem *dd_header_item = this->table->horizontalHeaderItem(2);
+    if (dd_header_item)
+    {
+        dd_header_item->setToolTip("dirty dozen");
+    }
+    
+    QTableWidgetItem *inv_dd_header_item = this->table->horizontalHeaderItem(3);
+    if (inv_dd_header_item)
+    {
+        inv_dd_header_item->setToolTip("inverted dirty dozen");
+    }
+    
+    // using visibility-toggling as workaround to also resize columns to header label
+    this->table->setVisible(false);
     this->table->resizeColumnsToContents();
+    this->table->setVisible(true);
 }
 
 QComboBox *QDecksOverviewWidget::populateComboStatus(QString deck_name)

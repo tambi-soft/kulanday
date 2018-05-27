@@ -1,5 +1,5 @@
 
-#include "q_kulanday_main_window.h"
+#include "main_window.h"
 
 QKulandayMainWindow::QKulandayMainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -17,6 +17,8 @@ QKulandayMainWindow::QKulandayMainWindow(QWidget *parent)
     
     setMenuBar(menu_bar);
     connect(menu_bar, &QKulandayMenuBar::newDecksOverviewTab, this, &QKulandayMainWindow::showDecksOverviewTab);
+    connect(menu_bar, &QKulandayMenuBar::newSearchTab, this, &QKulandayMainWindow::showSearchWidget);
+    connect(menu_bar, &QKulandayMenuBar::newAboutTab, this, &QKulandayMainWindow::showAboutWidget);
     
     connect(tab_widget, &QTabWidget::tabCloseRequested, this, &QKulandayMainWindow::closeTab);
     
@@ -212,6 +214,24 @@ void QKulandayMainWindow::deactivateDecksOverviewCloseButton()
 {
     QTabBar *tb = this->tab_widget->tabBar();
     tb->tabButton(0, QTabBar::RightSide)->hide();
+}
+
+void QKulandayMainWindow::showSearchWidget()
+{
+    QSearchWidget *widget = new QSearchWidget();
+    
+    this->tab_widget->addTab(widget, "search");
+    
+    activateNewTab();
+}
+
+void QKulandayMainWindow::showAboutWidget()
+{
+    AboutWidget *widget = new AboutWidget();
+    
+    this->tab_widget->addTab(widget, "about");
+    
+    activateNewTab();
 }
 
 bool QKulandayMainWindow::eventFilter(QObject *watched, QEvent *event)

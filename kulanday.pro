@@ -50,41 +50,43 @@ QT += widgets\
 
 # Input
 HEADERS += \
-    src/q_kulanday_main_window.h\
     src/db_adapter.h \
-    src/q_dirtydozen_widget.h \
-    src/q_kulanday_menubar.h \
-    src/q_create_new_deck_dialog.h \
-    src/q_deck_item_widget.h \
-    src/q_deck_widget.h \
-    src/q_decks_widget.h \
-    src/q_audio_list_table.h \
     src/q_click_label.h\
     src/unicode_fonts.h \
     src/config.h \
-    src/q_inv_dirty_dozen_widget.h \
     src/audio_recorder.h \
     src/db_adapter_meta.h \
-    src/q_search_widget.h
+    src/menubar.h \
+    src/search_widget.h \
+    src/main_window.h \
+    src/audio_list_table.h \
+    src/create_new_deck_dialog.h \
+    src/inv_dirty_dozen_widget.h \
+    src/dirtydozen_widget.h \
+    src/decks_widget.h \
+    src/deck_widget.h \
+    src/deck_item_widget.h \
+    src/about_widget.h
 
 SOURCES += \
     src/kulanday.cpp\
-    src/q_kulanday_main_window.cpp\
     src/db_adapter.cpp \
-    src/q_dirtydozen_widget.cpp \
-    src/q_kulanday_menubar.cpp \
-    src/q_create_new_deck_dialog.cpp \
-    src/q_deck_item_widget.cpp \
-    src/q_deck_widget.cpp \
-    src/q_decks_widget.cpp \
-    src/q_audio_list_table.cpp \
     src/q_click_label.cpp\
     src/unicode_fonts.cpp \
     src/config.cpp \
-    src/q_inv_dirty_dozen_widget.cpp \
     src/audio_recorder.cpp \
     src/db_adapter_meta.cpp \
-    src/q_search_widget.cpp
+    src/menubar.cpp \
+    src/search_widget.cpp \
+    src/main_window.cpp \
+    src/audio_list_table.cpp \
+    src/create_new_deck_dialog.cpp \
+    src/inv_dirty_dozen_widget.cpp \
+    src/dirtydozen_widget.cpp \
+    src/decks_widget.cpp \
+    src/deck_widget.cpp \
+    src/deck_item_widget.cpp \
+    src/about_widget.cpp
 
 RESOURCES += \
     resources.qrc
