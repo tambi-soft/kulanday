@@ -43,7 +43,7 @@ private:
     DbAdapter *database;
     UnicodeFonts *unicodeFonts;
     
-    int COLUMN_OFFSET = 9;
+    int COLUMN_OFFSET = 10;
     
     QCheckBox *chk_name;
     QCheckBox *chk_word;
@@ -55,6 +55,7 @@ private:
     void initTableWidget(QString deck_name);
     void appendPlayButtons(int table_rowid, QList<QMap<QString,QVariant>> audio_filenames, int max_audio_count);
     void audioButtonClicked(QPushButton *button, QString audio_filename);
+    void moveItem(QString deck_name, qlonglong rowid);
     
 protected:
     void hideEvent(QHideEvent *event);

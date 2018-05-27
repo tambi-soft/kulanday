@@ -93,6 +93,11 @@ void QDeckOverviewWidget::initTableWidget(QString deck_name)
             edit_button->setIcon(QIcon::fromTheme("document-properties"));
             connect(edit_button, &QPushButton::clicked, this, [this, deck_name, rowid]{ editRowButtonClicked(deck_name, rowid); });
             
+            // move item to another deck
+            QPushButton *move_button = new QPushButton();
+            move_button->setIcon(QIcon::fromTheme("document-send"));
+            connect(move_button, &QPushButton::clicked, this, [this, deck_name, rowid]{ moveItem(deck_name, rowid); });
+            
             QPushButton *delete_button = new QPushButton();
             delete_button->setIcon(QIcon::fromTheme("edit-delete"));
             connect(delete_button, &QPushButton::clicked, this, [this, rowid, data, i]{ deleteRowButtonClicked(rowid, data.at(i)); });
@@ -123,29 +128,31 @@ void QDeckOverviewWidget::initTableWidget(QString deck_name)
             }
             
             table->setCellWidget(i, 0, edit_button);
-            table->setCellWidget(i, 1, delete_button);
+            table->setCellWidget(i, 1, move_button);
+            table->setCellWidget(i, 2, delete_button);
             
-            table->setItem(i, 2, new QTableWidgetItem(order_index));
+            table->setItem(i, 3, new QTableWidgetItem(order_index));
+            
             if (chk_name->isChecked())
             {
-                table->setItem(i, 3, new QTableWidgetItem(name));
+                table->setItem(i, 4, new QTableWidgetItem(name));
             }
             if (chk_word->isChecked())
             {
-                table->setItem(i, 4, new QTableWidgetItem(word));
+                table->setItem(i, 5, new QTableWidgetItem(word));
             }
             if (chk_phonetical->isChecked())
             {
-                table->setItem(i, 5, new QTableWidgetItem(phonetical));
+                table->setItem(i, 6, new QTableWidgetItem(phonetical));
             }
             if (chk_translation->isChecked())
             {
-                table->setItem(i, 6, new QTableWidgetItem(translation));
+                table->setItem(i, 7, new QTableWidgetItem(translation));
             }
             
             // apply unicode fonts to cells
             /*
-            for (int j = 3; j <= 6; ++j)
+            for (int j = 4; j <= 7; ++j)
             {
                 QTableWidgetItem *item = table->item(i, j);
                 
@@ -161,8 +168,8 @@ void QDeckOverviewWidget::initTableWidget(QString deck_name)
                 }
             }
             */
-            table->setCellWidget(i, 7, svg_widget);
-            table->setCellWidget(i, 8, image_widget);
+            table->setCellWidget(i, 8, svg_widget);
+            table->setCellWidget(i, 9, image_widget);
             
             QList<QMap<QString,QVariant>> audio_filenames = db_adapter->audioFilenamesForDeckRowID(rowid);
             appendPlayButtons(i, audio_filenames, max_audio_count);
@@ -171,7 +178,7 @@ void QDeckOverviewWidget::initTableWidget(QString deck_name)
     
     //table->horizontalHeader()->hide();
     QStringList labels;
-    labels << "" << "" << "" << "name" << "word" << "phon." << "trans." << "svg" << "image" << "" << "" << "" << "" << "" << "" << "" << "" << "" << "";
+    labels << "" << "" << "" << "" << "name" << "word" << "phon." << "trans." << "svg" << "image" << "" << "" << "" << "" << "" << "" << "" << "" << "" << "";
     table->setHorizontalHeaderLabels(labels);
     
     table->resizeColumnsToContents();
@@ -276,6 +283,11 @@ void QDeckOverviewWidget::deleteRowButtonClicked(int rowid, QMap<QString,QVarian
     
     table->clear();
     initTableWidget(this->deck_name);
+}
+
+void QDeckOverviewWidget::moveItem(QString deck_name, qlonglong rowid)
+{
+    
 }
 
 void QDeckOverviewWidget::hideEvent(QHideEvent *event)
