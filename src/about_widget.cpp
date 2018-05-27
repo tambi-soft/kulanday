@@ -22,6 +22,7 @@ void AboutWidget::showAbout()
     (c) 2018-2018 The Kulanday Author(s)\n\n\
     http://tambi-soft.github.io");
     
+    text->setReadOnly(true);
     this->tab_widget->addTab(text, "About");
 }
 
@@ -30,6 +31,7 @@ void AboutWidget::showLibraries()
     QTextEdit *text = new QTextEdit();
     text->setText("Qt (5.11.0)");
     
+    text->setReadOnly(true);
     this->tab_widget->addTab(text, "Libraries");
 }
 
@@ -38,6 +40,7 @@ void AboutWidget::showAuthors()
     QTextEdit *text = new QTextEdit();
     text->setText("");
     
+    text->setReadOnly(true);
     this->tab_widget->addTab(text, "Authors");
 }
 
@@ -46,6 +49,7 @@ void AboutWidget::showThanks()
     QTextEdit *text = new QTextEdit();
     text->setText("");
     
+    text->setReadOnly(true);
     this->tab_widget->addTab(text, "Thanks To");
 }
 
@@ -67,5 +71,6 @@ void AboutWidget::showLicense()
     QTextEdit *text = new QTextEdit();
     text->setText(lines);
     
+    text->setReadOnly(true);
     this->tab_widget->addTab(text, "License");
 }
