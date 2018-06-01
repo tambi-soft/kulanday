@@ -67,6 +67,7 @@ void QDirtyDozenWidget::update()
     for (int i = 0; i < this->dataset.length(); ++i)
     {
         QPushButton *button = new QPushButton();
+        button->setMinimumHeight(190);
         
         if (this->select_display_combo->currentText() == "image")
         {
