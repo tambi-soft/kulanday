@@ -15,7 +15,7 @@ QAudioListTable::QAudioListTable(QDir *decks_path, QString deck_name, qlonglong 
     this->database = new DbAdapter(this->decks_path, deck_name);
     
     QAudioEncoderSettings settings;
-    settings.setCodec("audio/vorbis");
+    settings.setCodec("audio/x-vorbis");
     //this->recorder->setContainerFormat("ogg");
     //this->recorder->setEncodingSettings(settings);
     
