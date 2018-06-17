@@ -70,18 +70,18 @@ void QDeckItemWidget::initializeGui(QString deck_name, int rowid)
     setLayout(grid);
     
     this->image_view = new QLabel();
-    this->name_line = new QLineEdit();
-    this->word_line = new QLineEdit();
-    this->phonetical_line = new QLineEdit();
-    this->translation_line = new QLineEdit();
+    this->name_line = new ResizingTextEdit();
+    this->word_line = new ResizingTextEdit();
+    this->phonetical_line = new ResizingTextEdit();
+    this->translation_line = new ResizingTextEdit();
     this->audio_list_widget = new QAudioListTable(this->decks_path, deck_name, rowid);
     
     connect(this->audio_list_widget, &QAudioListTable::changed, this, &QDeckItemWidget::onAudioListChanged);
     
-    connect(this->name_line, &QLineEdit::textChanged, this, &QDeckItemWidget::onItemChanged);
-    connect(this->word_line, &QLineEdit::textChanged, this, &QDeckItemWidget::onItemChanged);
-    connect(this->phonetical_line, &QLineEdit::textChanged, this, &QDeckItemWidget::onItemChanged);
-    connect(this->translation_line, &QLineEdit::textChanged, this, &QDeckItemWidget::onItemChanged);
+    connect(this->name_line, &ResizingTextEdit::textChanged, this, &QDeckItemWidget::onItemChanged);
+    connect(this->word_line, &ResizingTextEdit::textChanged, this, &QDeckItemWidget::onItemChanged);
+    connect(this->phonetical_line, &ResizingTextEdit::textChanged, this, &QDeckItemWidget::onItemChanged);
+    connect(this->translation_line, &ResizingTextEdit::textChanged, this, &QDeckItemWidget::onItemChanged);
     
     this->import_image_button = new QPushButton("add image from file");
     import_image_button->setIcon(QIcon::fromTheme("document-open"));
@@ -196,10 +196,10 @@ void QDeckItemWidget::onItemChanged()
 {
     if (! this->ignore_item_changes)
     {
-        QString name = this->name_line->text();
-        QString word = this->word_line->text();
-        QString phonetical = this->phonetical_line->text();
-        QString translation = this->translation_line->text();
+        QString name = this->name_line->toPlainText();
+        QString word = this->word_line->toPlainText();
+        QString phonetical = this->phonetical_line->toPlainText();
+        QString translation = this->translation_line->toPlainText();
         
         this->database->updateDeckItem(rowid, name, word, phonetical, translation);
         this->item_changed = true;

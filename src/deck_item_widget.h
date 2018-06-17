@@ -6,7 +6,6 @@
 #include <QPushButton>
 #include <QIcon>
 #include <QLabel>
-#include <QLineEdit>
 #include <QPixmap>
 #include <QDir>
 #include <QSize>
@@ -17,6 +16,7 @@
 
 #include "db_adapter.h"
 #include "audio_list_table.h"
+#include "resizing_text_edit.h"
 
 class QDeckItemWidget : public QWidget
 {
@@ -34,10 +34,10 @@ private:
     
     QGridLayout *grid;
     QLabel *image_view;
-    QLineEdit *name_line;
-    QLineEdit *word_line;
-    QLineEdit *phonetical_line;
-    QLineEdit *translation_line;
+    ResizingTextEdit *name_line;
+    ResizingTextEdit *word_line;
+    ResizingTextEdit *phonetical_line;
+    ResizingTextEdit *translation_line;
     QAudioListTable *audio_list_widget;
     DbAdapter *database = nullptr;
     QPushButton *import_image_button;

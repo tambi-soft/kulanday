@@ -66,7 +66,8 @@ HEADERS += \
     src/decks_widget.h \
     src/deck_widget.h \
     src/deck_item_widget.h \
-    src/about_widget.h
+    src/about_widget.h \
+    src/resizing_text_edit.h
 
 SOURCES += \
     src/kulanday.cpp\
@@ -86,7 +87,8 @@ SOURCES += \
     src/decks_widget.cpp \
     src/deck_widget.cpp \
     src/deck_item_widget.cpp \
-    src/about_widget.cpp
+    src/about_widget.cpp \
+    src/resizing_text_edit.cpp
 
 RESOURCES += \
     resources.qrc
