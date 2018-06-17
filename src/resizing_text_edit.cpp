@@ -4,10 +4,13 @@ ResizingTextEdit::ResizingTextEdit(QTextEdit *parent) : QTextEdit(parent)
 {
     QSizePolicy size_policy = this->sizePolicy();
     size_policy.setHeightForWidth(true);
-    //size_policy.setVerticalPolicy(QSizePolicy::Preferred);
+    size_policy.setVerticalPolicy(QSizePolicy::Preferred);
     this->setSizePolicy(size_policy);
     
     connect(this, &ResizingTextEdit::textChanged, this, &ResizingTextEdit::updateGeometry);
+    
+    //setMinimumHeight(00);
+    setMaximumHeight(500);
 }
 
 /*
