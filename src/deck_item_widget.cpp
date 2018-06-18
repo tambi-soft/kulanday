@@ -32,10 +32,10 @@ void QDeckItemWidget::populateGui(QDir *decks_path, QString deck_name, int rowid
     QList<QMap<QString,QVariant>> data = database->selectDeckItem(rowid);
     
     this->ignore_item_changes = true;
-    this->name_line->setText(data[0]["name"].toString());
-    this->word_line->setText(data[0]["word"].toString());
-    this->phonetical_line->setText(data[0]["phonetical"].toString());
-    this->translation_line->setText(data[0]["translation"].toString());
+    this->name_line->setPlainText(data[0]["name"].toString());
+    this->word_line->setPlainText(data[0]["word"].toString());
+    this->phonetical_line->setPlainText(data[0]["phonetical"].toString());
+    this->translation_line->setPlainText(data[0]["translation"].toString());
     this->ignore_item_changes = false;
     
     if (! data[0]["image"].isNull())

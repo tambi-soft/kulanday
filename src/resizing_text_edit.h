@@ -13,16 +13,12 @@ class ResizingTextEdit : public QTextEdit
 {
     Q_OBJECT
 public:
-    explicit ResizingTextEdit(QTextEdit *parent = nullptr);
-    /*
-    void setMinimumLines(int num_lines);
-    bool hasHeightForWidth();
-    int heightForWidth(int width);
-    QSize sizeHint();
-    int lineCountToWidgetHeight(int num_lines);
-    */
+    explicit ResizingTextEdit(QWidget *parent = nullptr);
+
+    void updateGeometry();
+    
 protected:
-    //void paintEvent(QPaintEvent *e);
+    void paintEvent(QPaintEvent *e);
     
 signals:
     
