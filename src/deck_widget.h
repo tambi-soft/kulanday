@@ -56,6 +56,7 @@ private:
     void appendPlayButtons(int table_rowid, QList<QMap<QString,QVariant>> audio_filenames, int max_audio_count);
     void audioButtonClicked(QPushButton *button, QString audio_filename);
     void moveItem(QString deck_name, qlonglong rowid);
+    QString cropText(QString text);
     
 protected:
     void hideEvent(QHideEvent *event);

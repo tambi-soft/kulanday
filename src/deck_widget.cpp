@@ -108,6 +108,11 @@ void QDeckOverviewWidget::initTableWidget(QString deck_name)
             QString phonetical = data.at(i)["phonetical"].toString();
             QString translation = data.at(i)["translation"].toString();
             
+            name = cropText(name);
+            word = cropText(word);
+            phonetical = cropText(phonetical);
+            translation = cropText(translation);
+            
             QString image_filename = data.at(i)["image"].toString();
             QString svg_filename = data.at(i)["svg_filename"].toString();
             
@@ -303,4 +308,20 @@ void QDeckOverviewWidget::refresh()
 {
     table->clear();
     initTableWidget(this->deck_name);
+}
+
+QString QDeckOverviewWidget::cropText(QString text)
+{
+    QString result;
+    
+    if (text.length() > 30)
+    {
+        result = text.left(15) + "[...]" + text.right(10);
+    }
+    else
+    {
+        result = text;
+    }
+    
+    return result;
 }
