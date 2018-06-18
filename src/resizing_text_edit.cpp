@@ -15,33 +15,30 @@ void ResizingTextEdit::updateGeometry()
     qreal document_margin = this->document()->documentMargin();
     QFontMetrics font_metrics = QFontMetrics(this->document()->defaultFont());
     
-    int height = widget_margins.top() +
-            document_margin +
-            font_metrics.height() +
-            this->document()->documentMargin() +
-            widget_margins.bottom();
-    
     int line_count = this->document()->lineCount();
-    if (line_count > 1)
+    if (line_count > 5)
     {
-        height = widget_margins.top() +
-                document_margin +
-                std::min(line_count, 5) * font_metrics.height() +
-                this->document()->documentMargin() +
-                widget_margins.bottom();
+        line_count = 5;
     }
     else
     {
         int str_width = font_metrics.width(this->toPlainText(), -1);
         if (this->width() < str_width + 2 * document_margin + widget_margins.left() + widget_margins.right())
         {
-            height = widget_margins.top() +
-                    document_margin +
-                    5 * font_metrics.height() +
-                    this->document()->documentMargin() +
-                    widget_margins.bottom();
+            line_count = 5;
+        }
+        else
+        {
+            line_count = 1;
         }
     }
+    
+    int height = widget_margins.top() +
+            document_margin +
+            line_count * font_metrics.height() +
+            this->document()->documentMargin() +
+            widget_margins.bottom();
+    
     setMinimumHeight(height);
     setMaximumHeight(height);
     
