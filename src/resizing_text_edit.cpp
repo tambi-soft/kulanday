@@ -20,6 +20,10 @@ void ResizingTextEdit::updateGeometry()
     {
         line_count = 5;
     }
+    else if (line_count > 1 && line_count <= 5)
+    {
+        // just keep line_count as it is
+    }
     else
     {
         int str_width = font_metrics.width(this->toPlainText(), -1);
