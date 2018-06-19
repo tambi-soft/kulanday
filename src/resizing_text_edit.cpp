@@ -16,7 +16,8 @@ void ResizingTextEdit::updateGeometry()
     QFontMetrics font_metrics = QFontMetrics(this->document()->defaultFont());
     
     int line_count = this->document()->lineCount();
-    if (line_count > 5)
+    int str_width = font_metrics.width(this->toPlainText(), -1);
+    if (this->width() < str_width + 2 * document_margin + widget_margins.left() + widget_margins.right())
     {
         line_count = 5;
     }
@@ -24,17 +25,13 @@ void ResizingTextEdit::updateGeometry()
     {
         // just keep line_count as it is
     }
+    else if (line_count > 5)
+    {
+        line_count = 5;
+    }
     else
     {
-        int str_width = font_metrics.width(this->toPlainText(), -1);
-        if (this->width() < str_width + 2 * document_margin + widget_margins.left() + widget_margins.right())
-        {
-            line_count = 5;
-        }
-        else
-        {
-            line_count = 1;
-        }
+        line_count = 1;
     }
     
     int height = widget_margins.top() +
