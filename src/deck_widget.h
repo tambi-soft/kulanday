@@ -29,7 +29,7 @@ class QDeckOverviewWidget : public QWidget
 {
     Q_OBJECT
 public:
-    explicit QDeckOverviewWidget(QDir *decks_path, QWidget *parent = nullptr);
+    explicit QDeckOverviewWidget(QString filter, QDir *decks_path, QWidget *parent = nullptr);
     explicit QDeckOverviewWidget(QDir *decks_path, QString deck_name, QWidget *parent = nullptr);
     
     void refresh();

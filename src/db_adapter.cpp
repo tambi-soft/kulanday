@@ -87,6 +87,24 @@ QList<QMap<QString,QVariant>> DbAdapter::selectDeckItems()
     return dbIteratorToMapList(query);
 }
 
+QList<QMap<QString,QVariant>> DbAdapter::selectDeckItemsFiltered(QString filter)
+{
+    QSqlQuery query(this->db);
+    query.prepare("SELECT rowid, order_index, name, word, phonetical, translation, svg_filename, image, created\
+        FROM deck\
+        WHERE name LIKE ? OR word LIKE ? OR phonetical LIKE ? OR translation LIKE ?\
+        ORDER BY order_index");
+    query.bindValue(0, "%"+filter+"%");
+    query.bindValue(1, "%"+filter+"%");
+    query.bindValue(2, "%"+filter+"%");
+    query.bindValue(3, "%"+filter+"%");
+    query.exec();
+    
+    qDebug() << query.executedQuery();
+    
+    return dbIteratorToMapList(query);
+}
+
 QList<QVariant> DbAdapter::selectDeckItemsWithAudio()
 {
     

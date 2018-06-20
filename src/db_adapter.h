@@ -25,6 +25,7 @@ public:
     qlonglong newDeckRow();
     qlonglong newAudioRow(int deck_rowid);
     QList<QMap<QString,QVariant>> selectDeckItems();
+    QList<QMap<QString,QVariant>> selectDeckItemsFiltered(QString filter);
     QList<QVariant> selectDeckItemsWithAudio();
     QList<QMap<QString,QVariant>> selectDeckDirtyDozenItems();
     QList<QMap<QString,QVariant>> selectDeckItem(int rowid);

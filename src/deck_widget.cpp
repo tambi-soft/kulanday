@@ -1,7 +1,7 @@
 
 #include "deck_widget.h"
 
-QDeckOverviewWidget::QDeckOverviewWidget(QDir *decks_path, QWidget *parent)
+QDeckOverviewWidget::QDeckOverviewWidget(QString filter, QDir *decks_path, QWidget *parent)
     : QWidget(parent)
 {
     initGui();
@@ -14,7 +14,7 @@ QDeckOverviewWidget::QDeckOverviewWidget(QDir *decks_path, QWidget *parent)
     foreach (QString deck_name, decks_names) {
         
         this->db_adapter = new DbAdapter(decks_path, deck_name);
-        QList<QMap<QString,QVariant>> data = this->db_adapter->selectDeckItems();
+        QList<QMap<QString,QVariant>> data = this->db_adapter->selectDeckItemsFiltered(filter);
         
         for (int i = 0; i < data.length(); ++i)
         {
@@ -105,10 +105,8 @@ QList<QMap<QString,QVariant>> QDeckOverviewWidget::fetchDeckData()
     this->db_adapter = new DbAdapter(this->decks_path, this->deck_name);
     this->database = db_adapter;
     
-    QString deck_name = this->deck_name;
-    
     QList<QMap<QString,QVariant>> data = db_adapter->selectDeckItems();
-    qDebug() << data;
+    
     return data;
 }
 
@@ -161,8 +159,6 @@ void QDeckOverviewWidget::populateTableWidget(QList<QMap<QString,QVariant>> data
             QLabel *image_widget = new QLabel(this);
             if (image_filename != "" && chk_image->isChecked())
             {
-                qDebug() << "DECK NAME:" << deck_name << image_filename;
-                qDebug() << this->decks_path->absolutePath();
                 QPixmap pixmap(this->decks_path->absolutePath() + "/" + deck_name + "/" + image_filename);
                 pixmap = pixmap.scaled(QSize(60, 30), Qt::KeepAspectRatio);
                 image_widget->setPixmap(pixmap);
@@ -339,7 +335,9 @@ void QDeckOverviewWidget::showEvent(QShowEvent *event)
 void QDeckOverviewWidget::refresh()
 {
     table->clear();
-    //populateTableWidget(this->deck_name);
+    
+    QList<QMap<QString,QVariant>> data = fetchDeckData();
+    populateTableWidget(data);
 }
 
 QString QDeckOverviewWidget::cropText(QString text)

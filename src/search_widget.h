@@ -3,7 +3,10 @@
 
 #include <QWidget>
 #include <QVBoxLayout>
+#include <QHBoxLayout>
 #include <QDir>
+#include <QLineEdit>
+#include <QPushButton>
 
 #include "deck_widget.h"
 
@@ -15,6 +18,8 @@ public:
     
 private:
     QVBoxLayout *layout;
+    QLineEdit *input_line;
+    QPushButton *start_search_button;
     QDeckOverviewWidget *deck_widget;
     
 signals:
