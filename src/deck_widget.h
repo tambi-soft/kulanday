@@ -29,6 +29,7 @@ class QDeckOverviewWidget : public QWidget
 {
     Q_OBJECT
 public:
+    explicit QDeckOverviewWidget(QDir *decks_path, QWidget *parent = nullptr);
     explicit QDeckOverviewWidget(QDir *decks_path, QString deck_name, QWidget *parent = nullptr);
     
     void refresh();
@@ -43,6 +44,8 @@ private:
     DbAdapter *database;
     UnicodeFonts *unicodeFonts;
     
+    DbAdapter *db_adapter;
+    
     int COLUMN_OFFSET = 10;
     
     QCheckBox *chk_name;
@@ -52,7 +55,9 @@ private:
     QCheckBox *chk_svg;
     QCheckBox *chk_image;
     
-    void initTableWidget(QString deck_name);
+    void initGui();
+    QList<QMap<QString, QVariant> > fetchDeckData();
+    void populateTableWidget(QList<QMap<QString,QVariant>> data);
     void appendPlayButtons(int table_rowid, QList<QMap<QString,QVariant>> audio_filenames, int max_audio_count);
     void audioButtonClicked(QPushButton *button, QString audio_filename);
     void moveItem(QString deck_name, qlonglong rowid);

@@ -2,6 +2,8 @@
 
 DbAdapter::DbAdapter(QDir *decks_path, QString deck_name, QObject *parent) : QObject(parent)
 {
+    this->deck_name = deck_name;
+    
     if (! QSqlDatabase::contains(deck_name))
     {
         QSqlDatabase::addDatabase("QSQLITE", deck_name);
@@ -33,6 +35,7 @@ QList<QMap<QString,QVariant>> DbAdapter::dbIteratorToMapList(QSqlQuery query)
     while (query.next())
     {
         QMap<QString,QVariant> map;
+        map["[deck_name]"] = this->deck_name;
         for (int i = 0; i <= rec.count(); ++i)
         {
             QString name = rec.fieldName(i);

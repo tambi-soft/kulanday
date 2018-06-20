@@ -1,22 +1,58 @@
 
 #include "deck_widget.h"
 
+QDeckOverviewWidget::QDeckOverviewWidget(QDir *decks_path, QWidget *parent)
+    : QWidget(parent)
+{
+    initGui();
+    
+    this->decks_path = decks_path;
+    
+    QList<QMap<QString,QVariant>> result;
+    
+    QStringList decks_names = decks_path->entryList(QDir::NoDotAndDotDot | QDir::Dirs, QDir::Name);
+    foreach (QString deck_name, decks_names) {
+        
+        this->db_adapter = new DbAdapter(decks_path, deck_name);
+        QList<QMap<QString,QVariant>> data = this->db_adapter->selectDeckItems();
+        
+        for (int i = 0; i < data.length(); ++i)
+        {
+            QMap<QString,QVariant> set = data.at(i);
+            result.append(set);
+        }
+        
+    }
+    
+    populateTableWidget(result);
+}
+
 QDeckOverviewWidget::QDeckOverviewWidget(QDir *decks_path, QString deck_name, QWidget *parent)
     : QWidget(parent)
-    , layout (new QGridLayout)
-    , table (new QTableWidget)
-    , player (new QMediaPlayer)
-    , unicodeFonts (new UnicodeFonts)
-    , chk_name (new QCheckBox)
-    , chk_word (new QCheckBox)
-    , chk_phonetical (new QCheckBox)
-    , chk_translation (new QCheckBox)
-    , chk_svg (new QCheckBox)
-    , chk_image (new QCheckBox)
 {
-    setLayout(layout);
+    initGui();
+    
     this->decks_path = decks_path;
     this->deck_name = deck_name;
+    
+    QList<QMap<QString,QVariant>> data = fetchDeckData();
+    populateTableWidget(data);
+}
+
+void QDeckOverviewWidget::initGui()
+{
+    layout = new QGridLayout();
+    table = new QTableWidget();
+    player = new QMediaPlayer();
+    unicodeFonts = new UnicodeFonts();
+    chk_name = new QCheckBox();
+    chk_word = new QCheckBox();
+    chk_phonetical = new QCheckBox();
+    chk_translation = new QCheckBox();
+    chk_svg = new QCheckBox();
+    chk_image = new QCheckBox();
+            
+    setLayout(layout);
     
     //setFocusPolicy(Qt::StrongFocus);
     
@@ -62,25 +98,30 @@ QDeckOverviewWidget::QDeckOverviewWidget(QDir *decks_path, QString deck_name, QW
     layout->addWidget(table, 1, 0, 1, 2);
     layout->addWidget(refresh_button, 2, 0);
     layout->addWidget(new_item_button, 2, 1);
-    
-    initTableWidget(deck_name);
 }
 
-void QDeckOverviewWidget::initTableWidget(QString deck_name)
+QList<QMap<QString,QVariant>> QDeckOverviewWidget::fetchDeckData()
+{
+    this->db_adapter = new DbAdapter(this->decks_path, this->deck_name);
+    this->database = db_adapter;
+    
+    QString deck_name = this->deck_name;
+    
+    QList<QMap<QString,QVariant>> data = db_adapter->selectDeckItems();
+    qDebug() << data;
+    return data;
+}
+
+void QDeckOverviewWidget::populateTableWidget(QList<QMap<QString,QVariant>> data)
 {
     // to avoid pointing to a deleted object after reinitializing
     this->playing_button = nullptr;
-    
-    DbAdapter *db_adapter = new DbAdapter(this->decks_path, deck_name);
-    this->database = db_adapter;
-    
-    QList<QMap<QString,QVariant>> data = db_adapter->selectDeckItems();
     
     if (data.length() > 0)
     {
         table->setRowCount(data.length());
         
-        int max_audio_count = db_adapter->getMaxAudioCount();
+        int max_audio_count = this->db_adapter->getMaxAudioCount();
         table->setColumnCount(COLUMN_OFFSET + max_audio_count);
         
         // insert data
@@ -88,6 +129,7 @@ void QDeckOverviewWidget::initTableWidget(QString deck_name)
         for (int i = 0; i < data.length(); ++i)
         {
             int rowid = data.at(i)["rowid"].toInt(); // needed for SELECTing audio files
+            QString deck_name = data.at(i)["[deck_name]"].toString();
             
             QPushButton *edit_button = new QPushButton();
             edit_button->setIcon(QIcon::fromTheme("document-properties"));
@@ -119,6 +161,8 @@ void QDeckOverviewWidget::initTableWidget(QString deck_name)
             QLabel *image_widget = new QLabel(this);
             if (image_filename != "" && chk_image->isChecked())
             {
+                qDebug() << "DECK NAME:" << deck_name << image_filename;
+                qDebug() << this->decks_path->absolutePath();
                 QPixmap pixmap(this->decks_path->absolutePath() + "/" + deck_name + "/" + image_filename);
                 pixmap = pixmap.scaled(QSize(60, 30), Qt::KeepAspectRatio);
                 image_widget->setPixmap(pixmap);
@@ -155,24 +199,6 @@ void QDeckOverviewWidget::initTableWidget(QString deck_name)
                 table->setItem(i, 7, new QTableWidgetItem(translation));
             }
             
-            // apply unicode fonts to cells
-            /*
-            for (int j = 4; j <= 7; ++j)
-            {
-                QTableWidgetItem *item = table->item(i, j);
-                
-                if (item != nullptr)
-                {
-                    QFont font = unicodeFonts->getFontAndSize(item->text());
-                    if (font.pointSize() > 20)
-                    {
-                        font.setPointSize(20);
-                    }
-                    
-                    item->setFont(font);
-                }
-            }
-            */
             table->setCellWidget(i, 8, svg_widget);
             table->setCellWidget(i, 9, image_widget);
             
@@ -250,13 +276,17 @@ void QDeckOverviewWidget::newItemButtonClicked()
     emit newDeckItemRequested(deck_name);
     
     table->clear();
-    initTableWidget(this->deck_name);
+    
+    QList<QMap<QString,QVariant>> data = fetchDeckData();
+    populateTableWidget(data);
 }
 
 void QDeckOverviewWidget::refreshTable()
 {
     table->clear();
-    initTableWidget(this->deck_name);
+    
+    QList<QMap<QString,QVariant>> data = fetchDeckData();
+    populateTableWidget(data);
 }
 
 void QDeckOverviewWidget::editRowButtonClicked(QString deck_name, int rowid)
@@ -286,7 +316,9 @@ void QDeckOverviewWidget::deleteRowButtonClicked(int rowid, QMap<QString,QVarian
     }
     
     table->clear();
-    initTableWidget(this->deck_name);
+    
+    QList<QMap<QString,QVariant>> data = fetchDeckData();
+    populateTableWidget(data);
 }
 
 void QDeckOverviewWidget::moveItem(QString deck_name, qlonglong rowid)
@@ -307,7 +339,7 @@ void QDeckOverviewWidget::showEvent(QShowEvent *event)
 void QDeckOverviewWidget::refresh()
 {
     table->clear();
-    initTableWidget(this->deck_name);
+    //populateTableWidget(this->deck_name);
 }
 
 QString QDeckOverviewWidget::cropText(QString text)
