@@ -27,7 +27,7 @@ public:
     bool eventFilter(QObject *watched, QEvent *event);
 private:
     QTabWidget *tab_widget;
-    QKulandayMenuBar *menu_bar;
+    MenuBar *menu_bar;
     
     QDir *deckpath;
     

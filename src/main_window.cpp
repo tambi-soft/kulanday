@@ -4,7 +4,7 @@
 QKulandayMainWindow::QKulandayMainWindow(QWidget *parent)
     : QMainWindow(parent)
     , tab_widget (new QTabWidget)
-    , menu_bar (new QKulandayMenuBar)
+    , menu_bar (new MenuBar)
 {
     resize(800, 700);
     
@@ -16,9 +16,9 @@ QKulandayMainWindow::QKulandayMainWindow(QWidget *parent)
     tab_widget->setMovable(true);
     
     setMenuBar(menu_bar);
-    connect(menu_bar, &QKulandayMenuBar::newDecksOverviewTab, this, &QKulandayMainWindow::showDecksOverviewTab);
-    connect(menu_bar, &QKulandayMenuBar::newSearchTab, this, &QKulandayMainWindow::showSearchWidget);
-    connect(menu_bar, &QKulandayMenuBar::newAboutTab, this, &QKulandayMainWindow::showAboutWidget);
+    connect(menu_bar, &MenuBar::newDecksOverviewTab, this, &QKulandayMainWindow::showDecksOverviewTab);
+    connect(menu_bar, &MenuBar::newSearchTab, this, &QKulandayMainWindow::showSearchWidget);
+    connect(menu_bar, &MenuBar::newAboutTab, this, &QKulandayMainWindow::showAboutWidget);
     
     connect(tab_widget, &QTabWidget::tabCloseRequested, this, &QKulandayMainWindow::closeTab);
     
@@ -218,7 +218,7 @@ void QKulandayMainWindow::deactivateDecksOverviewCloseButton()
 
 void QKulandayMainWindow::showSearchWidget()
 {
-    QSearchWidget *widget = new QSearchWidget();
+    SearchWidget *widget = new SearchWidget(this->deckpath);
     
     this->tab_widget->addTab(widget, "search");
     

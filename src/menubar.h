@@ -5,12 +5,13 @@
 #include <QAction>
 #include <QKeySequence>
 #include <QApplication>
+#include <QDir>
 
-class QKulandayMenuBar : public QMenuBar
+class MenuBar : public QMenuBar
 {
     Q_OBJECT
 public:
-    explicit QKulandayMenuBar(QMenuBar *parent = nullptr);
+    explicit MenuBar(QMenuBar *parent = nullptr);
     
 private:
     void addFileMenu();

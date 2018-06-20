@@ -1,23 +1,23 @@
 #include "menubar.h"
 
-QKulandayMenuBar::QKulandayMenuBar(QMenuBar *parent)
+MenuBar::MenuBar(QMenuBar *parent)
 {
     addFileMenu();
     addSearchMenu();
     addHelpMenu();
 }
 
-void QKulandayMenuBar::addFileMenu()
+void MenuBar::addFileMenu()
 {
     QAction *newDecksOverviewAction = new QAction(QIcon::fromTheme("utilities-terminal"), "&New Decks Overview Tab");
     newDecksOverviewAction->setShortcut(QKeySequence::fromString("Ctrl+N"));
     newDecksOverviewAction->setStatusTip("new Decks Overview Tab");
-    connect(newDecksOverviewAction, &QAction::triggered, this, &QKulandayMenuBar::emitNewDecksOverviewTab);
+    connect(newDecksOverviewAction, &QAction::triggered, this, &MenuBar::emitNewDecksOverviewTab);
     
     QAction *exitAction = new QAction(QIcon::fromTheme("application-exit"), "&Exit");
     exitAction->setShortcut(QKeySequence::fromString("Ctrl+Q"));
     exitAction->setStatusTip("Exit application");
-    connect(exitAction, &QAction::triggered, this, &QKulandayMenuBar::quitApplication);
+    connect(exitAction, &QAction::triggered, this, &MenuBar::quitApplication);
     
     QMenu *fileMenu = addMenu("&File");
     fileMenu->addAction(newDecksOverviewAction);
@@ -25,42 +25,42 @@ void QKulandayMenuBar::addFileMenu()
     fileMenu->addAction(exitAction);
 }
 
-void QKulandayMenuBar::addSearchMenu()
+void MenuBar::addSearchMenu()
 {
     QAction *searchAction = new QAction(QIcon::fromTheme("system-search"), "&Search");
     searchAction->setShortcut(QKeySequence::fromString("Ctrl+S"));
     searchAction->setStatusTip("search for an item");
-    connect(searchAction, &QAction::triggered, this, &QKulandayMenuBar::emitSearchTab);
+    connect(searchAction, &QAction::triggered, this, &MenuBar::emitSearchTab);
     
     QMenu *searchMenu = addMenu("&Search");
     searchMenu->addAction(searchAction);
 }
 
-void QKulandayMenuBar::addHelpMenu()
+void MenuBar::addHelpMenu()
 {
     QAction *aboutAction = new QAction(QIcon(":logo"), "About Kulanday");
-    connect(aboutAction, &QAction::triggered, this, &QKulandayMenuBar::emitAboutTab);
+    connect(aboutAction, &QAction::triggered, this, &MenuBar::emitAboutTab);
     
     QMenu *menu = addMenu("&Help");
     menu->addAction(aboutAction);
 }
 
-void QKulandayMenuBar::quitApplication()
+void MenuBar::quitApplication()
 {
     QApplication::quit();
 }
 
-void QKulandayMenuBar::emitNewDecksOverviewTab()
+void MenuBar::emitNewDecksOverviewTab()
 {
     emit newDecksOverviewTab();
 }
 
-void QKulandayMenuBar::emitSearchTab()
+void MenuBar::emitSearchTab()
 {
     emit newSearchTab();
 }
 
-void QKulandayMenuBar::emitAboutTab()
+void MenuBar::emitAboutTab()
 {
     emit newAboutTab();
 }
