@@ -35,6 +35,7 @@ public:
     void refresh();
     
 private:
+    bool searchMode;
     QGridLayout *layout;
     QTableWidget *table;
     QDir *decks_path;

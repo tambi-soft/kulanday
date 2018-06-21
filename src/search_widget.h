@@ -20,7 +20,10 @@ private:
     QVBoxLayout *layout;
     QLineEdit *input_line;
     QPushButton *start_search_button;
-    QDeckOverviewWidget *deck_widget;
+    QDeckOverviewWidget *deck_widget = nullptr;
+    QDir *decks_path;
+    
+    void onSearchButtonClicked();
     
 signals:
     

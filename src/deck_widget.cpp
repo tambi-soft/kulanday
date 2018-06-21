@@ -4,6 +4,8 @@
 QDeckOverviewWidget::QDeckOverviewWidget(QString filter, QDir *decks_path, QWidget *parent)
     : QWidget(parent)
 {
+    this->searchMode = true;
+    
     initGui();
     
     this->decks_path = decks_path;
@@ -30,6 +32,8 @@ QDeckOverviewWidget::QDeckOverviewWidget(QString filter, QDir *decks_path, QWidg
 QDeckOverviewWidget::QDeckOverviewWidget(QDir *decks_path, QString deck_name, QWidget *parent)
     : QWidget(parent)
 {
+    this->searchMode = false;
+    
     initGui();
     
     this->decks_path = decks_path;
@@ -94,10 +98,16 @@ void QDeckOverviewWidget::initGui()
     connect(chk_svg, &QCheckBox::clicked, this, &QDeckOverviewWidget::refresh);
     connect(chk_image, &QCheckBox::clicked, this, &QDeckOverviewWidget::refresh);
     
-    layout->addWidget(chk_widget, 0, 0, 1, 2);
+    if (! this->searchMode)
+    {
+        layout->addWidget(chk_widget, 0, 0, 1, 2);
+    }
     layout->addWidget(table, 1, 0, 1, 2);
-    layout->addWidget(refresh_button, 2, 0);
-    layout->addWidget(new_item_button, 2, 1);
+    if (! this->searchMode)
+    {
+        layout->addWidget(refresh_button, 2, 0);
+        layout->addWidget(new_item_button, 2, 1);
+    }
 }
 
 QList<QMap<QString,QVariant>> QDeckOverviewWidget::fetchDeckData()
