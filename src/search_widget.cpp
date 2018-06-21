@@ -19,6 +19,10 @@ SearchWidget::SearchWidget(QDir *decks_path, QWidget *parent)
     h_layout->addWidget(start_search_button);
     layout->addWidget(h_widget);
     
+    layout->setContentsMargins(0, 0, 0, 0);
+    
+    layout->setAlignment(Qt::AlignTop);
+    
     setLayout(layout);
 }
 

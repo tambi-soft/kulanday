@@ -47,7 +47,7 @@ private:
     
     DbAdapter *db_adapter;
     
-    int COLUMN_OFFSET = 10;
+    int COLUMN_OFFSET = 11;
     
     QCheckBox *chk_name;
     QCheckBox *chk_word;

@@ -182,31 +182,32 @@ void QDeckOverviewWidget::populateTableWidget(QList<QMap<QString,QVariant>> data
                 svg_widget->setFixedSize(60, 30);
             }
             
-            table->setCellWidget(i, 0, edit_button);
-            table->setCellWidget(i, 1, move_button);
-            table->setCellWidget(i, 2, delete_button);
+            table->setItem(i, 0, new QTableWidgetItem(deck_name));
+            table->setCellWidget(i, 1, edit_button);
+            table->setCellWidget(i, 2, move_button);
+            table->setCellWidget(i, 3, delete_button);
             
-            table->setItem(i, 3, new QTableWidgetItem(order_index));
+            table->setItem(i, 4, new QTableWidgetItem(order_index));
             
             if (chk_name->isChecked())
             {
-                table->setItem(i, 4, new QTableWidgetItem(name));
+                table->setItem(i, 5, new QTableWidgetItem(name));
             }
             if (chk_word->isChecked())
             {
-                table->setItem(i, 5, new QTableWidgetItem(word));
+                table->setItem(i, 6, new QTableWidgetItem(word));
             }
             if (chk_phonetical->isChecked())
             {
-                table->setItem(i, 6, new QTableWidgetItem(phonetical));
+                table->setItem(i, 7, new QTableWidgetItem(phonetical));
             }
             if (chk_translation->isChecked())
             {
-                table->setItem(i, 7, new QTableWidgetItem(translation));
+                table->setItem(i, 8, new QTableWidgetItem(translation));
             }
             
-            table->setCellWidget(i, 8, svg_widget);
-            table->setCellWidget(i, 9, image_widget);
+            table->setCellWidget(i, 9, svg_widget);
+            table->setCellWidget(i, 10, image_widget);
             
             QList<QMap<QString,QVariant>> audio_filenames = db_adapter->audioFilenamesForDeckRowID(rowid);
             appendPlayButtons(i, audio_filenames, max_audio_count);
@@ -215,11 +216,23 @@ void QDeckOverviewWidget::populateTableWidget(QList<QMap<QString,QVariant>> data
     
     //table->horizontalHeader()->hide();
     QStringList labels;
-    labels << "" << "" << "" << "" << "name" << "word" << "phon." << "trans." << "svg" << "image" << "" << "" << "" << "" << "" << "" << "" << "" << "" << "";
+    labels << "deck" << "" << "" << "" << "" << "name" << "word" << "phon." << "trans." << "svg" << "image" << "" << "" << "" << "" << "" << "" << "" << "" << "" << "";
     table->setHorizontalHeaderLabels(labels);
     
     table->resizeColumnsToContents();
     //table->resizeRowsToContents();
+    
+    if (this->searchMode)
+    {
+        table->setColumnHidden(1, true);
+        table->setColumnHidden(2, true);
+        table->setColumnHidden(3, true);
+        table->setColumnHidden(4, true);
+    }
+    else
+    {
+        table->setColumnHidden(0, true);
+    }
 }
 
 void QDeckOverviewWidget::appendPlayButtons(int table_rowid, QList<QMap<QString,QVariant>> audio_filenames, int max_audio_count)
