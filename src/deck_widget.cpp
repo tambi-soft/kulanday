@@ -129,11 +129,9 @@ void QDeckOverviewWidget::populateTableWidget(QList<QMap<QString,QVariant>> data
     {
         table->setRowCount(data.length());
         
-        int max_audio_count = this->db_adapter->getMaxAudioCount();
-        table->setColumnCount(COLUMN_OFFSET + max_audio_count);
+        table->setColumnCount(COLUMN_OFFSET + 1000);
         
         // insert data
-        int i = 0;
         for (int i = 0; i < data.length(); ++i)
         {
             int rowid = data.at(i)["rowid"].toInt(); // needed for SELECTing audio files
@@ -209,8 +207,7 @@ void QDeckOverviewWidget::populateTableWidget(QList<QMap<QString,QVariant>> data
             table->setCellWidget(i, 9, svg_widget);
             table->setCellWidget(i, 10, image_widget);
             
-            QList<QMap<QString,QVariant>> audio_filenames = db_adapter->audioFilenamesForDeckRowID(rowid);
-            appendPlayButtons(i, audio_filenames, max_audio_count, deck_name);
+            appendPlayButtons(i, data, deck_name);
         }
     }
     
@@ -221,6 +218,8 @@ void QDeckOverviewWidget::populateTableWidget(QList<QMap<QString,QVariant>> data
     
     table->resizeColumnsToContents();
     //table->resizeRowsToContents();
+    
+    table->setColumnCount(COLUMN_OFFSET + this->max_audio_count);
     
     if (this->searchMode)
     {
@@ -235,11 +234,14 @@ void QDeckOverviewWidget::populateTableWidget(QList<QMap<QString,QVariant>> data
     }
 }
 
-void QDeckOverviewWidget::appendPlayButtons(int table_rowid, QList<QMap<QString,QVariant>> audio_filenames, int max_audio_count, QString deck_name)
+void QDeckOverviewWidget::appendPlayButtons(int table_rowid, QList<QMap<QString,QVariant>> data, QString deck_name)
 {
-    for (int column = 0; column < audio_filenames.length(); ++column)
+    QStringList audio_files = data.at(table_rowid)["audio"].toString().split(",");
+    this->max_audio_count = std::max(audio_files.length(), this->max_audio_count);
+    
+    for (int column = 0; column < audio_files.length(); ++column)
     {
-        QString audio_filename = audio_filenames.at(column)["filename"].toString();
+        QString audio_filename = audio_files.at(column);
         QPushButton *audio_button = new QPushButton();
         if (audio_filename != "")
         {

@@ -48,6 +48,7 @@ private:
     DbAdapter *db_adapter;
     
     int COLUMN_OFFSET = 11;
+    int max_audio_count = 0;
     
     QCheckBox *chk_name;
     QCheckBox *chk_word;
@@ -59,7 +60,7 @@ private:
     void initGui();
     QList<QMap<QString, QVariant> > fetchDeckData();
     void populateTableWidget(QList<QMap<QString,QVariant>> data);
-    void appendPlayButtons(int table_rowid, QList<QMap<QString,QVariant>> audio_filenames, int max_audio_count, QString deck_name);
+    void appendPlayButtons(int table_rowid, QList<QMap<QString,QVariant>> data, QString deck_name);
     void audioButtonClicked(QPushButton *button, QString audio_filename, QString deck_name);
     void moveItem(QString deck_name, qlonglong rowid);
     QString cropText(QString text);

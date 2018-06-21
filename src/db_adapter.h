@@ -33,7 +33,6 @@ public:
     QList<QMap<QString, QVariant> > deleteItem(int rowid);
     void deleteImage(int rowid);
     QList<QMap<QString,QVariant>> audioFilenamesForDeckRowID(qlonglong rowid);
-    int getMaxAudioCount();
     void deleteAudio(int rowid);
     void insertAudioFilename(qlonglong deck_rowid, int audio_rowid, QString filename, QString description);
     void insertImageFilename(int rowid, QString filename);

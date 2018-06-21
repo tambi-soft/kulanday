@@ -82,7 +82,11 @@ qlonglong DbAdapter::newAudioRow(int deck_rowid)
 
 QList<QMap<QString,QVariant>> DbAdapter::selectDeckItems()
 {
-    QSqlQuery query("SELECT rowid, order_index, name, word, phonetical, translation, svg_filename, image, created FROM deck ORDER BY order_index", this->db);
+    QSqlQuery query("SELECT deck.rowid, order_index, name, word, phonetical, translation, svg_filename, image, created, GROUP_CONCAT(audio.filename, \",\") AS audio\
+            FROM deck\
+            LEFT JOIN audio ON audio.deck_rowid = deck.rowid\
+            GROUP BY deck.rowid\
+            ORDER BY order_index", this->db);
     
     return dbIteratorToMapList(query);
 }
@@ -90,9 +94,11 @@ QList<QMap<QString,QVariant>> DbAdapter::selectDeckItems()
 QList<QMap<QString,QVariant>> DbAdapter::selectDeckItemsFiltered(QString filter)
 {
     QSqlQuery query(this->db);
-    query.prepare("SELECT rowid, order_index, name, word, phonetical, translation, svg_filename, image, created\
+    query.prepare("SELECT deck.rowid, order_index, name, word, phonetical, translation, svg_filename, image, created, GROUP_CONCAT(audio.filename, \",\") AS audio\
         FROM deck\
+        LEFT JOIN audio ON audio.deck_rowid = deck.rowid\
         WHERE name LIKE ? OR word LIKE ? OR phonetical LIKE ? OR translation LIKE ?\
+        GROUP BY deck.rowid\
         ORDER BY order_index");
     query.bindValue(0, "%"+filter+"%");
     query.bindValue(1, "%"+filter+"%");
@@ -207,22 +213,6 @@ QList<QMap<QString,QVariant>> DbAdapter::audioFilenamesForDeckRowID(qlonglong ro
     query.exec();
     
     return dbIteratorToMapList(query);
-}
-
-int DbAdapter::getMaxAudioCount()
-{
-    QSqlQuery query("SELECT COUNT(*) AS result FROM audio GROUP BY deck_rowid ORDER BY result DESC LIMIT 1", this->db);
-    
-    QList<QMap<QString,QVariant>> list = dbIteratorToMapList(query);
-    
-    if (list.length() > 0 && list.at(0).contains("result"))
-    {
-        return list.at(0)["result"].toInt();
-    }
-    else
-    {
-        return 0;
-    }
 }
 
 void DbAdapter::deleteAudio(int rowid)
