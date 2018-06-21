@@ -150,7 +150,7 @@ void QDeckOverviewWidget::populateTableWidget(QList<QMap<QString,QVariant>> data
             
             QPushButton *delete_button = new QPushButton();
             delete_button->setIcon(QIcon::fromTheme("edit-delete"));
-            connect(delete_button, &QPushButton::clicked, this, [this, rowid, data, i]{ deleteRowButtonClicked(rowid, data.at(i)); });
+            connect(delete_button, &QPushButton::clicked, this, [this, rowid, data, i, deck_name]{ deleteRowButtonClicked(rowid, data.at(i), deck_name); });
             
             QString order_index = data.at(i)["order_index"].toString();
             QString name = data.at(i)["name"].toString();
@@ -210,7 +210,7 @@ void QDeckOverviewWidget::populateTableWidget(QList<QMap<QString,QVariant>> data
             table->setCellWidget(i, 10, image_widget);
             
             QList<QMap<QString,QVariant>> audio_filenames = db_adapter->audioFilenamesForDeckRowID(rowid);
-            appendPlayButtons(i, audio_filenames, max_audio_count);
+            appendPlayButtons(i, audio_filenames, max_audio_count, deck_name);
         }
     }
     
@@ -235,7 +235,7 @@ void QDeckOverviewWidget::populateTableWidget(QList<QMap<QString,QVariant>> data
     }
 }
 
-void QDeckOverviewWidget::appendPlayButtons(int table_rowid, QList<QMap<QString,QVariant>> audio_filenames, int max_audio_count)
+void QDeckOverviewWidget::appendPlayButtons(int table_rowid, QList<QMap<QString,QVariant>> audio_filenames, int max_audio_count, QString deck_name)
 {
     for (int column = 0; column < audio_filenames.length(); ++column)
     {
@@ -251,12 +251,12 @@ void QDeckOverviewWidget::appendPlayButtons(int table_rowid, QList<QMap<QString,
             audio_button->setEnabled(false);
         }
         
-        connect(audio_button, &QPushButton::clicked, this, [this, audio_button, audio_filename]{ audioButtonClicked(audio_button, audio_filename); });
+        connect(audio_button, &QPushButton::clicked, this, [this, audio_button, audio_filename, deck_name]{ audioButtonClicked(audio_button, audio_filename, deck_name); });
         
         table->setCellWidget(table_rowid, column + COLUMN_OFFSET, audio_button);
     }
 }
-void QDeckOverviewWidget::audioButtonClicked(QPushButton *button, QString audio_filename)
+void QDeckOverviewWidget::audioButtonClicked(QPushButton *button, QString audio_filename, QString deck_name)
 {
     if (this->player->state() == QMediaPlayer::PlayingState && this->playing_button == button)
     {
@@ -271,7 +271,7 @@ void QDeckOverviewWidget::audioButtonClicked(QPushButton *button, QString audio_
         
         this->playing_button = button;
         
-        QString audio_path = this->decks_path->absolutePath() + "/" + this->deck_name + "/" + audio_filename;
+        QString audio_path = this->decks_path->absolutePath() + "/" + deck_name + "/" + audio_filename;
         QUrl audio_url = QUrl::fromLocalFile(audio_path);
         
         player->setMedia(QMediaContent(audio_url));
@@ -313,7 +313,7 @@ void QDeckOverviewWidget::editRowButtonClicked(QString deck_name, int rowid)
     emit showDeckItemRequested(deck_name, rowid);
 }
 
-void QDeckOverviewWidget::deleteRowButtonClicked(int rowid, QMap<QString,QVariant> data_row)
+void QDeckOverviewWidget::deleteRowButtonClicked(int rowid, QMap<QString,QVariant> data_row, QString deck_name)
 {
     QString message = "delete " + data_row["name"].toString() + "|" + data_row["word"].toString() + "|" + data_row["phonetical"].toString() + "|" + data_row["translation"].toString() + "?";
     int reply = QMessageBox::question(this, "Delete", message, QMessageBox::Yes, QMessageBox::No);
@@ -327,7 +327,7 @@ void QDeckOverviewWidget::deleteRowButtonClicked(int rowid, QMap<QString,QVarian
             QString filename = data_to_delete.at(i)["filename"].toString();
             if (filename != "")
             {
-                QString filepath = this->decks_path->absolutePath() + "/" + this->deck_name + "/" + filename;
+                QString filepath = this->decks_path->absolutePath() + "/" + deck_name + "/" + filename;
                 QFile file(filepath);
                 file.remove();
             }

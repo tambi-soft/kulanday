@@ -59,8 +59,8 @@ private:
     void initGui();
     QList<QMap<QString, QVariant> > fetchDeckData();
     void populateTableWidget(QList<QMap<QString,QVariant>> data);
-    void appendPlayButtons(int table_rowid, QList<QMap<QString,QVariant>> audio_filenames, int max_audio_count);
-    void audioButtonClicked(QPushButton *button, QString audio_filename);
+    void appendPlayButtons(int table_rowid, QList<QMap<QString,QVariant>> audio_filenames, int max_audio_count, QString deck_name);
+    void audioButtonClicked(QPushButton *button, QString audio_filename, QString deck_name);
     void moveItem(QString deck_name, qlonglong rowid);
     QString cropText(QString text);
     
@@ -78,7 +78,7 @@ private slots:
     void newItemButtonClicked();
     void refreshTable();
     void editRowButtonClicked(QString deck_name, int rowid);
-    void deleteRowButtonClicked(int rowid, QMap<QString, QVariant> data_row);
+    void deleteRowButtonClicked(int rowid, QMap<QString, QVariant> data_row, QString deck_name);
     void mediaPlayerStateChanged(int state);
 };
 

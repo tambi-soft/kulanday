@@ -100,8 +100,6 @@ QList<QMap<QString,QVariant>> DbAdapter::selectDeckItemsFiltered(QString filter)
     query.bindValue(3, "%"+filter+"%");
     query.exec();
     
-    qDebug() << query.executedQuery();
-    
     return dbIteratorToMapList(query);
 }
 
