@@ -109,11 +109,6 @@ QList<QMap<QString,QVariant>> DbAdapter::selectDeckItemsFiltered(QString filter)
     return dbIteratorToMapList(query);
 }
 
-QList<QVariant> DbAdapter::selectDeckItemsWithAudio()
-{
-    
-}
-
 QList<QMap<QString,QVariant>> DbAdapter::selectDeckDirtyDozenItems()
 {
     QSqlQuery query("SELECT image, rowid, name, word, phonetical, translation, svg_filename, image, filename\
