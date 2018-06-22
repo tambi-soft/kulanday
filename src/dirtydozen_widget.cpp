@@ -57,6 +57,12 @@ void QDirtyDozenWidget::update()
 {
     clear();
     
+    // turn button to "start over" when all items are shown
+    if (this->full_dataset.length() >= this->counter)
+    {
+        this->show_all_button->setText("start over");
+    }
+    
     this->dataset = this->full_dataset.mid(0, this->counter);
     // we want to play the new item before shuffle
     // (after it is hard to know wich one is the new)

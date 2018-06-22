@@ -134,7 +134,8 @@ void QDeckOverviewWidget::populateTableWidget(QList<QMap<QString,QVariant>> data
         // insert data
         for (int i = 0; i < data.length(); ++i)
         {
-            int rowid = data.at(i)["rowid"].toInt(); // needed for SELECTing audio files
+            int rowid = data.at(i)["rowid"].toInt();
+            
             QString deck_name = data.at(i)["[deck_name]"].toString();
             
             QPushButton *edit_button = new QPushButton();
