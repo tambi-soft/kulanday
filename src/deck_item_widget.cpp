@@ -134,10 +134,11 @@ void QDeckItemWidget::initializeGui(QString deck_name, int rowid)
 void QDeckItemWidget::importImageClicked()
 {
     this->default_import_path = "";
-    QString image_url = QFileDialog::getOpenFileName(this, "Please select an Image File", QDir::homePath());
+    QString image_url = QFileDialog::getOpenFileName(this, "Please select an Image File", this->last_import_path);
     
     if (image_url != NULL)
     {
+        this->last_import_path = image_url;
         QFile filepath(image_url);
         
         QString filename = QUrl(image_url).fileName();

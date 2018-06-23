@@ -33,6 +33,7 @@ public:
     
 private:
     QDir *decks_path;
+    QString last_import_path = QDir::homePath();
     QString deck_name;
     qlonglong deck_rowid;
     QMap<int,int> audio_rowid; // table row -> db row
@@ -56,7 +57,6 @@ private:
     
     DbAdapter *database = nullptr;
     QMediaPlayer *player;
-    //QAudioRecorder *recorder;
     AudioRecorder *arec;
     QPushButton *playing_button = nullptr;
     

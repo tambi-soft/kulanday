@@ -29,6 +29,7 @@ public:
     
 private:
     QDir *decks_path;
+    QString last_import_path = QDir::homePath();
     QString deck_name;
     QString image_path;
     
