@@ -30,6 +30,8 @@ private:
     MenuBar *menu_bar;
     
     QDir *deckpath;
+    QString last_image_import_path = QDir::homePath();
+    QString last_audio_import_path = QDir::homePath();
     
     int SELECT_DECK_INDEX = 0;
     int DECK_OVERVIEW_INDEX = 1;
@@ -59,4 +61,6 @@ private slots:
     void activateNewTab();
     void closeTab(int tab_id);
     void onTabMoved(int from, int to);
+    void onLastImageImportPathUpdated(QString last_image_import_path);
+    void onLastAudioImportPathUpdated(QString last_audio_import_path);
 };

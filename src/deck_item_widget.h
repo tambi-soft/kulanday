@@ -22,14 +22,15 @@ class QDeckItemWidget : public QWidget
 {
     Q_OBJECT
 public:
-    explicit QDeckItemWidget(QDir *decks_path, QString deck_name, QWidget *parent = nullptr);
-    explicit QDeckItemWidget(QDir *decks_path, QString deck_name, int rowid, QWidget *parent = nullptr);
+    explicit QDeckItemWidget(QDir *decks_path, QString deck_name, QString last_image_import_path, QWidget *parent = nullptr);
+    explicit QDeckItemWidget(QDir *decks_path, QString deck_name, int rowid, QString last_image_import_path, QWidget *parent = nullptr);
     
     int rowid;
     
 private:
     QDir *decks_path;
-    QString last_import_path = QDir::homePath();
+    //QString last_image_import_path = QDir::homePath();
+    QString last_image_import_path;
     QString deck_name;
     QString image_path;
     
@@ -60,6 +61,7 @@ protected:
     
 signals:
     void contentsUpdated(QString deck_name);
+    void imageImportPathUpdated(QString last_image_import_path);
     
 public slots:
     void importImageClicked();

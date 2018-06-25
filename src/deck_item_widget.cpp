@@ -1,7 +1,9 @@
 #include "deck_item_widget.h"
 
-QDeckItemWidget::QDeckItemWidget(QDir *decks_path, QString deck_name, QWidget *parent) : QWidget(parent)
+QDeckItemWidget::QDeckItemWidget(QDir *decks_path, QString deck_name, QString last_image_import_path, QWidget *parent) : QWidget(parent)
 {
+    this->last_image_import_path = last_image_import_path;
+    
     if (this->database == nullptr)
     {
         this->database = new DbAdapter(decks_path, deck_name);
@@ -12,8 +14,10 @@ QDeckItemWidget::QDeckItemWidget(QDir *decks_path, QString deck_name, QWidget *p
     populateGui(decks_path, deck_name, rowid);
 }
 
-QDeckItemWidget::QDeckItemWidget(QDir *decks_path, QString deck_name, int rowid, QWidget *parent) : QWidget(parent)
+QDeckItemWidget::QDeckItemWidget(QDir *decks_path, QString deck_name, int rowid, QString last_image_import_path, QWidget *parent) : QWidget(parent)
 {
+    this->last_image_import_path = last_image_import_path;
+    
     populateGui(decks_path, deck_name, rowid);
 }
 
@@ -134,11 +138,12 @@ void QDeckItemWidget::initializeGui(QString deck_name, int rowid)
 void QDeckItemWidget::importImageClicked()
 {
     this->default_import_path = "";
-    QString image_url = QFileDialog::getOpenFileName(this, "Please select an Image File", this->last_import_path);
+    QString image_url = QFileDialog::getOpenFileName(this, "Please select an Image File", this->last_image_import_path);
     
     if (image_url != NULL)
     {
-        this->last_import_path = image_url;
+        this->last_image_import_path = image_url;
+        emit imageImportPathUpdated(this->last_image_import_path);
         QFile filepath(image_url);
         
         QString filename = QUrl(image_url).fileName();

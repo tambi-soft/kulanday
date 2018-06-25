@@ -126,9 +126,11 @@ void QKulandayMainWindow::deleteDeck(QString deck_name)
 
 void QKulandayMainWindow::createNewDeckItem(QString deck_name)
 {
-    QDeckItemWidget *deck_item = new QDeckItemWidget(this->deckpath, deck_name);
+    QDeckItemWidget *deck_item = new QDeckItemWidget(this->deckpath, deck_name, this->last_image_import_path);
     connect(deck_item, &QDeckItemWidget::contentsUpdated, this, &QKulandayMainWindow::onDeckItemContentsUpdated);
     tab_widget->addTab(deck_item, deck_name);
+    
+    connect(deck_item, &QDeckItemWidget::imageImportPathUpdated, this, &QKulandayMainWindow::onLastImageImportPathUpdated);
     
     activateNewTab();
     this->tab_widget->setTabIcon(this->tab_widget->currentIndex(), QIcon::fromTheme("document-properties"));
@@ -146,9 +148,12 @@ void QKulandayMainWindow::showDeckItem(QString deck_name, int rowid)
     }
     else
     {
-        QDeckItemWidget *deck_item = new QDeckItemWidget(this->deckpath, deck_name, rowid);
+        QDeckItemWidget *deck_item = new QDeckItemWidget(this->deckpath, deck_name, rowid, this->last_image_import_path);
+        
         connect(deck_item, &QDeckItemWidget::contentsUpdated, this, &QKulandayMainWindow::onDeckItemContentsUpdated);
         tab_widget->addTab(deck_item, deck_name);
+        
+        connect(deck_item, &QDeckItemWidget::imageImportPathUpdated, this, &QKulandayMainWindow::onLastImageImportPathUpdated);
         
         activateNewTab();
         this->tab_widget->setTabIcon(this->tab_widget->currentIndex(), QIcon::fromTheme("document-properties"));
@@ -255,4 +260,14 @@ bool QKulandayMainWindow::eventFilter(QObject *watched, QEvent *event)
     }
     
     return QWidget::eventFilter(watched, event);
+}
+
+void QKulandayMainWindow::onLastImageImportPathUpdated(QString last_image_import_path)
+{
+    this->last_image_import_path = last_image_import_path;
+}
+
+void QKulandayMainWindow::onLastAudioImportPathUpdated(QString last_audio_import_path)
+{
+    this->last_audio_import_path = last_audio_import_path;
 }
