@@ -318,24 +318,29 @@ void QDeckOverviewWidget::editRowButtonClicked(QString deck_name, int rowid)
     emit showDeckItemRequested(deck_name, rowid);
 }
 
-void QDeckOverviewWidget::deleteRowButtonClicked(int rowid, QMap<QString,QVariant> data_row, QString deck_name)
+void QDeckOverviewWidget::deleteRowButtonClicked(qlonglong rowid, QMap<QString,QVariant> data_row, QString deck_name)
 {
     QString message = "delete " + data_row["name"].toString() + "|" + data_row["word"].toString() + "|" + data_row["phonetical"].toString() + "|" + data_row["translation"].toString() + "?";
     int reply = QMessageBox::question(this, "Delete", message, QMessageBox::Yes, QMessageBox::No);
     
     if (reply == QMessageBox::Yes)
     {
-        QList<QMap<QString,QVariant>> data_to_delete = this->database->deleteItem(rowid);
-        
-        for (int i = 0; i < data_to_delete.length(); ++i)
+        deleteRow(rowid, deck_name);
+    }
+}
+
+void QDeckOverviewWidget::deleteRow(qlonglong rowid, QString deck_name)
+{
+    QList<QMap<QString,QVariant>> data_to_delete = this->database->deleteItem(rowid);
+    
+    for (int i = 0; i < data_to_delete.length(); ++i)
+    {
+        QString filename = data_to_delete.at(i)["filename"].toString();
+        if (filename != "")
         {
-            QString filename = data_to_delete.at(i)["filename"].toString();
-            if (filename != "")
-            {
-                QString filepath = this->decks_path->absolutePath() + "/" + deck_name + "/" + filename;
-                QFile file(filepath);
-                file.remove();
-            }
+            QString filepath = this->decks_path->absolutePath() + "/" + deck_name + "/" + filename;
+            QFile file(filepath);
+            file.remove();
         }
     }
     
@@ -347,7 +352,9 @@ void QDeckOverviewWidget::deleteRowButtonClicked(int rowid, QMap<QString,QVarian
 
 void QDeckOverviewWidget::moveItem(QString deck_name, qlonglong rowid)
 {
-    MoveItemDialog *dialog = new MoveItemDialog(this->decks_path, deck_name);
+    MoveItemDialog *dialog = new MoveItemDialog(this->decks_path, deck_name, rowid);
+    connect(dialog, &MoveItemDialog::deleteRow, this, &QDeckOverviewWidget::deleteRow);
+    
     dialog->exec();
 }
 

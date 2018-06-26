@@ -1,9 +1,14 @@
 #include "move_item_dialog.h"
 
-MoveItemDialog::MoveItemDialog(QDir *decks_path, QString deck_name, QDialog *parent)
+MoveItemDialog::MoveItemDialog(QDir *decks_path, QString deck_name, qlonglong rowid, QDialog *parent)
     : QDialog(parent)
+    , scroll_layout (new QVBoxLayout)
 {
     this->setAttribute(Qt::WA_DeleteOnClose);
+    
+    this->decks_path = decks_path;
+    this->deck_name = deck_name;
+    this->rowid = rowid;
     
     QGridLayout *top_layout = new QGridLayout;
     
@@ -12,15 +17,13 @@ MoveItemDialog::MoveItemDialog(QDir *decks_path, QString deck_name, QDialog *par
     scroll_area->setWidgetResizable(true);
     scroll_area->setWidget(scroll_widget);
     
-    QVBoxLayout *scroll_layout = new QVBoxLayout;
-    
     QStringList decks_names = decks_path->entryList(QDir::NoDotAndDotDot | QDir::Dirs, QDir::Name);    
     foreach (QString deck, decks_names)
     {
         if (deck != deck_name)
         {
             QRadioButton *radio = new QRadioButton(deck);
-            scroll_layout->addWidget(radio);
+            this->scroll_layout->addWidget(radio);
         }
     }
     
@@ -41,7 +44,22 @@ MoveItemDialog::MoveItemDialog(QDir *decks_path, QString deck_name, QDialog *par
 
 void MoveItemDialog::onMoveButton()
 {
+    DbAdapter *database = new DbAdapter(this->decks_path, this->deck_name);
     
+    // copy text and images
+    QList<QMap<QString,QVariant>> data = database->selectDeckItem(rowid);
+    qDebug() << data;
+    
+    
+    // copy audio
+    QList<QMap<QString,QVariant>> audio_data = database->audioFilenamesForDeckRowID(this->rowid);
+    qDebug() << audio_data;
+    
+    // delete from this deck
+    //emit deleteRow(this->rowid, deck_name);
+    
+    // close dialog after work is done
+    close();
 }
 
 void MoveItemDialog::onCancelButton()

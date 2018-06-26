@@ -65,6 +65,7 @@ private:
     void audioButtonClicked(QPushButton *button, QString audio_filename, QString deck_name);
     void moveItem(QString deck_name, qlonglong rowid);
     QString cropText(QString text);
+    void deleteRow(qlonglong rowid, QString deck_name);
     
 protected:
     void hideEvent(QHideEvent *event);
@@ -80,7 +81,7 @@ private slots:
     void newItemButtonClicked();
     void refreshTable();
     void editRowButtonClicked(QString deck_name, int rowid);
-    void deleteRowButtonClicked(int rowid, QMap<QString, QVariant> data_row, QString deck_name);
+    void deleteRowButtonClicked(qlonglong rowid, QMap<QString, QVariant> data_row, QString deck_name);
     void mediaPlayerStateChanged(int state);
 };
 
