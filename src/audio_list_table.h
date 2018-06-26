@@ -33,7 +33,7 @@ public:
     
 private:
     QDir *decks_path;
-    QString last_import_path = QDir::homePath();
+    QString last_audio_import_path = QDir::homePath();
     QString deck_name;
     qlonglong deck_rowid;
     QMap<int,int> audio_rowid; // table row -> db row
@@ -68,6 +68,7 @@ private:
     
 signals:
     void changed();
+    void audioImportPathUpdated(QString last_image_import_path);
     
 private slots:
     void onItemChanged();

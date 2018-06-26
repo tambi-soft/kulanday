@@ -24,6 +24,7 @@
 
 #include "db_adapter.h"
 #include "unicode_fonts.h"
+#include "move_item_dialog.h"
 
 class QDeckOverviewWidget : public QWidget
 {

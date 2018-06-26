@@ -345,7 +345,8 @@ void QDeckOverviewWidget::deleteRowButtonClicked(int rowid, QMap<QString,QVarian
 
 void QDeckOverviewWidget::moveItem(QString deck_name, qlonglong rowid)
 {
-    
+    MoveItemDialog *dialog = new MoveItemDialog(this->decks_path);
+    dialog->show();
 }
 
 void QDeckOverviewWidget::hideEvent(QHideEvent *event)

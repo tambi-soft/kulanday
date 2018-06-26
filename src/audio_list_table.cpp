@@ -188,13 +188,14 @@ void QAudioListTable::deleteButtonClicked(int row)
 
 void QAudioListTable::importButtonClicked(int row)
 {
-    QString audio_url = QFileDialog::getOpenFileName(this, "Import Audio", this->last_import_path);
+    QString audio_url = QFileDialog::getOpenFileName(this, "Import Audio", this->last_audio_import_path);
     if (audio_url != NULL)
     {
         QFile filepath(audio_url);
         QString filename = QUrl(audio_url).fileName();
         
-        this->last_import_path = audio_url;
+        this->last_audio_import_path = audio_url;
+        emit audioImportPathUpdated(this->last_audio_import_path);
         
         // copy the image to the deck.
         // if there is already a file with this name, just append an undersore to it (probably before the extension)
