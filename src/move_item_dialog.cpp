@@ -1,41 +1,42 @@
 #include "move_item_dialog.h"
 
-MoveItemDialog::MoveItemDialog(QDir *decks_path, QDialog *parent)
+MoveItemDialog::MoveItemDialog(QDir *decks_path, QString deck_name, QDialog *parent)
     : QDialog(parent)
-//    , scroll_layout (new QVBoxLayout)
-//    , scroll_widget (new QWidget)
-//    , grid (new QGridLayout)
 {
-    //this->setGeometry(100, 100, 260, 260);
+    this->setAttribute(Qt::WA_DeleteOnClose);
     
-    QWidget *top_widget = new QWidget();
-    QGridLayout *top_layout = new QGridLayout();
-    setLayout(top_layout);
-    top_layout->addWidget(top_widget, 0, 0, 1, 2);
+    QGridLayout *top_layout = new QGridLayout;
     
-    //top_widget->setGeometry(10, 10, 400, 500);
-    QScrollArea *scroll_area = new QScrollArea(top_widget);
-    scroll_area->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
+    QWidget *scroll_widget = new QWidget;
+    QScrollArea *scroll_area = new QScrollArea;
     scroll_area->setWidgetResizable(true);
-    //scroll_area->setGeometry(10, 10, 400, 500);
+    scroll_area->setWidget(scroll_widget);
     
-    QWidget *widget = new QWidget();
-    scroll_area->setWidget(widget);
-    
-    QVBoxLayout *scroll_layout = new QVBoxLayout();
-    widget->setLayout(scroll_layout);
+    QVBoxLayout *scroll_layout = new QVBoxLayout;
     
     QStringList decks_names = decks_path->entryList(QDir::NoDotAndDotDot | QDir::Dirs, QDir::Name);    
     foreach (QString deck, decks_names)
     {
-        QRadioButton *radio = new QRadioButton(deck);
-        scroll_layout->addWidget(radio);
+        if (deck != deck_name)
+        {
+            QRadioButton *radio = new QRadioButton(deck);
+            scroll_layout->addWidget(radio);
+        }
     }
+    
+    scroll_widget->setLayout(scroll_layout);
+    
+    top_layout->addWidget(scroll_area, 0, 0, 1, 2);
     
     QPushButton *move_button = new QPushButton("move");
     QPushButton *cancel_button = new QPushButton("cancel");
     top_layout->addWidget(move_button, 1, 0);
     top_layout->addWidget(cancel_button, 1, 1);
+    
+    connect(move_button, &QPushButton::clicked, this, &MoveItemDialog::onMoveButton);
+    connect(cancel_button, &QPushButton::clicked, this, &MoveItemDialog::onCancelButton);
+    
+    setLayout(top_layout);
 }
 
 void MoveItemDialog::onMoveButton()
@@ -45,5 +46,5 @@ void MoveItemDialog::onMoveButton()
 
 void MoveItemDialog::onCancelButton()
 {
-    destroy();
+    close();
 }

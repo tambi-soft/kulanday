@@ -129,6 +129,8 @@ void QDeckOverviewWidget::populateTableWidget(QList<QMap<QString,QVariant>> data
     {
         table->setRowCount(data.length());
         
+        // we want to make sure that the table is large enough for holding all columns.
+        // sadly, we now the correct column count only afterwards ...
         table->setColumnCount(COLUMN_OFFSET + 1000);
         
         // insert data
@@ -345,8 +347,8 @@ void QDeckOverviewWidget::deleteRowButtonClicked(int rowid, QMap<QString,QVarian
 
 void QDeckOverviewWidget::moveItem(QString deck_name, qlonglong rowid)
 {
-    MoveItemDialog *dialog = new MoveItemDialog(this->decks_path);
-    dialog->show();
+    MoveItemDialog *dialog = new MoveItemDialog(this->decks_path, deck_name);
+    dialog->exec();
 }
 
 void QDeckOverviewWidget::hideEvent(QHideEvent *event)

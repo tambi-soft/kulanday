@@ -15,13 +15,9 @@ class MoveItemDialog : public QDialog
 {
     Q_OBJECT
 public:
-    explicit MoveItemDialog(QDir *decks_path, QDialog *parent = nullptr);
+    explicit MoveItemDialog(QDir *decks_path, QString deck_name, QDialog *parent = nullptr);
     
 private:
-    //QVBoxLayout *scroll_layout;
-    //QScrollArea *scroll_area;
-    //QWidget *scroll_widget;
-    //QGridLayout *grid;
     
 signals:
     
