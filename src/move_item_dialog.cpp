@@ -44,19 +44,58 @@ MoveItemDialog::MoveItemDialog(QDir *decks_path, QString deck_name, qlonglong ro
 
 void MoveItemDialog::onMoveButton()
 {
-    DbAdapter *database = new DbAdapter(this->decks_path, this->deck_name);
+    // detect witch radiobox is checked
+    QString target_deck_name = "";
+    for (int i = 0; i < this->scroll_layout->count(); ++i)
+    {
+        QWidget *widget = this->scroll_layout->itemAt(i)->widget();
+        QString class_name = widget->metaObject()->className();
+        if (class_name == "QRadioButton")
+        {
+            QRadioButton *rad = (QRadioButton*)widget;
+            if (rad->isChecked())
+            {
+                target_deck_name = rad->text();
+            }
+        }
+    }
+    qDebug() << target_deck_name;
+    
+    // init db and new deck row enry
+    DbAdapter *source_database = new DbAdapter(this->decks_path, this->deck_name);
+    
+    DbAdapter *target_database = new DbAdapter(this->decks_path, target_deck_name);
+    int new_rowid = target_database->newDeckRow();
     
     // copy text and images
-    QList<QMap<QString,QVariant>> data = database->selectDeckItem(rowid);
+    QMap<QString,QVariant> data = source_database->selectDeckItem(rowid).at(0);
     qDebug() << data;
+    target_database->updateDeckItem(new_rowid, data["name"].toString(), data["word"].toString(), data["phonetical"].toString(), data["translation"].toString());
+    
+    QFile *image = new QFile(this->decks_path->absolutePath() + "/" + this->deck_name + "/" + data["image"].toString());
+    image->copy(this->decks_path->absolutePath() + "/" + target_deck_name + "/" + data["image"].toString());
+    
+    target_database->insertImageFilename(new_rowid, data["image"].toString());
+    
     
     
     // copy audio
-    QList<QMap<QString,QVariant>> audio_data = database->audioFilenamesForDeckRowID(this->rowid);
+    QList<QMap<QString,QVariant>> audio_data = source_database->audioFilenamesForDeckRowID(this->rowid);
     qDebug() << audio_data;
     
+    for (int i = 0; i < audio_data.length(); ++i)
+    {
+        QMap<QString,QVariant> data = audio_data.at(i);
+        
+        QFile *audio = new QFile(this->decks_path->absolutePath() + "/" + this->deck_name + "/" + data["filename"].toString());
+        audio->copy(this->decks_path->absolutePath() + "/" + target_deck_name + "/" + data["filename"].toString());
+        
+        int audio_rowid = target_database->newAudioRow(new_rowid);
+        target_database->insertAudioFilename(new_rowid, audio_rowid, data["filename"].toString(), data["description"].toString());
+    }
+    
     // delete from this deck
-    //emit deleteRow(this->rowid, deck_name);
+    emit deleteRow(this->rowid, deck_name);
     
     // close dialog after work is done
     close();
