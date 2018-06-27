@@ -58,7 +58,7 @@ void QDirtyDozenWidget::update()
     clear();
     
     // turn button to "start over" when all items are shown
-    if (this->full_dataset.length() >= this->counter)
+    if (this->full_dataset.length() <= this->counter)
     {
         this->show_all_button->setText("start over");
     }
@@ -227,6 +227,8 @@ void QDirtyDozenWidget::displayButtonClicked(int rowid, QPushButton *button)
         }
         else
         {
+            this->counter = 1;
+            
             playRandomAudio();
         }
     }

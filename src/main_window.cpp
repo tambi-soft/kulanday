@@ -6,7 +6,7 @@ QKulandayMainWindow::QKulandayMainWindow(QWidget *parent)
     , tab_widget (new QTabWidget)
     , menu_bar (new MenuBar)
 {
-    resize(800, 700);
+    resize(860, 730);
     
     Config *config = new Config();
     this->deckpath = config->getDecksPath();

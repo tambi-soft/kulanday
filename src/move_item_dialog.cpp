@@ -59,7 +59,6 @@ void MoveItemDialog::onMoveButton()
             }
         }
     }
-    qDebug() << target_deck_name;
     
     // init db and new deck row enry
     DbAdapter *source_database = new DbAdapter(this->decks_path, this->deck_name);
@@ -69,7 +68,6 @@ void MoveItemDialog::onMoveButton()
     
     // copy text and images
     QMap<QString,QVariant> data = source_database->selectDeckItem(rowid).at(0);
-    qDebug() << data;
     target_database->updateDeckItem(new_rowid, data["name"].toString(), data["word"].toString(), data["phonetical"].toString(), data["translation"].toString());
     
     QFile *image = new QFile(this->decks_path->absolutePath() + "/" + this->deck_name + "/" + data["image"].toString());
@@ -81,7 +79,6 @@ void MoveItemDialog::onMoveButton()
     
     // copy audio
     QList<QMap<QString,QVariant>> audio_data = source_database->audioFilenamesForDeckRowID(this->rowid);
-    qDebug() << audio_data;
     
     for (int i = 0; i < audio_data.length(); ++i)
     {
