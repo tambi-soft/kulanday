@@ -4,7 +4,6 @@
 QKulandayMainWindow::QKulandayMainWindow(QWidget *parent)
     : QMainWindow(parent)
     , tab_widget (new QTabWidget)
-    , menu_bar (new MenuBar)
 {
     resize(860, 730);
     
@@ -15,6 +14,7 @@ QKulandayMainWindow::QKulandayMainWindow(QWidget *parent)
     tab_widget->setTabsClosable(true);
     tab_widget->setMovable(true);
     
+    this->menu_bar = new MenuBar(this->deckpath);
     setMenuBar(menu_bar);
     connect(menu_bar, &MenuBar::newDecksOverviewTab, this, &QKulandayMainWindow::showDecksOverviewTab);
     connect(menu_bar, &MenuBar::newSearchTab, this, &QKulandayMainWindow::showSearchWidget);

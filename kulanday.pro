@@ -68,7 +68,8 @@ HEADERS += \
     src/deck_item_widget.h \
     src/about_widget.h \
     src/resizing_text_edit.h \
-    src/move_item_dialog.h
+    src/move_item_dialog.h \
+    src/compress_folder.h
 
 SOURCES += \
     src/kulanday.cpp\
@@ -90,7 +91,8 @@ SOURCES += \
     src/deck_item_widget.cpp \
     src/about_widget.cpp \
     src/resizing_text_edit.cpp \
-    src/move_item_dialog.cpp
+    src/move_item_dialog.cpp \
+    src/compress_folder.cpp
 
 RESOURCES += \
     resources.qrc
