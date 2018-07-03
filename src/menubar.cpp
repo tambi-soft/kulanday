@@ -1,8 +1,8 @@
 #include "menubar.h"
 
-MenuBar::MenuBar(QDir *deckpath, QMenuBar *parent)
+MenuBar::MenuBar(QDir *decks_paths, QMenuBar *parent)
 {
-    this->deckpath = deckpath;
+    this->decks_paths = decks_paths;
     
     addFileMenu();
     addSearchMenu();
@@ -85,10 +85,10 @@ void MenuBar::emitAboutTab()
 
 void MenuBar::onImportAction()
 {
-    QString in_path = QFileDialog::getOpenFileName(this, tr("Import Deck"), QDir::homePath(), tr("*.kpkg"));
+    QString in_path = QFileDialog::getOpenFileName(this, tr("Import Deck"), QDir::homePath(), tr("*.kdeck"));
     
     QString dirname = QDir(in_path).dirName().split(".").at(0);
-    QString out_path = this->deckpath->absolutePath() + "/" + dirname;
+    QString out_path = this->decks_paths->absolutePath() + "/" + dirname;
     
     if (! QDir(out_path).exists())
     {
@@ -112,17 +112,6 @@ void MenuBar::onImportAction()
 
 void MenuBar::onExportAction()
 {
-    QString modulname = "farsi_obst";
-    QString in_path = this->deckpath->absolutePath() + "/" + modulname;
-    QString zip_path = this->deckpath->absolutePath() + "/../" + modulname + ".kpkg";
-    
-    CompressFolder *cmp = new CompressFolder();
-    bool res = cmp->compressFolder(in_path, zip_path);
-    
-    if (res)
-    {
-        QMessageBox msg_box;
-        msg_box.setText("Module \"" + modulname + "\" successfully exported");
-        msg_box.exec();
-    }
+    ExportDecksDialog *dialog = new ExportDecksDialog(this->decks_paths);
+    dialog->exec();
 }

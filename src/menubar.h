@@ -13,15 +13,16 @@
 #include <QDebug>
 
 #include "compress_folder.h"
+#include "export_decks_dialog.h"
 
 class MenuBar : public QMenuBar
 {
     Q_OBJECT
 public:
-    explicit MenuBar(QDir *deckpath, QMenuBar *parent = nullptr);
+    explicit MenuBar(QDir *decks_paths, QMenuBar *parent = nullptr);
     
 private:
-    QDir *deckpath;
+    QDir *decks_paths;
     void addFileMenu();
     void addSearchMenu();
     void addHelpMenu();

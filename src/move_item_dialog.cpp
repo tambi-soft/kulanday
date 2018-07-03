@@ -10,6 +10,8 @@ MoveItemDialog::MoveItemDialog(QDir *decks_path, QString deck_name, qlonglong ro
     this->deck_name = deck_name;
     this->rowid = rowid;
     
+    setWindowTitle("kulanday - move item");
+    
     QGridLayout *top_layout = new QGridLayout;
     
     QWidget *scroll_widget = new QWidget;
@@ -17,7 +19,7 @@ MoveItemDialog::MoveItemDialog(QDir *decks_path, QString deck_name, qlonglong ro
     scroll_area->setWidgetResizable(true);
     scroll_area->setWidget(scroll_widget);
     
-    QStringList decks_names = decks_path->entryList(QDir::NoDotAndDotDot | QDir::Dirs, QDir::Name);    
+    QStringList decks_names = decks_path->entryList(QDir::NoDotAndDotDot | QDir::Dirs, QDir::Name);
     foreach (QString deck, decks_names)
     {
         if (deck != deck_name)
@@ -60,7 +62,7 @@ void MoveItemDialog::onMoveButton()
         }
     }
     
-    // init db and new deck row enry
+    // init db and new deck row entry
     DbAdapter *source_database = new DbAdapter(this->decks_path, this->deck_name);
     
     DbAdapter *target_database = new DbAdapter(this->decks_path, target_deck_name);
