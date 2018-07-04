@@ -11,7 +11,7 @@ void AudioConverter::convertAudioToProperOggVorbis(QString deck_name)
     QString ffmpeg_path = "";
     if (QSysInfo::kernelType() == "winnt")
     {
-        ffmpeg_path = "./uieuiaeia/";
+        ffmpeg_path = "./ffmpeg-20180702-win32-static/bin/";
     }
     
     QDir *deck = new QDir(this->decks_path->absolutePath() + "/" + deck_name);
