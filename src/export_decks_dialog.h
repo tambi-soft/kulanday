@@ -16,6 +16,7 @@
 #include <QDebug>
 
 #include "compress_folder.h"
+#include "audio_converter.h"
 
 class ExportDecksDialog : public QDialog
 {
