@@ -16,11 +16,9 @@ int main(int argc, char *argv[])
     
 #ifdef __linux__
 #else
-        QIcon::setThemeSearchPaths(QStringList("./oxygen"));
-        QIcon::setThemeName("oxygen");
+        QIcon::setThemeSearchPaths(QStringList(QList<QString>() << "./Adwaita"));
+        QIcon::setThemeName("Adwaita");
 #endif
-    
-    qDebug() << QIcon::themeSearchPaths();
     
     mainWin.setWindowIcon(QIcon(":logo"));
     mainWin.show();
