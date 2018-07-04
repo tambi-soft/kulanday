@@ -35,7 +35,6 @@ private:
     QDir *decks_path;
     
     void populateComboNameFilterBox();
-    void populateComboStatusFilterBox();
     void populateDecksOverview();
     QComboBox *populateComboStatus(QString deck_name);
     void populateComboStatusFilter(QComboBox *combo);

@@ -81,11 +81,6 @@ void QDecksOverviewWidget::populateComboNameFilterBox()
     this->combo_name_filter->blockSignals(false);
 }
 
-void QDecksOverviewWidget::populateComboStatusFilterBox()
-{
-    
-}
-
 void QDecksOverviewWidget::populateDecksOverview()
 {
     QStringList decks_names = decks_path->entryList(QDir::NoDotAndDotDot | QDir::Dirs, QDir::Name);
