@@ -70,7 +70,8 @@ HEADERS += \
     src/resizing_text_edit.h \
     src/move_item_dialog.h \
     src/compress_folder.h \
-    src/export_decks_dialog.h
+    src/export_decks_dialog.h \
+    src/audio_converter.h
 
 SOURCES += \
     src/kulanday.cpp\
@@ -94,7 +95,8 @@ SOURCES += \
     src/resizing_text_edit.cpp \
     src/move_item_dialog.cpp \
     src/compress_folder.cpp \
-    src/export_decks_dialog.cpp
+    src/export_decks_dialog.cpp \
+    src/audio_converter.cpp
 
 RESOURCES += \
     resources.qrc

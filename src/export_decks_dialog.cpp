@@ -48,7 +48,7 @@ ExportDecksDialog::ExportDecksDialog(QDir *decks_path, QDialog *parent)
 
 void ExportDecksDialog::onExportButton()
 {
-    // get checked boxes
+    // get checked boxes status
     QStringList selected_decks_names;
     for (int i = 0; i < this->scroll_layout->count(); ++i)
     {
@@ -64,7 +64,13 @@ void ExportDecksDialog::onExportButton()
         }
     }
     
-    // export the stuff
+    AudioConverter *conv = new AudioConverter(this->decks_path);
+    foreach (QString deck_name, selected_decks_names)
+    {
+        conv->convertAudioToProperOggVorbis(deck_name);
+    }
+    
+    // export the selected stuff
     CompressFolder *cmp = new CompressFolder;
     foreach (QString module_name, selected_decks_names)
     {
