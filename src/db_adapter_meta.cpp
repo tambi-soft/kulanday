@@ -67,6 +67,9 @@ void DbAdapterMeta::initializeTables()
 
 void DbAdapterMeta::populateDecksTable(QStringList decks_names)
 {
+    QSqlQuery begin("begin", this->db);
+    begin.exec();
+    
     foreach (QString deck_name, decks_names)
     {
         QSqlQuery query(this->db);
@@ -74,6 +77,9 @@ void DbAdapterMeta::populateDecksTable(QStringList decks_names)
         query.bindValue(":deck_name", deck_name);
         query.exec();
     }
+    
+    QSqlQuery end("end", this->db);
+    end.exec();
 }
 
 QMap<QString,QString> DbAdapterMeta::selectDecksStati()
