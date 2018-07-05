@@ -19,6 +19,7 @@ QKulandayMainWindow::QKulandayMainWindow(QWidget *parent)
     connect(menu_bar, &MenuBar::newDecksOverviewTab, this, &QKulandayMainWindow::showDecksOverviewTab);
     connect(menu_bar, &MenuBar::newSearchTab, this, &QKulandayMainWindow::showSearchWidget);
     connect(menu_bar, &MenuBar::newAboutTab, this, &QKulandayMainWindow::showAboutWidget);
+    connect(menu_bar, &MenuBar::deckImported, this, &QKulandayMainWindow::synchronizeDecksOverviews);
     
     connect(tab_widget, &QTabWidget::tabCloseRequested, this, &QKulandayMainWindow::closeTab);
     
@@ -122,6 +123,8 @@ void QKulandayMainWindow::deleteDeck(QString deck_name)
     QString delpath = this->deckpath->absolutePath() + "/" + deck_name;
     QDir *dir = new QDir(delpath);
     dir->removeRecursively();
+    
+    synchronizeDecksOverviews();
 }
 
 void QKulandayMainWindow::createNewDeckItem(QString deck_name)
@@ -270,4 +273,17 @@ void QKulandayMainWindow::onLastImageImportPathUpdated(QString last_image_import
 void QKulandayMainWindow::onLastAudioImportPathUpdated(QString last_audio_import_path)
 {
     this->last_audio_import_path = last_audio_import_path;
+}
+
+void QKulandayMainWindow::synchronizeDecksOverviews()
+{
+    for (int i = 0; i < this->tab_widget->count(); ++i)
+    {
+        QWidget *widget = this->tab_widget->widget(i);
+        if (QString(widget->metaObject()->className()) == "QDecksOverviewWidget")
+        {
+            QDecksOverviewWidget *decks = (QDecksOverviewWidget*)widget;
+            decks->refreshTable();
+        }
+    }
 }

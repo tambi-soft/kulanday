@@ -63,4 +63,5 @@ private slots:
     void onTabMoved(int from, int to);
     void onLastImageImportPathUpdated(QString last_image_import_path);
     void onLastAudioImportPathUpdated(QString last_audio_import_path);
+    void synchronizeDecksOverviews();
 };

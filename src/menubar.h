@@ -34,6 +34,7 @@ signals:
     void newDecksOverviewTab();
     void newSearchTab();
     void newAboutTab();
+    void deckImported();
     
 public slots:
     void quitApplication();

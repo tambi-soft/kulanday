@@ -100,6 +100,8 @@ void MenuBar::onImportAction()
             QMessageBox msg_box;
             msg_box.setText("Module \"" + dirname + "\" successfully imported");
             msg_box.exec();
+            
+            emit deckImported();
         }
     }
     else if (in_path != "")

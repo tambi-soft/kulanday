@@ -41,9 +41,11 @@ private:
     void comboColorAdjust(QComboBox *combo);
     void comboFilterColorAdjust(QComboBox *combo);
     
+public slots:
+    void refreshTable();
+    
 private slots:
     void createNewDeckClicked();
-    void refreshTable();
     void tableButtonDirtyDozenClicked(QString deck_name);
     void tableButtonLearnClicked(QString deck_name);
     void tableButtonViewDeckClicked(QString deck_name);
