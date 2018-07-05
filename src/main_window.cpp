@@ -28,13 +28,12 @@ QKulandayMainWindow::QKulandayMainWindow(QWidget *parent)
     
     tab_bar->setMouseTracking(true);
     tab_bar->installEventFilter(this);
-    
+    /*
     tab_bar->setStyleSheet("QTabBar::tab {\
                            border-left: 1px solid #9B9B9B;\
                            border-right: 1px solid #9B9B9B;\
                            border-bottom: 1px solid #9B9B9B;\
                            border-top-color: #5A5A5A;\
-                           /*min-width: 20ex;*/\
                            max-width: 15ex;\
                            font: 8px;\
                            padding: 1px;\
@@ -51,7 +50,7 @@ QKulandayMainWindow::QKulandayMainWindow(QWidget *parent)
                            margin-top: 3px;\
                            background: #e7e7e7;\
                            }");
-    
+    */
     showDecksOverviewTab();
     deactivateDecksOverviewCloseButton();
 }
