@@ -22,17 +22,21 @@ QDecksOverviewWidget :: QDecksOverviewWidget(QDir *decks_path, QWidget *parent)
     populateComboStatusFilter(combo_status_filter);
     connect(combo_status_filter, &QComboBox::currentTextChanged, this, &QDecksOverviewWidget::onComboStatusFilterTextChanged);
     
+    combo_name_filter->setToolTip("filter for decks with the selected prefix");
+    combo_status_filter->setToolTip("filter for decks with the selected tag");
+    
     QPushButton *refresh_button = new QPushButton("refresh");
     connect(refresh_button, &QPushButton::clicked, this, &QDecksOverviewWidget::refreshTable);
     
     QPushButton *new_deck_button = new QPushButton("create new deck");
     connect(new_deck_button, &QPushButton::clicked, this, &QDecksOverviewWidget::createNewDeckClicked);
     
-    layout->addWidget(combo_name_filter, 0, 0);
-    layout->addWidget(combo_status_filter, 0, 1);
-    layout->addWidget(table, 1, 0, 1, 2);
+    layout->addWidget(new QLabel("filter:"), 0, 0);
+    layout->addWidget(combo_name_filter, 0, 1);
+    layout->addWidget(combo_status_filter, 0, 2);
+    layout->addWidget(table, 1, 0, 1, 3);
     layout->addWidget(refresh_button, 2, 0);
-    layout->addWidget(new_deck_button, 2, 1);
+    layout->addWidget(new_deck_button, 2, 2);
     
     //table->horizontalHeader()->hide();
     //table->verticalHeader()->hide();
@@ -112,18 +116,22 @@ void QDecksOverviewWidget::populateDecksOverview()
                 QPushButton *button_dirty_dozen = new QPushButton();
                 button_dirty_dozen->setIcon(QIcon::fromTheme("image-loading"));
                 connect(button_dirty_dozen, &QPushButton::clicked, this, [this, deck_name]{  tableButtonDirtyDozenClicked(deck_name); });
+                button_dirty_dozen->setToolTip("dirty dozen");
                 
                 QPushButton *button_inv_dirty_dozen = new QPushButton();
                 button_inv_dirty_dozen->setIcon(QIcon::fromTheme("image-x-generic"));
                 connect(button_inv_dirty_dozen, &QPushButton::clicked, this, [this, deck_name]{ tableButtonLearnClicked(deck_name); });
+                button_inv_dirty_dozen->setToolTip("inverted dirty dozen");
                 
                 QPushButton *button_view_deck = new QPushButton();
                 button_view_deck->setIcon(QIcon::fromTheme("folder-open"));
                 connect(button_view_deck, &QPushButton::clicked, this, [this, deck_name]{ tableButtonViewDeckClicked(deck_name); });
+                button_view_deck->setToolTip("view / edit deck");
                 
                 QPushButton *button_delete_deck = new QPushButton();
                 button_delete_deck->setIcon(QIcon::fromTheme("edit-delete"));
                 connect(button_delete_deck, &QPushButton::clicked, this, [this, deck_name]{ tableButtonDeleteDeckClicked(deck_name); });
+                button_delete_deck->setToolTip("delete deck");
                 
                 QComboBox *combo_status = populateComboStatus(deck_name);
                 if (decks_meta[deck_name] != "")
@@ -162,6 +170,7 @@ void QDecksOverviewWidget::populateDecksOverview()
     QStringList labels;
     labels << "view" << "deck name" << "learn a" << "learn b" << "tag" << "last learned" << "";
     table->setHorizontalHeaderLabels(labels);
+    table->verticalHeader()->hide();
     
     QTableWidgetItem *dd_header_item = this->table->horizontalHeaderItem(2);
     if (dd_header_item)

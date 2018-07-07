@@ -3,7 +3,7 @@
 #include <QWidget>
 #include <QGridLayout>
 #include <QTableWidget>
-#include <QHeaderView> // for hiding headers
+#include <QHeaderView>
 #include <QPushButton>
 #include <QDir>
 #include <QFileDialog>
@@ -12,6 +12,7 @@
 #include <QIcon>
 #include <QColor>
 #include <QMessageBox>
+#include <QLabel>
 
 #include "create_new_deck_dialog.h"
 #include "db_adapter_meta.h"
