@@ -47,13 +47,9 @@ QDecksOverviewWidget :: QDecksOverviewWidget(QDir *decks_path, QWidget *parent)
 
 void QDecksOverviewWidget::createNewDeckClicked()
 {
-    //QCreateNewDeckDialog *new_deck_dialog = new QCreateNewDeckDialog(decks_path);
-    //new_deck_dialog->exec();
     QString default_deck_path = this->decks_path->absolutePath();
-    //QUrl url = QFileDialog::getExistingDirectoryUrl(this, "Select Directory for the new Deck", default_deck_path, QFileDialog::ShowDirsOnly);
-    QString url_path = QFileDialog::getExistingDirectory(this, tr("Create New Deck"),
-                                                    default_deck_path,
-                                                    QFileDialog::ShowDirsOnly);
+    
+    QString url_path = QCreateNewDeckDialog::getExistingDirectory(default_deck_path);
     
     emit createNewDeck(QUrl(url_path));
     
