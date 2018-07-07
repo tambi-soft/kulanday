@@ -43,6 +43,7 @@ private:
     QAudioListTable *audio_list_widget;
     DbAdapter *database = nullptr;
     QPushButton *import_image_button;
+    QPushButton *delete_image_button;
     
     bool ignore_item_changes;
     bool item_changed = false;

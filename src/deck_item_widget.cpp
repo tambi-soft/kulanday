@@ -42,7 +42,11 @@ void QDeckItemWidget::populateGui(QDir *decks_path, QString deck_name, int rowid
     this->translation_line->setPlainText(data[0]["translation"].toString());
     this->ignore_item_changes = false;
     
-    if (! data[0]["image"].isNull())
+    if (data[0]["image"].isNull())
+    {
+        this->delete_image_button->setEnabled(false);
+    }
+    else
     {
         this->image_path = this->decks_path->absolutePath() + "/" + deck_name + "/" + data[0]["image"].toString();
         QPixmap pixmap;
@@ -91,7 +95,7 @@ void QDeckItemWidget::initializeGui(QString deck_name, int rowid)
     import_image_button->setIcon(QIcon::fromTheme("document-open"));
     connect(import_image_button, &QPushButton::clicked, this, &QDeckItemWidget::importImageClicked);
     
-    QPushButton *delete_image_button = new QPushButton("clear image");
+    this->delete_image_button = new QPushButton("clear image");
     delete_image_button->setIcon(QIcon::fromTheme("edit-delete"));
     connect(delete_image_button, &QPushButton::clicked, this, &QDeckItemWidget::deleteImageClicked);
     
@@ -168,6 +172,7 @@ void QDeckItemWidget::importImageClicked()
         this->image_view->setPixmap(scaled);
         
         this->import_image_button->setEnabled(false);
+        this->delete_image_button->setEnabled(true);
         this->item_changed = true;
         
         this->image_path = this->decks_path->absolutePath() + "/" + this->deck_name + "/" + QUrl(image_url).fileName();
@@ -189,6 +194,7 @@ void QDeckItemWidget::deleteImageClicked()
     }
     
     this->import_image_button->setEnabled(true);
+    this->delete_image_button->setEnabled(false);
     this->item_changed = true;
 }
 
