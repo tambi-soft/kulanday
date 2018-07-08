@@ -29,7 +29,9 @@ void AboutWidget::showAbout()
 void AboutWidget::showLibraries()
 {
     QTextEdit *text = new QTextEdit();
-    text->setText("Qt (5.11.0)");
+    text->setText("Qt (5.11.0)\n\
+ffmpeg\n\
+ogg vorbis codec");
     
     text->setReadOnly(true);
     this->tab_widget->addTab(text, "Libraries");
