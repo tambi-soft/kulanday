@@ -143,15 +143,18 @@ void QDeckOverviewWidget::populateTableWidget(QList<QMap<QString,QVariant>> data
             QPushButton *edit_button = new QPushButton();
             edit_button->setIcon(QIcon::fromTheme("document-properties"));
             connect(edit_button, &QPushButton::clicked, this, [this, deck_name, rowid]{ editRowButtonClicked(deck_name, rowid); });
+            edit_button->setToolTip("edit this item");
             
             // move item to another deck
             QPushButton *move_button = new QPushButton();
             move_button->setIcon(QIcon::fromTheme("document-send"));
             connect(move_button, &QPushButton::clicked, this, [this, deck_name, rowid]{ moveItem(deck_name, rowid); });
+            move_button->setToolTip("move this item to another deck");
             
             QPushButton *delete_button = new QPushButton();
             delete_button->setIcon(QIcon::fromTheme("edit-delete"));
             connect(delete_button, &QPushButton::clicked, this, [this, rowid, data, i, deck_name]{ deleteRowButtonClicked(rowid, data.at(i), deck_name); });
+            delete_button->setToolTip("delete this item");
             
             QString order_index = data.at(i)["order_index"].toString();
             QString name = data.at(i)["name"].toString();
