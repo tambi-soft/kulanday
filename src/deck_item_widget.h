@@ -13,10 +13,12 @@
 #include <QSvgWidget>
 #include <QMessageBox>
 #include <QFileDialog>
+#include <QFont>
 
 #include "db_adapter.h"
 #include "audio_list_table.h"
 #include "resizing_text_edit.h"
+#include "unicode_fonts.h"
 
 class QDeckItemWidget : public QWidget
 {
@@ -56,6 +58,8 @@ private:
     void initializeGui(QString deck_name, int rowid);
     
     QString randomword(int length);
+    
+    UnicodeFonts *unicodeFonts;
     
 protected:
     void hideEvent(QHideEvent *event);

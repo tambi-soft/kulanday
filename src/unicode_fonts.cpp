@@ -1,11 +1,6 @@
 
 #include "unicode_fonts.h"
 
-#include <QFont>
-#include <QFontDatabase>
-
-#include <QDebug>
-
 UnicodeFonts::UnicodeFonts(QObject *parent)
 {
     /*
@@ -44,18 +39,20 @@ QFont UnicodeFonts::getFontAndSize(QString string)
     QString font_name;
     int font_size;
     
-    if (isInUnicodeRange(arabic_block[0], arabic_block[1], string))
+    if (isInUnicodeRange(1536, 1791, string))
     {
 //         qDebug() << "arabic";
-        font_name = arabic_font;
-        font_size = arabic_size;
+        font_name = ":ttf_sheharazade";
+        font_size = 25;
     }
+    /*
     else if (isInUnicodeRange(hebrew_block[0], hebrew_block[1], string))
     {
 //         qDebug() << "hebrew";
         font_name = hebrew_font;
         font_size = hebrew_size;
     }
+    */
     /*
     else if (isInUnicodeRange(greek_block[0], greek_block[1], string))
     {
@@ -75,7 +72,7 @@ QFont UnicodeFonts::getFontAndSize(QString string)
     else
     {
 //         qDebug() << "else";
-        font_name = default_font;
+        font_name = ":ttf_dejavu_sans";//default_font;
         font_size = default_size;
     }
 //     qDebug() << "FONT NAME:";

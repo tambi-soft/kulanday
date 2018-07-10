@@ -3,6 +3,11 @@
 #define UNICODE_FONTS
 
 #include <QObject>
+#include <QFont>
+#include <QFontDatabase>
+#include <QString>
+
+#include <QDebug>
 
 class UnicodeFonts : public QObject
 {

@@ -1,6 +1,8 @@
 #include "deck_item_widget.h"
 
-QDeckItemWidget::QDeckItemWidget(QDir *decks_path, QString deck_name, QString last_image_import_path, QWidget *parent) : QWidget(parent)
+QDeckItemWidget::QDeckItemWidget(QDir *decks_path, QString deck_name, QString last_image_import_path, QWidget *parent)
+    : QWidget(parent)
+    , unicodeFonts (new UnicodeFonts)
 {
     this->last_image_import_path = last_image_import_path;
     
@@ -34,6 +36,11 @@ void QDeckItemWidget::populateGui(QDir *decks_path, QString deck_name, int rowid
         this->database = new DbAdapter(this->decks_path, deck_name);
     }
     QList<QMap<QString,QVariant>> data = database->selectDeckItem(rowid);
+    
+    name_line->setFont(this->unicodeFonts->getFontAndSize(data[0]["name"].toString()));
+    word_line->setFont(this->unicodeFonts->getFontAndSize(data[0]["word"].toString()));
+    phonetical_line->setFont(this->unicodeFonts->getFontAndSize(data[0]["phonetical"].toString()));
+    translation_line->setFont(this->unicodeFonts->getFontAndSize(data[0]["translation"].toString()));
     
     this->ignore_item_changes = true;
     this->name_line->setPlainText(data[0]["name"].toString());
