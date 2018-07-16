@@ -82,11 +82,14 @@ qlonglong DbAdapter::newAudioRow(int deck_rowid)
 
 QList<QMap<QString,QVariant>> DbAdapter::selectDeckItems()
 {
-    QSqlQuery query("SELECT deck.rowid, order_index, name, word, phonetical, translation, svg_filename, image, created, GROUP_CONCAT(audio.filename, \",\") AS audio\
-            FROM deck\
-            LEFT JOIN audio ON audio.deck_rowid = deck.rowid\
-            GROUP BY deck.rowid\
-            ORDER BY order_index", this->db);
+    QSqlQuery query("SELECT deck.rowid, order_index, name, word, phonetical, translation, svg_filename, image, created, \
+                    GROUP_CONCAT(audio_new.filename) AS audio\
+                     FROM deck\
+                    LEFT JOIN (\
+                    SELECT rowid, deck_rowid, description, IFNULL(filename, 'none') AS filename FROM audio\
+                    ) AS audio_new ON audio_new.deck_rowid = deck.rowid\
+                    GROUP BY deck.rowid\
+                    ORDER BY order_index", this->db);
     
     return dbIteratorToMapList(query);
 }

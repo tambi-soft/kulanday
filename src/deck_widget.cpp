@@ -244,24 +244,38 @@ void QDeckOverviewWidget::appendPlayButtons(int table_rowid, QList<QMap<QString,
 {
     QStringList audio_files = data.at(table_rowid)["audio"].toString().split(",");
     this->max_audio_count = std::max(audio_files.length(), this->max_audio_count);
-    
+    qDebug() << data;
+    qDebug() << audio_files.length();
     for (int column = 0; column < audio_files.length(); ++column)
     {
         QString audio_filename = audio_files.at(column);
-        QPushButton *audio_button = new QPushButton();
-        if (audio_filename != "")
+        qDebug() << audio_filename;
+        QPushButton *audio_button = nullptr;//new QPushButton();
+        if (audio_filename == "none")
         {
+            audio_button = new QPushButton();
+            audio_button->setIcon(QIcon::fromTheme("media-record"));
+            audio_button->setEnabled(false);
+        }
+        else if (audio_filename != "")
+        {
+            audio_button = new QPushButton();
             audio_button->setIcon(QIcon::fromTheme("media-playback-start"));
         }
+        /*
         else
         {
             audio_button->setIcon(QIcon::fromTheme("media-record"));
             audio_button->setEnabled(false);
         }
+        */
         
-        connect(audio_button, &QPushButton::clicked, this, [this, audio_button, audio_filename, deck_name]{ audioButtonClicked(audio_button, audio_filename, deck_name); });
-        
-        table->setCellWidget(table_rowid, column + COLUMN_OFFSET, audio_button);
+        if (audio_filename != nullptr)
+        {
+            connect(audio_button, &QPushButton::clicked, this, [this, audio_button, audio_filename, deck_name]{ audioButtonClicked(audio_button, audio_filename, deck_name); });
+            
+            table->setCellWidget(table_rowid, column + COLUMN_OFFSET, audio_button);
+        }
     }
 }
 void QDeckOverviewWidget::audioButtonClicked(QPushButton *button, QString audio_filename, QString deck_name)
