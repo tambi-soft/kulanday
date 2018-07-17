@@ -244,12 +244,16 @@ void QDeckOverviewWidget::appendPlayButtons(int table_rowid, QList<QMap<QString,
 {
     QStringList audio_files = data.at(table_rowid)["audio"].toString().split(",");
     this->max_audio_count = std::max(audio_files.length(), this->max_audio_count);
-    qDebug() << data;
-    qDebug() << audio_files.length();
+    
     for (int column = 0; column < audio_files.length(); ++column)
     {
-        QString audio_filename = audio_files.at(column);
-        qDebug() << audio_filename;
+        QString audio_filename_ordered = audio_files.at(column);
+        QString audio_filename = "";
+        if (audio_filename_ordered.contains(":"))
+        {
+            audio_filename = audio_filename_ordered.split(":").at(1);
+        }
+        
         QPushButton *audio_button = nullptr;//new QPushButton();
         if (audio_filename == "none")
         {

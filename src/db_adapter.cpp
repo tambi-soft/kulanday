@@ -82,8 +82,11 @@ qlonglong DbAdapter::newAudioRow(int deck_rowid)
 
 QList<QMap<QString,QVariant>> DbAdapter::selectDeckItems()
 {
+    // concerning the GROUP_CONCAT:
+    // sqlite does not support ordering here, so we have to build one ourselves by concating rowid:filename.
+    // of course, afterwards we have to split this in code
     QSqlQuery query("SELECT deck.rowid, order_index, name, word, phonetical, translation, svg_filename, image, created, \
-                    GROUP_CONCAT(audio_new.filename) AS audio\
+                    GROUP_CONCAT(audio_new.rowid || \":\" || audio_new.filename) AS audio\
                      FROM deck\
                     LEFT JOIN (\
                     SELECT rowid, deck_rowid, description, IFNULL(filename, 'none') AS filename FROM audio\
