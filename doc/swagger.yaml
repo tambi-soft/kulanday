@@ -1,0 +1,32 @@
+swagger: '2.0'
+info:
+  version: 0.9.0
+  title: "kulanday"
+  description: "This is the API for kulanday for synchronizing decks"
+  termsOfService: terms
+  contact:
+    email: nano13@gmx.net
+  license:
+    name: GPL
+    url: https://www.gnu.org/licenses/gpl-3.0.de.html
+host: localhost
+schemes:
+- "https"
+- "http"
+paths:
+  /deck:
+    post:
+      tags: 
+      - "deck"
+      summary: "add a new deck"
+      description: ""
+      operationId: "addDeck"
+      consumes: 
+      - "application/octet-stream"
+      responses:
+        200:
+          description: OK
+        405:
+          description: Invalid input
+
+      
