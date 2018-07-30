@@ -14,6 +14,8 @@
 #include <QUrl>
 #include <QFont>
 #include <QIcon>
+#include <QSlider>
+#include <QGroupBox>
 
 #include "db_adapter.h"
 #include "unicode_fonts.h"
@@ -30,6 +32,7 @@ public:
     
 private:
     QGridLayout *grid;
+    QSlider *slider_repeat_times;
     UnicodeFonts *unicodeFonts;
     
     QDir *decks_path;
@@ -50,6 +53,8 @@ private:
     QComboBox *select_display_combo;
     QPushButton *show_all_button;
     QMediaPlayer *audioPlayer;
+    
+    void sliderRepeatTimesChanged(int value);
     
     void update();
     QList<QMap<QString, QVariant> > shuffleList(QList<QMap<QString, QVariant> > list);

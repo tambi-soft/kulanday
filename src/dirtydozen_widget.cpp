@@ -3,8 +3,9 @@
 QDirtyDozenWidget::QDirtyDozenWidget(QDir *decks_path, QString deck_name, QWidget *parent)
     : QWidget(parent)
     , grid (new QGridLayout)
-    , audioPlayer (new QMediaPlayer)
+//    , slider_repeat (new QSlider)
     , unicodeFonts (new UnicodeFonts)
+    , audioPlayer (new QMediaPlayer)
 {
     DISPLAY_COMBO_ITEMS << "image" << "name" << "word" << "translation";
     this->decks_path = decks_path;
@@ -47,10 +48,29 @@ void QDirtyDozenWidget::initialize(QString deck_name)
     connect(show_all_button, &QPushButton::clicked, this, &QDirtyDozenWidget::showAllButtonClicked);
     this->grid->addWidget(show_all_button, int(12 / this->COLUMNS +2), 0);
     
+    QGroupBox *slider_group = new QGroupBox("repeats counter");
+    QHBoxLayout *slider_layout = new QHBoxLayout();
+    this->slider_repeat_times = new QSlider(Qt::Horizontal);
+    slider_layout->addWidget(this->slider_repeat_times);
+    slider_group->setLayout(slider_layout);
+    //this->grid->addWidget(this->slider_repeat_times, int(12 / this->COLUMNS +2), 1, 1, 2);
+    this->grid->addWidget(slider_group, int(12 / this->COLUMNS+2), 1, 1, 2);
+    this->slider_repeat_times->setMinimum(1);
+    this->slider_repeat_times->setMaximum(21);
+    this->slider_repeat_times->setValue(11);
+    this->slider_repeat_times->setTickInterval(5);
+    this->slider_repeat_times->setTickPosition(QSlider::TicksBothSides);
+    connect(this->slider_repeat_times, &QSlider::valueChanged, this, &QDirtyDozenWidget::sliderRepeatTimesChanged);
+    
     QPushButton *shuffle_button = new QPushButton("shuffle");
     shuffle_button->setIcon(QIcon::fromTheme("media-playlist-shuffle"));
     connect(shuffle_button, &QPushButton::clicked, this, &QDirtyDozenWidget::onShuffleButtonClicked);
     this->grid->addWidget(shuffle_button, int(12 / this->COLUMNS +2), this->COLUMNS-1);
+}
+
+void QDirtyDozenWidget::sliderRepeatTimesChanged(int value)
+{
+    this->delay = value;
 }
 
 void QDirtyDozenWidget::update()
@@ -206,19 +226,18 @@ void QDirtyDozenWidget::displayButtonClicked(int rowid, QPushButton *button)
                 else if (this->delay_counter == 2)
                 {
                     this->delay = 8;
+                    //this->delay = this->slider_repeat_times->value();
                 }
                 else
                 {
-                    this->delay = 10;
+                    //this->delay = 10;
+                    this->delay = this->slider_repeat_times->value();
                 }
                 
                 this->delay_counter = 0;
                 
                 this->counter++;
                 this->update();
-                
-                // moved to "update()":
-                //playNextAudio();
             }
             else
             {
