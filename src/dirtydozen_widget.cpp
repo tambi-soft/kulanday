@@ -50,6 +50,7 @@ void QDirtyDozenWidget::initialize(QString deck_name)
     
     QGroupBox *slider_group = new QGroupBox("repeats counter");
     QHBoxLayout *slider_layout = new QHBoxLayout();
+    slider_layout->setContentsMargins(0, 0, 0, 0);
     this->slider_repeat_times = new QSlider(Qt::Horizontal);
     slider_layout->addWidget(this->slider_repeat_times);
     slider_group->setLayout(slider_layout);

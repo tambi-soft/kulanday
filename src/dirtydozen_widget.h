@@ -16,6 +16,7 @@
 #include <QIcon>
 #include <QSlider>
 #include <QGroupBox>
+#include <QLayout>
 
 #include "db_adapter.h"
 #include "unicode_fonts.h"
