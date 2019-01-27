@@ -48,6 +48,5 @@ Config::Config(QObject *parent) : QObject(parent)
 
 QDir *Config::getDecksPath()
 {
-    qDebug() << "rrrrr" << deckpath->absolutePath();
     return this->deckpath;
 }
