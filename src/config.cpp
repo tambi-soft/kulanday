@@ -37,9 +37,9 @@ Config::Config(QObject *parent) : QObject(parent)
     }
     
     QSettings *settings = new QSettings(config_file->fileName(), QSettings::IniFormat);
-    QVariant deckpath_var = settings->value("kulanday/deckpath");
+    QString deckpath_var = settings->value("kulanday/deckpath").toString();
     
-    deckpath = new QDir(config_dir->absolutePath() + "/decks");
+    deckpath = new QDir(deckpath_var.replace("$CONFDIR", config_dir->absolutePath()));
     if (! deckpath->exists())
     {
         deckpath->mkdir(deckpath->absolutePath());
@@ -48,5 +48,6 @@ Config::Config(QObject *parent) : QObject(parent)
 
 QDir *Config::getDecksPath()
 {
+    qDebug() << "rrrrr" << deckpath->absolutePath();
     return this->deckpath;
 }
