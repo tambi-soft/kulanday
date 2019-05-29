@@ -45,7 +45,6 @@ Config::Config(QObject *parent) : QObject(parent)
         deckpath->mkdir(deckpath->absolutePath());
     }
 }
-
 QDir *Config::getDecksPath()
 {
     return this->deckpath;
