@@ -52,6 +52,8 @@ QT += widgets\
 # Input
 HEADERS += \
     src/db_adapter.h \
+    src/deck_item_markers_widget.h \
+    src/deck_item_simple_widget.h \
     src/q_click_label.h\
     src/unicode_fonts.h \
     src/config.h \
@@ -66,7 +68,6 @@ HEADERS += \
     src/dirtydozen_widget.h \
     src/decks_widget.h \
     src/deck_widget.h \
-    src/deck_item_widget.h \
     src/about_widget.h \
     src/resizing_text_edit.h \
     src/move_item_dialog.h \
@@ -75,6 +76,8 @@ HEADERS += \
     src/audio_converter.h
 
 SOURCES += \
+    src/deck_item_markers_widget.cpp \
+    src/deck_item_simple_widget.cpp \
     src/kulanday.cpp\
     src/db_adapter.cpp \
     src/q_click_label.cpp\
@@ -91,7 +94,6 @@ SOURCES += \
     src/dirtydozen_widget.cpp \
     src/decks_widget.cpp \
     src/deck_widget.cpp \
-    src/deck_item_widget.cpp \
     src/about_widget.cpp \
     src/resizing_text_edit.cpp \
     src/move_item_dialog.cpp \

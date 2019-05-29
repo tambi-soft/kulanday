@@ -11,7 +11,7 @@
 #include "deck_widget.h"
 #include "inv_dirty_dozen_widget.h"
 #include "dirtydozen_widget.h"
-#include "deck_item_widget.h"
+#include "deck_item_simple_widget.h"
 #include "db_adapter.h"
 #include "config.h"
 #include "search_widget.h"
