@@ -85,18 +85,18 @@ void QDeckItemWidget::initializeGui(QString deck_name, int rowid)
     setLayout(grid);
     
     this->image_view = new QLabel();
-    this->name_line = new ResizingTextEdit();
-    this->word_line = new ResizingTextEdit();
-    this->phonetical_line = new ResizingTextEdit();
-    this->translation_line = new ResizingTextEdit();
+    this->name_line = new TextEditResizing();
+    this->word_line = new TextEditResizing();
+    this->phonetical_line = new TextEditResizing();
+    this->translation_line = new TextEditResizing();
     this->audio_list_widget = new QAudioListTable(this->decks_path, deck_name, rowid);
     
     connect(this->audio_list_widget, &QAudioListTable::changed, this, &QDeckItemWidget::onAudioListChanged);
     
-    connect(this->name_line, &ResizingTextEdit::textChanged, this, &QDeckItemWidget::onItemChanged);
-    connect(this->word_line, &ResizingTextEdit::textChanged, this, &QDeckItemWidget::onItemChanged);
-    connect(this->phonetical_line, &ResizingTextEdit::textChanged, this, &QDeckItemWidget::onItemChanged);
-    connect(this->translation_line, &ResizingTextEdit::textChanged, this, &QDeckItemWidget::onItemChanged);
+    connect(this->name_line, &TextEditResizing::textChanged, this, &QDeckItemWidget::onItemChanged);
+    connect(this->word_line, &TextEditResizing::textChanged, this, &QDeckItemWidget::onItemChanged);
+    connect(this->phonetical_line, &TextEditResizing::textChanged, this, &QDeckItemWidget::onItemChanged);
+    connect(this->translation_line, &TextEditResizing::textChanged, this, &QDeckItemWidget::onItemChanged);
     
     this->import_image_button = new QPushButton("add image from file");
     import_image_button->setIcon(QIcon::fromTheme("document-open"));

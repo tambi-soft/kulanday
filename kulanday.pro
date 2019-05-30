@@ -54,7 +54,11 @@ HEADERS += \
     src/db_adapter.h \
     src/deck_item_markers_widget.h \
     src/deck_item_simple_widget.h \
+    src/help_about_widget.h \
+    src/help_markers_widget.h \
     src/q_click_label.h\
+    src/text_edit_markers.h \
+    src/text_edit_resizing.h \
     src/unicode_fonts.h \
     src/config.h \
     src/audio_recorder.h \
@@ -68,8 +72,6 @@ HEADERS += \
     src/dirtydozen_widget.h \
     src/decks_widget.h \
     src/deck_widget.h \
-    src/about_widget.h \
-    src/resizing_text_edit.h \
     src/move_item_dialog.h \
     src/compress_folder.h \
     src/export_decks_dialog.h \
@@ -78,9 +80,13 @@ HEADERS += \
 SOURCES += \
     src/deck_item_markers_widget.cpp \
     src/deck_item_simple_widget.cpp \
+    src/help_about_widget.cpp \
+    src/help_markers_widget.cpp \
     src/kulanday.cpp\
     src/db_adapter.cpp \
     src/q_click_label.cpp\
+    src/text_edit_markers.cpp \
+    src/text_edit_resizing.cpp \
     src/unicode_fonts.cpp \
     src/config.cpp \
     src/audio_recorder.cpp \
@@ -94,8 +100,6 @@ SOURCES += \
     src/dirtydozen_widget.cpp \
     src/decks_widget.cpp \
     src/deck_widget.cpp \
-    src/about_widget.cpp \
-    src/resizing_text_edit.cpp \
     src/move_item_dialog.cpp \
     src/compress_folder.cpp \
     src/export_decks_dialog.cpp \

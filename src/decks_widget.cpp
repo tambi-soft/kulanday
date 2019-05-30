@@ -28,15 +28,19 @@ QDecksOverviewWidget :: QDecksOverviewWidget(QDir *decks_path, QWidget *parent)
     QPushButton *refresh_button = new QPushButton("refresh");
     connect(refresh_button, &QPushButton::clicked, this, &QDecksOverviewWidget::refreshTable);
     
-    QPushButton *new_deck_button = new QPushButton("create new deck");
-    connect(new_deck_button, &QPushButton::clicked, this, &QDecksOverviewWidget::createNewDeckClicked);
+    QPushButton *new_markers_deck_button = new QPushButton("create new markers deck");
+    connect(new_markers_deck_button, &QPushButton::clicked, this, &QDecksOverviewWidget::createNewMarkersDeckClicked);
+    
+    QPushButton *new_simple_deck_button = new QPushButton("create new simple deck");
+    connect(new_simple_deck_button, &QPushButton::clicked, this, &QDecksOverviewWidget::createNewSimpleDeckClicked);
     
     layout->addWidget(new QLabel("filter:"), 0, 0);
     layout->addWidget(combo_name_filter, 0, 1);
     layout->addWidget(combo_status_filter, 0, 2);
     layout->addWidget(table, 1, 0, 1, 3);
     layout->addWidget(refresh_button, 2, 0);
-    layout->addWidget(new_deck_button, 2, 2);
+    layout->addWidget(new_markers_deck_button, 2, 1);
+    layout->addWidget(new_simple_deck_button, 2, 2);
     
     //table->horizontalHeader()->hide();
     //table->verticalHeader()->hide();
@@ -45,7 +49,7 @@ QDecksOverviewWidget :: QDecksOverviewWidget(QDir *decks_path, QWidget *parent)
     populateDecksOverview();
 }
 
-void QDecksOverviewWidget::createNewDeckClicked()
+void QDecksOverviewWidget::createNewSimpleDeckClicked()
 {
     QString default_deck_path = this->decks_path->absolutePath();
     
@@ -55,6 +59,11 @@ void QDecksOverviewWidget::createNewDeckClicked()
     
     table->clear();
     populateDecksOverview();
+}
+
+void QDecksOverviewWidget::createNewMarkersDeckClicked()
+{
+    
 }
 
 void QDecksOverviewWidget::refreshTable()

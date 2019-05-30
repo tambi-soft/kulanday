@@ -56,10 +56,14 @@ void MenuBar::addSearchMenu()
 
 void MenuBar::addHelpMenu()
 {
+    QAction *helpMarkersAction = new QAction(QIcon::fromTheme("help-faq"), "Markers");
+    connect(helpMarkersAction, &QAction::triggered, this, &MenuBar::emitHelpMarkersTab);
+    
     QAction *aboutAction = new QAction(QIcon(":logo"), "About Kulanday");
     connect(aboutAction, &QAction::triggered, this, &MenuBar::emitAboutTab);
     
     QMenu *menu = addMenu("&Help");
+    menu->addAction(helpMarkersAction);
     menu->addAction(aboutAction);
 }
 
@@ -76,6 +80,11 @@ void MenuBar::emitNewDecksOverviewTab()
 void MenuBar::emitSearchTab()
 {
     emit newSearchTab();
+}
+
+void MenuBar::emitHelpMarkersTab()
+{
+    emit newHelpMarkersTab();
 }
 
 void MenuBar::emitAboutTab()

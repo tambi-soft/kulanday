@@ -9,5 +9,6 @@
         <file alias="ttf_dejavu_sans">assets/fonts/DejaVuSans.ttf</file>
         <file alias="logo">assets/logo2.png</file>
         <file alias="gpl">LICENCE.gpl-3.0.txt</file>
+        <file alias="markers">assets/markers.html</file>
     </qresource>
 </RCC>

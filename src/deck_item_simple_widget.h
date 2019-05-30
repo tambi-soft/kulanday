@@ -17,7 +17,7 @@
 
 #include "db_adapter.h"
 #include "audio_list_table.h"
-#include "resizing_text_edit.h"
+#include "text_edit_resizing.h"
 #include "unicode_fonts.h"
 
 class QDeckItemWidget : public QWidget
@@ -38,10 +38,10 @@ private:
     
     QGridLayout *grid;
     QLabel *image_view;
-    ResizingTextEdit *name_line;
-    ResizingTextEdit *word_line;
-    ResizingTextEdit *phonetical_line;
-    ResizingTextEdit *translation_line;
+    TextEditResizing *name_line;
+    TextEditResizing *word_line;
+    TextEditResizing *phonetical_line;
+    TextEditResizing *translation_line;
     QAudioListTable *audio_list_widget;
     DbAdapter *database = nullptr;
     QPushButton *import_image_button;

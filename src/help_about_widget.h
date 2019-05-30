@@ -8,11 +8,11 @@
 #include <QTextStream>
 #include <QTextEdit>
 
-class AboutWidget : public QWidget
+class HelpAboutWidget : public QWidget
 {
     Q_OBJECT
 public:
-    explicit AboutWidget(QWidget *parent = nullptr);
+    explicit HelpAboutWidget(QWidget *parent = nullptr);
     
 private:
     QVBoxLayout *layout;

@@ -18,7 +18,8 @@ QKulandayMainWindow::QKulandayMainWindow(QWidget *parent)
     setMenuBar(menu_bar);
     connect(menu_bar, &MenuBar::newDecksOverviewTab, this, &QKulandayMainWindow::showDecksOverviewTab);
     connect(menu_bar, &MenuBar::newSearchTab, this, &QKulandayMainWindow::showSearchWidget);
-    connect(menu_bar, &MenuBar::newAboutTab, this, &QKulandayMainWindow::showAboutWidget);
+    connect(menu_bar, &MenuBar::newHelpMarkersTab, this, &QKulandayMainWindow::showHelpMarkersWidget);
+    connect(menu_bar, &MenuBar::newAboutTab, this, &QKulandayMainWindow::showHelpAboutWidget);
     connect(menu_bar, &MenuBar::deckImported, this, &QKulandayMainWindow::synchronizeDecksOverviews);
     
     connect(tab_widget, &QTabWidget::tabCloseRequested, this, &QKulandayMainWindow::closeTab);
@@ -99,7 +100,8 @@ void QKulandayMainWindow::showDeckWidget(QString deck_name)
     {
         QDeckOverviewWidget *deck = new QDeckOverviewWidget(this->deckpath, deck_name);
         connect(deck, &QDeckOverviewWidget::newDeckItemRequested, this, &QKulandayMainWindow::createNewDeckItem);
-        connect(deck, &QDeckOverviewWidget::showDeckItemRequested, this, &QKulandayMainWindow::showDeckItem);
+        connect(deck, &QDeckOverviewWidget::showDeckItemRequested, this, &QKulandayMainWindow::showMarkersDeckItem);
+        //connect(deck, &QDeckOverviewWidget::showDeckItemRequested, this, &QKulandayMainWindow::showSimpleDeckItem);
         
         tab_widget->addTab(deck, deck_name);
         activateNewTab();
@@ -141,7 +143,7 @@ void QKulandayMainWindow::createNewDeckItem(QString deck_name)
     this->deck_item_widgets[deck_name + "_" + QString::number(rowid)] = this->tab_widget->currentIndex();
 }
 
-void QKulandayMainWindow::showDeckItem(QString deck_name, int rowid)
+void QKulandayMainWindow::showSimpleDeckItem(QString deck_name, int rowid)
 {
     if (this->deck_item_widgets.contains(deck_name + "_" + QString::number(rowid)))
     {
@@ -156,6 +158,29 @@ void QKulandayMainWindow::showDeckItem(QString deck_name, int rowid)
         tab_widget->addTab(deck_item, deck_name);
         
         connect(deck_item, &QDeckItemWidget::imageImportPathUpdated, this, &QKulandayMainWindow::onLastImageImportPathUpdated);
+        
+        activateNewTab();
+        this->tab_widget->setTabIcon(this->tab_widget->currentIndex(), QIcon::fromTheme("document-properties"));
+        
+        this->deck_item_widgets[deck_name + "_" + QString::number(rowid)] = this->tab_widget->currentIndex();
+    }
+}
+
+void QKulandayMainWindow::showMarkersDeckItem(QString deck_name, int rowid)
+{
+    if (this->deck_item_widgets.contains(deck_name + "_" + QString::number(rowid)))
+    {
+        int index = this->deck_item_widgets[deck_name + "_" + QString::number(rowid)];
+        this->tab_widget->setCurrentIndex(index);
+    }
+    else
+    {
+        QDeckItemMarkersWidget *deck_item = new QDeckItemMarkersWidget(this->deckpath, deck_name, rowid, this->last_image_import_path);
+        
+        connect(deck_item, &QDeckItemMarkersWidget::contentsUpdated, this, &QKulandayMainWindow::onDeckItemContentsUpdated);
+        tab_widget->addTab(deck_item, deck_name);
+        
+        connect(deck_item, &QDeckItemMarkersWidget::imageImportPathUpdated, this, &QKulandayMainWindow::onLastImageImportPathUpdated);
         
         activateNewTab();
         this->tab_widget->setTabIcon(this->tab_widget->currentIndex(), QIcon::fromTheme("document-properties"));
@@ -232,9 +257,18 @@ void QKulandayMainWindow::showSearchWidget()
     activateNewTab();
 }
 
-void QKulandayMainWindow::showAboutWidget()
+void QKulandayMainWindow::showHelpMarkersWidget()
 {
-    AboutWidget *widget = new AboutWidget();
+    HelpMarkersWidget *widget = new HelpMarkersWidget();
+    
+    this->tab_widget->addTab(widget, "markers");
+    
+    activateNewTab();
+}
+
+void QKulandayMainWindow::showHelpAboutWidget()
+{
+    HelpAboutWidget *widget = new HelpAboutWidget();
     
     this->tab_widget->addTab(widget, "about");
     

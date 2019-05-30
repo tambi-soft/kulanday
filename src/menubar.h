@@ -33,6 +33,7 @@ private:
 signals:
     void newDecksOverviewTab();
     void newSearchTab();
+    void newHelpMarkersTab();
     void newAboutTab();
     void deckImported();
     
@@ -40,6 +41,7 @@ public slots:
     void quitApplication();
     void emitNewDecksOverviewTab();
     void emitSearchTab();
+    void emitHelpMarkersTab();
     void emitAboutTab();
 };
 

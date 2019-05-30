@@ -1,6 +1,6 @@
-#include "about_widget.h"
+#include "help_about_widget.h"
 
-AboutWidget::AboutWidget(QWidget *parent)
+HelpAboutWidget::HelpAboutWidget(QWidget *parent)
     : QWidget(parent)
     , layout (new QVBoxLayout)
     , tab_widget (new QTabWidget)
@@ -15,18 +15,18 @@ AboutWidget::AboutWidget(QWidget *parent)
     showLicense();
 }
 
-void AboutWidget::showAbout()
+void HelpAboutWidget::showAbout()
 {
     QTextEdit *text = new QTextEdit();
     text->setText("Kulanday - Elearning / Flashcard / Dictionary Application\n\n\
-    (c) 2018-2018 The Kulanday Author(s)\n\n\
+    (c) 2018-2019 The Kulanday Author(s)\n\n\
     http://tambi-soft.github.io");
     
     text->setReadOnly(true);
     this->tab_widget->addTab(text, "About");
 }
 
-void AboutWidget::showLibraries()
+void HelpAboutWidget::showLibraries()
 {
     QTextEdit *text = new QTextEdit();
     text->setText("Qt (5.11.0)\n\
@@ -37,7 +37,7 @@ ogg vorbis codec");
     this->tab_widget->addTab(text, "Libraries");
 }
 
-void AboutWidget::showAuthors()
+void HelpAboutWidget::showAuthors()
 {
     QTextEdit *text = new QTextEdit();
     text->setText("");
@@ -46,7 +46,7 @@ void AboutWidget::showAuthors()
     this->tab_widget->addTab(text, "Authors");
 }
 
-void AboutWidget::showThanks()
+void HelpAboutWidget::showThanks()
 {
     QTextEdit *text = new QTextEdit();
     text->setText("");
@@ -55,7 +55,7 @@ void AboutWidget::showThanks()
     this->tab_widget->addTab(text, "Thanks To");
 }
 
-void AboutWidget::showLicense()
+void HelpAboutWidget::showLicense()
 {
     QFile file(":gpl");
     

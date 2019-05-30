@@ -1,15 +1,15 @@
-#include "resizing_text_edit.h"
+#include "text_edit_resizing.h"
 
-ResizingTextEdit::ResizingTextEdit(QWidget *parent) : QTextEdit(parent)
+TextEditResizing::TextEditResizing(QWidget *parent) : QTextEdit(parent)
 {
     QSizePolicy size_policy = this->sizePolicy();
     size_policy.setVerticalPolicy(QSizePolicy::Fixed);
     this->setSizePolicy(size_policy);
     
-    connect(this, &ResizingTextEdit::textChanged, this, &ResizingTextEdit::updateGeometry);
+    connect(this, &TextEditResizing::textChanged, this, &TextEditResizing::updateGeometry);
 }
 
-void ResizingTextEdit::updateGeometry()
+void TextEditResizing::updateGeometry()
 {
     QMargins widget_margins = this->contentsMargins();
     qreal document_margin = this->document()->documentMargin();
@@ -69,7 +69,7 @@ void ResizingTextEdit::updateGeometry()
     QTextEdit::updateGeometry();
 }
 
-void ResizingTextEdit::paintEvent(QPaintEvent *e)
+void TextEditResizing::paintEvent(QPaintEvent *e)
 {
     QTextEdit::paintEvent(e);
 }

@@ -9,11 +9,11 @@
 #include <QSizePolicy>
 #include <QDebug>
 
-class ResizingTextEdit : public QTextEdit
+class TextEditResizing : public QTextEdit
 {
     Q_OBJECT
 public:
-    explicit ResizingTextEdit(QWidget *parent = nullptr);
+    explicit TextEditResizing(QWidget *parent = nullptr);
 
     void updateGeometry();
     

@@ -12,17 +12,19 @@
 #include "inv_dirty_dozen_widget.h"
 #include "dirtydozen_widget.h"
 #include "deck_item_simple_widget.h"
+#include "deck_item_markers_widget.h"
 #include "db_adapter.h"
 #include "config.h"
 #include "search_widget.h"
-#include "about_widget.h"
+#include "help_about_widget.h"
+#include "help_markers_widget.h"
 
 class QKulandayMainWindow : public QMainWindow
 {
     Q_OBJECT
     
 public:
-    QKulandayMainWindow(QWidget *parent = 0);
+    QKulandayMainWindow(QWidget *parent = nullptr);
     
     bool eventFilter(QObject *watched, QEvent *event);
 private:
@@ -52,9 +54,11 @@ private slots:
     void createNewDeck(QUrl deck_url);
     void createNewDeckItem(QString deck_name);
     void deleteDeck(QString deck_name);
-    void showDeckItem(QString deck_name, int rowid);
+    void showSimpleDeckItem(QString deck_name, int rowid);
+    void showMarkersDeckItem(QString deck_name, int rowid);
     void showSearchWidget();
-    void showAboutWidget();
+    void showHelpMarkersWidget();
+    void showHelpAboutWidget();
     
     void onDeckItemContentsUpdated(QString deck_name);
     
