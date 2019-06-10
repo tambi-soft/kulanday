@@ -1,63 +1,67 @@
 #ifndef TEXT_EDIT_MARKERS_H
 #define TEXT_EDIT_MARKERS_H
 
-#include <QWidget>
-#include <QTextEdit>
-#include <QScrollBar>
-#include <QTextBlock>
-#include <QAbstractTextDocumentLayout>
-#include <QPainter>
-#include <QRectF>
-
 // https://doc.qt.io/qt-5/qtwidgets-widgets-codeeditor-example.html
 // https://stackoverflow.com/questions/2443358/how-to-add-lines-numbers-to-qtextedit
 
-class TextEditMarkers : public QTextEdit
+#include <QObject>
+#include <QPlainTextEdit>
+#include <QTextEdit>
+#include <QHBoxLayout>
+
+class MarkersTextEdit;
+class PayloadTextEdit;
+
+class TextEditMarkers : public QWidget
 {
     Q_OBJECT
+    
 public:
-    explicit TextEditMarkers(QWidget *parent = nullptr);
+    TextEditMarkers(QWidget *parent = nullptr);
     
-    int getFirstVisibleBlockId();
-        void lineNumberAreaPaintEvent(QPaintEvent *event);
-        int lineNumberAreaWidth();
+    MarkersTextEdit *markers;
+    PayloadTextEdit *payload;
     
-    signals:
-    
-    
-    public slots:
-    
-        void resizeEvent(QResizeEvent *e);
-    
-    private slots:
-    
-        void updateLineNumberAreaWidth(int newBlockCount);
-        void updateLineNumberArea(QRectF /*rect_f*/);
-        void updateLineNumberArea(int /*slider_pos*/);
-        void updateLineNumberArea();
-    
-    private:
-    
-        QWidget *lineNumberArea;
-    
-};
-
-
-
-class LineNumberArea : public QWidget
-{
-    Q_OBJECT
-
-public:
-    LineNumberArea(QTextEdit *editor);
-
-    QSize sizeHint() const;
-
-protected:
-    void paintEvent(QPaintEvent *event);
-
 private:
-    QTextEdit *codeEditor;
+    QHBoxLayout *layout;
+    
+private slots:
+    
+    
+signals:
+    void textChanged();
 };
+
+
+class MarkersTextEdit : public QTextEdit
+{
+    Q_OBJECT
+    
+public:
+    MarkersTextEdit(QWidget *parent = nullptr);
+    
+private:
+    
+    
+private slots:
+    
+    
+};
+
+class PayloadTextEdit : public QTextEdit
+{
+    Q_OBJECT
+    
+public:
+    PayloadTextEdit(QWidget *parent = nullptr);
+    
+private:
+    
+    
+private slots:
+    
+    
+};
+        
 
 #endif // TEXT_EDIT_MARKERS_H
