@@ -8,6 +8,9 @@
 #include <QPlainTextEdit>
 #include <QTextEdit>
 #include <QHBoxLayout>
+#include <QTextCursor>
+
+#include <QDebug>
 
 class MarkersTextEdit;
 class PayloadTextEdit;
@@ -20,13 +23,16 @@ public:
     TextEditMarkers(QWidget *parent = nullptr);
     
     MarkersTextEdit *markers;
-    PayloadTextEdit *payload;
+    //PayloadTextEdit *payload;
+    QPlainTextEdit *payload;
     
 private:
     QHBoxLayout *layout;
+    void setMarker(QString marker, int position, int payload_lines_count);
     
 private slots:
-    
+    /* analyze the input for markers (i.e.: something like "\lx" to create the markers entry */
+    void onPayloadTextChanged();
     
 signals:
     void textChanged();
