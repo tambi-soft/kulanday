@@ -52,6 +52,8 @@ void TextEditMarkers::onPayloadTextChanged()
                 
                 /* restore the previously saved text cursor */
                 this->payload->setTextCursor(cursor);
+                
+                //qDebug() << cursor.
             }
         }
     }

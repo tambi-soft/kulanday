@@ -100,8 +100,8 @@ void QKulandayMainWindow::showDeckWidget(QString deck_name)
     {
         QDeckOverviewWidget *deck = new QDeckOverviewWidget(this->deckpath, deck_name);
         connect(deck, &QDeckOverviewWidget::newDeckItemRequested, this, &QKulandayMainWindow::createNewDeckItem);
-        connect(deck, &QDeckOverviewWidget::showDeckItemRequested, this, &QKulandayMainWindow::showMarkersDeckItem);
-        //connect(deck, &QDeckOverviewWidget::showDeckItemRequested, this, &QKulandayMainWindow::showSimpleDeckItem);
+        //connect(deck, &QDeckOverviewWidget::showDeckItemRequested, this, &QKulandayMainWindow::showMarkersDeckItem);
+        connect(deck, &QDeckOverviewWidget::showDeckItemRequested, this, &QKulandayMainWindow::showSimpleDeckItem);
         
         tab_widget->addTab(deck, deck_name);
         activateNewTab();
