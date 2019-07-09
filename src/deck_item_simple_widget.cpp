@@ -36,12 +36,12 @@ void QDeckItemWidget::populateGui(QDir *decks_path, QString deck_name, int rowid
         this->database = new DbAdapter(this->decks_path, deck_name);
     }
     QList<QMap<QString,QVariant>> data = database->selectDeckItem(rowid);
-    
+    /*
     name_line->setFont(this->unicodeFonts->getFontAndSize(data[0]["name"].toString()));
     word_line->setFont(this->unicodeFonts->getFontAndSize(data[0]["word"].toString()));
     phonetical_line->setFont(this->unicodeFonts->getFontAndSize(data[0]["phonetical"].toString()));
     translation_line->setFont(this->unicodeFonts->getFontAndSize(data[0]["translation"].toString()));
-    
+    */
     this->ignore_item_changes = true;
     this->name_line->setPlainText(data[0]["name"].toString());
     this->word_line->setPlainText(data[0]["word"].toString());
