@@ -24,8 +24,8 @@ class QDeckItemMarkersWidget : public QWidget
 {
     Q_OBJECT
 public:
-    explicit QDeckItemMarkersWidget(QDir *decks_path, QString deck_name, QString last_image_import_path, QWidget *parent = nullptr);
-    explicit QDeckItemMarkersWidget(QDir *decks_path, QString deck_name, int rowid, QString last_image_import_path, QWidget *parent = nullptr);
+    explicit QDeckItemMarkersWidget(QDir *decks_path, QString deck_name, QString last_image_import_path, QString last_audio_import_path, QWidget *parent = nullptr);
+    explicit QDeckItemMarkersWidget(QDir *decks_path, QString deck_name, int rowid, QString last_image_import_path, QString last_audio_import_path, QWidget *parent = nullptr);
     
     int rowid;
     
@@ -33,6 +33,7 @@ private:
     QDir *decks_path;
     //QString last_image_import_path = QDir::homePath();
     QString last_image_import_path;
+    QString last_audio_import_path;
     QString deck_name;
     QString image_path;
     
@@ -64,6 +65,7 @@ protected:
 signals:
     void contentsUpdated(QString deck_name);
     void imageImportPathUpdated(QString last_image_import_path);
+    void audioImportPathUpdated(QString last_audio_import_path);
     
 public slots:
     void importImageClicked();

@@ -1,10 +1,11 @@
 #include "deck_item_simple_widget.h"
 
-QDeckItemWidget::QDeckItemWidget(QDir *decks_path, QString deck_name, QString last_image_import_path, QWidget *parent)
+QDeckItemWidget::QDeckItemWidget(QDir *decks_path, QString deck_name, QString last_image_import_path, QString last_audio_import_path, QWidget *parent)
     : QWidget(parent)
     , unicodeFonts (new UnicodeFonts)
 {
     this->last_image_import_path = last_image_import_path;
+    this->last_audio_import_path = last_audio_import_path;
     
     if (this->database == nullptr)
     {
@@ -16,9 +17,10 @@ QDeckItemWidget::QDeckItemWidget(QDir *decks_path, QString deck_name, QString la
     populateGui(decks_path, deck_name, rowid);
 }
 
-QDeckItemWidget::QDeckItemWidget(QDir *decks_path, QString deck_name, int rowid, QString last_image_import_path, QWidget *parent) : QWidget(parent)
+QDeckItemWidget::QDeckItemWidget(QDir *decks_path, QString deck_name, int rowid, QString last_image_import_path, QString last_audio_import_path, QWidget *parent) : QWidget(parent)
 {
     this->last_image_import_path = last_image_import_path;
+    this->last_audio_import_path = last_audio_import_path;
     
     populateGui(decks_path, deck_name, rowid);
 }
@@ -89,9 +91,10 @@ void QDeckItemWidget::initializeGui(QString deck_name, int rowid)
     this->word_line = new TextEditResizing();
     this->phonetical_line = new TextEditResizing();
     this->translation_line = new TextEditResizing();
-    this->audio_list_widget = new QAudioListTable(this->decks_path, deck_name, rowid);
+    this->audio_list_widget = new QAudioListTable(this->decks_path, deck_name, rowid, this->last_audio_import_path);
     
     connect(this->audio_list_widget, &QAudioListTable::changed, this, &QDeckItemWidget::onAudioListChanged);
+    connect(this->audio_list_widget, &QAudioListTable::audioImportPathUpdated, this, &QDeckItemWidget::onAudioImportPathUpdated);
     
     connect(this->name_line, &TextEditResizing::textChanged, this, &QDeckItemWidget::onItemChanged);
     connect(this->word_line, &TextEditResizing::textChanged, this, &QDeckItemWidget::onItemChanged);
@@ -151,7 +154,7 @@ void QDeckItemWidget::importImageClicked()
     this->default_import_path = "";
     QString image_url = QFileDialog::getOpenFileName(this, "Please select an Image File", this->last_image_import_path);
     
-    if (image_url != NULL)
+    if (image_url != nullptr)
     {
         this->last_image_import_path = image_url;
         emit imageImportPathUpdated(this->last_image_import_path);
@@ -228,6 +231,12 @@ void QDeckItemWidget::onItemChanged()
 void QDeckItemWidget::onAudioListChanged()
 {
     this->item_changed = true;
+}
+
+void QDeckItemWidget::onAudioImportPathUpdated(QString last_audio_import_path)
+{
+    this->last_audio_import_path = last_audio_import_path;
+    emit audioImportPathUpdated(this->last_audio_import_path);
 }
 
 void QDeckItemWidget::hideEvent(QHideEvent *event)

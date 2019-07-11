@@ -26,14 +26,14 @@ class QAudioListTable : public QTableWidget
 {
     Q_OBJECT
 public:
-    explicit QAudioListTable(QDir *decks_path, QString deck_name, qlonglong deck_rowid,  QTableWidget *parent = nullptr);
+    explicit QAudioListTable(QDir *decks_path, QString deck_name, qlonglong deck_rowid,  QString last_audio_import_path, QTableWidget *parent = nullptr);
     
     void newAudioLine();
     void stopAudio();
     
 private:
     QDir *decks_path;
-    QString last_audio_import_path = QDir::homePath();
+    QString last_audio_import_path; // = QDir::homePath();
     QString deck_name;
     qlonglong deck_rowid;
     QMap<int,int> audio_rowid; // table row -> db row

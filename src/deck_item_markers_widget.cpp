@@ -1,10 +1,11 @@
 #include "deck_item_markers_widget.h"
 
-QDeckItemMarkersWidget::QDeckItemMarkersWidget(QDir *decks_path, QString deck_name, QString last_image_import_path, QWidget *parent)
+QDeckItemMarkersWidget::QDeckItemMarkersWidget(QDir *decks_path, QString deck_name, QString last_image_import_path, QString last_audio_import_path, QWidget *parent)
     : QWidget(parent)
     , unicodeFonts (new UnicodeFonts)
 {
     this->last_image_import_path = last_image_import_path;
+    this->last_audio_import_path = last_audio_import_path;
     
     if (this->database == nullptr)
     {
@@ -16,9 +17,10 @@ QDeckItemMarkersWidget::QDeckItemMarkersWidget(QDir *decks_path, QString deck_na
     populateGui(decks_path, deck_name, rowid);
 }
 
-QDeckItemMarkersWidget::QDeckItemMarkersWidget(QDir *decks_path, QString deck_name, int rowid, QString last_image_import_path, QWidget *parent) : QWidget(parent)
+QDeckItemMarkersWidget::QDeckItemMarkersWidget(QDir *decks_path, QString deck_name, int rowid, QString last_image_import_path, QString last_audio_import_path, QWidget *parent) : QWidget(parent)
 {
     this->last_image_import_path = last_image_import_path;
+    this->last_audio_import_path = last_audio_import_path;
     
     populateGui(decks_path, deck_name, rowid);
 }
@@ -88,7 +90,7 @@ void QDeckItemMarkersWidget::initializeGui(QString deck_name, int rowid)
     
     this->image_view = new QLabel();
     this->text_edit_markers = new TextEditMarkers();
-    this->audio_list_widget = new QAudioListTable(this->decks_path, deck_name, rowid);
+    this->audio_list_widget = new QAudioListTable(this->decks_path, deck_name, rowid, this->last_audio_import_path);
     
     connect(this->audio_list_widget, &QAudioListTable::changed, this, &QDeckItemMarkersWidget::onAudioListChanged);
     

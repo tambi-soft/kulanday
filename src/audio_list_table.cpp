@@ -1,11 +1,13 @@
 #include "audio_list_table.h"
 
-QAudioListTable::QAudioListTable(QDir *decks_path, QString deck_name, qlonglong deck_rowid, QTableWidget *parent)
+QAudioListTable::QAudioListTable(QDir *decks_path, QString deck_name, qlonglong deck_rowid, QString last_audio_import_path, QTableWidget *parent)
     : QTableWidget(parent)
     , player (new QMediaPlayer)
     , arec (new AudioRecorder)
     //, recorder (new QAudioRecorder)
 {
+    this->last_audio_import_path = last_audio_import_path;
+    
     connect(this->player, &QMediaPlayer::stateChanged, this, &QAudioListTable::mediaPlayerStateChanged);
     connect(this, &QAudioListTable::itemChanged, this, &QAudioListTable::onItemChanged);
     
@@ -189,7 +191,7 @@ void QAudioListTable::deleteButtonClicked(int row)
 void QAudioListTable::importButtonClicked(int row)
 {
     QString audio_url = QFileDialog::getOpenFileName(this, "Import Audio", this->last_audio_import_path);
-    if (audio_url != NULL)
+    if (audio_url != nullptr)
     {
         QFile filepath(audio_url);
         QString filename = QUrl(audio_url).fileName();
