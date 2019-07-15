@@ -39,7 +39,7 @@ QDecksOverviewWidget :: QDecksOverviewWidget(QDir *decks_path, QWidget *parent)
     layout->addWidget(combo_status_filter, 0, 2);
     layout->addWidget(table, 1, 0, 1, 3);
     layout->addWidget(refresh_button, 2, 0);
-    layout->addWidget(new_markers_deck_button, 2, 1);
+    //layout->addWidget(new_markers_deck_button, 2, 1);
     layout->addWidget(new_simple_deck_button, 2, 2);
     
     //table->horizontalHeader()->hide();
