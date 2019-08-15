@@ -24,14 +24,15 @@ class QDeckItemWidget : public QWidget
 {
     Q_OBJECT
 public:
+    // create a new deck widget
     explicit QDeckItemWidget(QDir *decks_path, QString deck_name, QString last_image_import_path, QString last_audio_import_path, QWidget *parent = nullptr);
+    // open an existing deck widget
     explicit QDeckItemWidget(QDir *decks_path, QString deck_name, int rowid, QString last_image_import_path, QString last_audio_import_path, QWidget *parent = nullptr);
     
     int rowid;
     
 private:
     QDir *decks_path;
-    //QString last_image_import_path = QDir::homePath();
     QString last_image_import_path;
     QString last_audio_import_path;
     QString deck_name;

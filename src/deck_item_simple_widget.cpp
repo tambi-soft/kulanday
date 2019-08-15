@@ -15,6 +15,9 @@ QDeckItemWidget::QDeckItemWidget(QDir *decks_path, QString deck_name, QString la
     int rowid = this->database->newDeckRow();
     
     populateGui(decks_path, deck_name, rowid);
+    
+    // create automatically an audio entry
+    newAudioButtonClicked();
 }
 
 QDeckItemWidget::QDeckItemWidget(QDir *decks_path, QString deck_name, int rowid, QString last_image_import_path, QString last_audio_import_path, QWidget *parent) : QWidget(parent)
