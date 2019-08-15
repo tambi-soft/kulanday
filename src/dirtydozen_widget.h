@@ -38,8 +38,8 @@ private:
     
     QDir *decks_path;
     
-    int COLUMNS = 4;
-    int ITEM_COUNT = 16;
+    int COLUMNS = 5;
+    int ROWS = 4;
     QList<QString> DISPLAY_COMBO_ITEMS;
     QString learn_mode = "image";
     QList<QPushButton*> button_list;
