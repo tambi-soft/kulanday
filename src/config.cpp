@@ -36,8 +36,8 @@ Config::Config(QObject *parent) : QObject(parent)
                               QFileDevice::WriteOwner);
     }
     
-    QSettings *settings = new QSettings(config_file->fileName(), QSettings::IniFormat);
-    QString deckpath_var = settings->value("kulanday/deckpath").toString();
+    this->settings = new QSettings(config_file->fileName(), QSettings::IniFormat);
+    QString deckpath_var = this->settings->value("kulanday/deckpath").toString();
     
     deckpath = new QDir(deckpath_var.replace("$CONFDIR", config_dir->absolutePath()));
     if (! deckpath->exists())
@@ -45,7 +45,18 @@ Config::Config(QObject *parent) : QObject(parent)
         deckpath->mkdir(deckpath->absolutePath());
     }
 }
+
 QDir *Config::getDecksPath()
 {
     return this->deckpath;
+}
+
+QString Config::getLastLanguageFilter()
+{
+    return this->settings->value("kulanday/last_language_filter").toString();
+}
+
+void Config::setLastLanguageFilter(QString filter)
+{
+    this->settings->setValue("kulanday/last_language_filter", filter);
 }

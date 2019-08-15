@@ -28,6 +28,7 @@ public:
     
     bool eventFilter(QObject *watched, QEvent *event);
 private:
+    Config *config;
     QTabWidget *tab_widget;
     MenuBar *menu_bar;
     

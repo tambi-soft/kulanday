@@ -7,7 +7,7 @@ QKulandayMainWindow::QKulandayMainWindow(QWidget *parent)
 {
     resize(860, 730);
     
-    Config *config = new Config();
+    this->config = new Config();
     this->deckpath = config->getDecksPath();
     
     setCentralWidget(tab_widget);
@@ -58,7 +58,7 @@ QKulandayMainWindow::QKulandayMainWindow(QWidget *parent)
 
 void QKulandayMainWindow::showDecksOverviewTab()
 {
-    QDecksOverviewWidget *decks = new QDecksOverviewWidget(this->deckpath);
+    QDecksOverviewWidget *decks = new QDecksOverviewWidget(this->config, this->deckpath);
     tab_widget->addTab(decks, "decks");
     connect(decks, &QDecksOverviewWidget::deckDirtyDozenClicked, this, &QKulandayMainWindow::showDirtyDozenWidget);
     connect(decks, &QDecksOverviewWidget::deckLearnClicked, this, &QKulandayMainWindow::showLearnWidget);

@@ -17,9 +17,13 @@ public:
     explicit Config(QObject *parent = nullptr);
     
     QDir *getDecksPath();
+    QString getLastLanguageFilter();
+    void setLastLanguageFilter(QString filter);
     
 private:
+    QSettings *settings;
     QDir *deckpath;
+    
 signals:
     
 public slots:

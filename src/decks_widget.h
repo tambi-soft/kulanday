@@ -16,13 +16,14 @@
 
 #include "create_new_deck_dialog.h"
 #include "db_adapter_meta.h"
+#include "config.h"
 
 class QDecksOverviewWidget : public QWidget
 {
     Q_OBJECT
 
 public:
-    QDecksOverviewWidget(QDir *decks_path, QWidget *parent = 0);
+    QDecksOverviewWidget(Config *config, QDir *decks_path, QWidget *parent = nullptr);
 
 private:
     DbAdapterMeta *database;
@@ -33,6 +34,7 @@ private:
     QComboBox *combo_status_filter;
     QTableWidget *table;
     
+    Config *config;
     QDir *decks_path;
     
     void populateComboNameFilterBox();

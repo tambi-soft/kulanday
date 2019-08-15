@@ -1,7 +1,7 @@
 
 #include <src/decks_widget.h>
 
-QDecksOverviewWidget :: QDecksOverviewWidget(QDir *decks_path, QWidget *parent)
+QDecksOverviewWidget :: QDecksOverviewWidget(Config *config, QDir *decks_path, QWidget *parent)
     : layout (new QGridLayout)
     , combo_name_filter (new QComboBox)
     , combo_status_filter (new QComboBox)
@@ -10,6 +10,7 @@ QDecksOverviewWidget :: QDecksOverviewWidget(QDir *decks_path, QWidget *parent)
     resize(600, 400);
     setLayout(layout);
     
+    this->config = config;
     this->decks_path = decks_path;
     
     COMBO_STATI << "ToDo" << "perfect" << "good" << "weak" << "poor" << "none";
@@ -88,6 +89,10 @@ void QDecksOverviewWidget::populateComboNameFilterBox()
     this->combo_name_filter->blockSignals(true);
     this->combo_name_filter->addItems(items);
     this->combo_name_filter->blockSignals(false);
+    
+    // load last filter from config
+    QString current_text = this->config->getLastLanguageFilter();
+    this->combo_name_filter->setCurrentText(current_text);
 }
 
 void QDecksOverviewWidget::populateDecksOverview()
@@ -275,6 +280,8 @@ void QDecksOverviewWidget::tableButtonDeleteDeckClicked(QString deck_name)
 
 void QDecksOverviewWidget::onComboNameFilterTextChanged(QString text)
 {
+    this->config->setLastLanguageFilter(text);
+    
     this->table->clear();
     populateDecksOverview();
 }
