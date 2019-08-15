@@ -70,7 +70,7 @@ qlonglong DbAdapter::newDeckRow()
     return query.lastInsertId().toLongLong();
 }
 
-qlonglong DbAdapter::newAudioRow(int deck_rowid)
+qlonglong DbAdapter::newAudioRow(qlonglong deck_rowid)
 {
     QSqlQuery query(this->db);
     query.prepare("INSERT INTO audio (deck_rowid) VALUES (:deck_rowid)");
@@ -133,7 +133,7 @@ QList<QMap<QString,QVariant>> DbAdapter::selectDeckDirtyDozenItems()
     return dbIteratorToMapList(query);
 }
 
-QList<QMap<QString,QVariant>> DbAdapter::selectDeckItem(int rowid)
+QList<QMap<QString,QVariant>> DbAdapter::selectDeckItem(qlonglong rowid)
 {
     QSqlQuery query(this->db);
     query.prepare("SELECT name, word, phonetical, translation, svg_filename, image FROM deck WHERE rowid=:rowid");
@@ -143,7 +143,7 @@ QList<QMap<QString,QVariant>> DbAdapter::selectDeckItem(int rowid)
     return dbIteratorToMapList(query);
 }
 
-void DbAdapter::updateDeckItem(int rowid, QString name, QString word, QString phonetical, QString translation)
+void DbAdapter::updateDeckItem(qlonglong rowid, QString name, QString word, QString phonetical, QString translation)
 {
     QSqlQuery query(this->db);
     query.prepare("UPDATE deck SET name=:name, word=:word, phonetical=:phonetical, translation=:translation WHERE rowid=:rowid");
@@ -155,7 +155,7 @@ void DbAdapter::updateDeckItem(int rowid, QString name, QString word, QString ph
     query.exec();
 }
 
-QList<QMap<QString,QVariant>> DbAdapter::deleteItem(int rowid)
+QList<QMap<QString,QVariant>> DbAdapter::deleteItem(qlonglong rowid)
 {
     QList<QMap<QString,QVariant>> result;
     
@@ -198,7 +198,7 @@ QList<QMap<QString,QVariant>> DbAdapter::deleteItem(int rowid)
     return result;
 }
 
-void DbAdapter::deleteImage(int rowid)
+void DbAdapter::deleteImage(qlonglong rowid)
 {
     QSqlQuery query(this->db);
     query.prepare("UPDATE deck SET image=NULL WHERE rowid=:rowid");
@@ -216,7 +216,7 @@ QList<QMap<QString,QVariant>> DbAdapter::audioFilenamesForDeckRowID(qlonglong ro
     return dbIteratorToMapList(query);
 }
 
-void DbAdapter::deleteAudio(int rowid)
+void DbAdapter::deleteAudio(qlonglong rowid)
 {
     QSqlQuery query(this->db);
     query.prepare("DELETE FROM audio WHERE rowid = :rowid");
@@ -224,7 +224,7 @@ void DbAdapter::deleteAudio(int rowid)
     query.exec();
 }
 
-void DbAdapter::insertAudioFilename(qlonglong deck_rowid, int audio_rowid, QString filename, QString description)
+void DbAdapter::insertAudioFilename(qlonglong deck_rowid, qlonglong audio_rowid, QString filename, QString description)
 {
     QSqlQuery query(this->db);
     query.prepare("UPDATE audio SET deck_rowid = :deck_rowid, filename=:filename, description = :description WHERE rowid = :audio_rowid");
@@ -235,7 +235,7 @@ void DbAdapter::insertAudioFilename(qlonglong deck_rowid, int audio_rowid, QStri
     query.exec();
 }
 
-void DbAdapter::insertImageFilename(int rowid, QString filename)
+void DbAdapter::insertImageFilename(qlonglong rowid, QString filename)
 {
     QSqlQuery query(this->db);
     query.prepare("UPDATE deck SET image=:filename WHERE rowid=:rowid");
