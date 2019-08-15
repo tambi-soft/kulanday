@@ -115,9 +115,10 @@ QList<QMap<QString,QVariant>> DbAdapter::selectDeckItemsFiltered(QString filter)
     return dbIteratorToMapList(query);
 }
 
-QList<QMap<QString,QVariant>> DbAdapter::selectDeckDirtyDozenItems()
+QList<QMap<QString,QVariant>> DbAdapter::selectDeckDirtyDozenItems(int limit)
 {
-    QSqlQuery query("SELECT image, rowid, name, word, phonetical, translation, svg_filename, image, filename\
+    QSqlQuery query(this->db);
+    query.prepare("SELECT image, rowid, name, word, phonetical, translation, svg_filename, image, filename\
         FROM\
         (\
             SELECT image, deck.rowid AS rowid, name, word, phonetical, translation, svg_filename, image, audio.filename\
@@ -128,7 +129,9 @@ QList<QMap<QString,QVariant>> DbAdapter::selectDeckDirtyDozenItems()
         WHERE T.filename IS NOT NULL\
         GROUP BY rowid\
         ORDER BY RANDOM()\
-        LIMIT 12", this->db);
+        LIMIT :limit");
+    query.bindValue(":limit", limit);
+    query.exec();
     
     return dbIteratorToMapList(query);
 }

@@ -8,6 +8,7 @@ QDirtyDozenWidget::QDirtyDozenWidget(QDir *decks_path, QString deck_name, QWidge
     , audioPlayer (new QMediaPlayer)
 {
     DISPLAY_COMBO_ITEMS << "image" << "name" << "word" << "translation";
+    
     this->decks_path = decks_path;
     
     setLayout(grid);
@@ -26,7 +27,7 @@ QDirtyDozenWidget::QDirtyDozenWidget(QDir *decks_path, QString deck_name, QWidge
 void QDirtyDozenWidget::initialize(QString deck_name)
 {
     DbAdapter *db_adapter = new DbAdapter(this->decks_path, deck_name);
-    this->full_dataset = db_adapter->selectDeckDirtyDozenItems();
+    this->full_dataset = db_adapter->selectDeckDirtyDozenItems(this->ITEM_COUNT);
     
     //QLabel *select_display_combo_label = new QLabel("select display:");
     //this->grid->addWidget(select_display_combo_label, 0, 0);
@@ -46,7 +47,7 @@ void QDirtyDozenWidget::initialize(QString deck_name)
     
     this->show_all_button = new QPushButton("show all");
     connect(show_all_button, &QPushButton::clicked, this, &QDirtyDozenWidget::showAllButtonClicked);
-    this->grid->addWidget(show_all_button, int(12 / this->COLUMNS +2), 0);
+    this->grid->addWidget(show_all_button, int(this->ITEM_COUNT / this->COLUMNS +2), 0);
     
     QGroupBox *slider_group = new QGroupBox("repeats counter");
     QHBoxLayout *slider_layout = new QHBoxLayout();
@@ -55,7 +56,7 @@ void QDirtyDozenWidget::initialize(QString deck_name)
     slider_layout->addWidget(this->slider_repeat_times);
     slider_group->setLayout(slider_layout);
     //this->grid->addWidget(this->slider_repeat_times, int(12 / this->COLUMNS +2), 1, 1, 2);
-    this->grid->addWidget(slider_group, int(12 / this->COLUMNS+2), 1, 1, 2);
+    this->grid->addWidget(slider_group, int(this->ITEM_COUNT / this->COLUMNS+2), 1, 1, 2);
     this->slider_repeat_times->setMinimum(1);
     this->slider_repeat_times->setMaximum(21);
     this->slider_repeat_times->setValue(11);
@@ -66,7 +67,7 @@ void QDirtyDozenWidget::initialize(QString deck_name)
     QPushButton *shuffle_button = new QPushButton("shuffle");
     shuffle_button->setIcon(QIcon::fromTheme("media-playlist-shuffle"));
     connect(shuffle_button, &QPushButton::clicked, this, &QDirtyDozenWidget::onShuffleButtonClicked);
-    this->grid->addWidget(shuffle_button, int(12 / this->COLUMNS +2), this->COLUMNS-1);
+    this->grid->addWidget(shuffle_button, int(this->ITEM_COUNT / this->COLUMNS +2), this->COLUMNS-1);
 }
 
 void QDirtyDozenWidget::sliderRepeatTimesChanged(int value)

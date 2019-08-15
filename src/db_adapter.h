@@ -26,7 +26,7 @@ public:
     qlonglong newAudioRow(qlonglong deck_rowid);
     QList<QMap<QString,QVariant>> selectDeckItems();
     QList<QMap<QString,QVariant>> selectDeckItemsFiltered(QString filter);
-    QList<QMap<QString,QVariant>> selectDeckDirtyDozenItems();
+    QList<QMap<QString,QVariant>> selectDeckDirtyDozenItems(int limit);
     QList<QMap<QString,QVariant>> selectDeckItem(qlonglong rowid);
     void updateDeckItem(qlonglong rowid, QString name, QString word, QString phonetical, QString translation);
     QList<QMap<QString, QVariant> > deleteItem(qlonglong rowid);
