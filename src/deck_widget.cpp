@@ -29,10 +29,12 @@ QDeckOverviewWidget::QDeckOverviewWidget(QString filter, QDir *decks_path, QWidg
     populateTableWidget(result);
 }
 
-QDeckOverviewWidget::QDeckOverviewWidget(QDir *decks_path, QString deck_name, QWidget *parent)
+QDeckOverviewWidget::QDeckOverviewWidget(QDir *decks_path, QString deck_name, Config *config, QWidget *parent)
     : QWidget(parent)
 {
     this->searchMode = false;
+    
+    this->config = config;
     
     initGui();
     
@@ -373,7 +375,7 @@ void QDeckOverviewWidget::deleteRow(qlonglong rowid, QString deck_name)
 
 void QDeckOverviewWidget::moveItem(QString deck_name, qlonglong rowid)
 {
-    MoveItemDialog *dialog = new MoveItemDialog(this->decks_path, deck_name, rowid);
+    MoveItemDialog *dialog = new MoveItemDialog(this->decks_path, deck_name, this->config, rowid);
     connect(dialog, &MoveItemDialog::deleteRow, this, &QDeckOverviewWidget::deleteRow);
     
     dialog->exec();

@@ -54,6 +54,7 @@ HEADERS += \
     src/db_adapter.h \
     src/deck_item_markers_widget.h \
     src/deck_item_simple_widget.h \
+    src/filter_language_combo.h \
     src/help_about_widget.h \
     src/help_markers_widget.h \
     src/q_click_label.h\
@@ -80,6 +81,7 @@ HEADERS += \
 SOURCES += \
     src/deck_item_markers_widget.cpp \
     src/deck_item_simple_widget.cpp \
+    src/filter_language_combo.cpp \
     src/help_about_widget.cpp \
     src/help_markers_widget.cpp \
     src/kulanday.cpp\

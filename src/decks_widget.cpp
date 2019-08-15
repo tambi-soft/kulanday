@@ -1,9 +1,8 @@
 
 #include <src/decks_widget.h>
 
-QDecksOverviewWidget :: QDecksOverviewWidget(Config *config, QDir *decks_path, QWidget *parent)
+QDecksOverviewWidget :: QDecksOverviewWidget(Config *config, QDir *decks_path, QWidget */*parent*/)
     : layout (new QGridLayout)
-    , combo_name_filter (new QComboBox)
     , combo_status_filter (new QComboBox)
     , table (new QTableWidget)
 {
@@ -12,6 +11,8 @@ QDecksOverviewWidget :: QDecksOverviewWidget(Config *config, QDir *decks_path, Q
     
     this->config = config;
     this->decks_path = decks_path;
+    
+    this->combo_name_filter = new FilterLanguageCombo(decks_path, config);
     
     COMBO_STATI << "ToDo" << "perfect" << "good" << "weak" << "poor" << "none";
     COMBO_STATI_FILTER << "[all]" << "ToDo" << "perfect" << "good" << "weak" << "poor" << "none";
@@ -46,7 +47,6 @@ QDecksOverviewWidget :: QDecksOverviewWidget(Config *config, QDir *decks_path, Q
     //table->horizontalHeader()->hide();
     //table->verticalHeader()->hide();
     
-    populateComboNameFilterBox();
     populateDecksOverview();
 }
 
@@ -71,28 +71,6 @@ void QDecksOverviewWidget::refreshTable()
 {
     table->clear();
     populateDecksOverview();
-}
-
-void QDecksOverviewWidget::populateComboNameFilterBox()
-{
-    QStringList decks_names = decks_path->entryList(QDir::NoDotAndDotDot | QDir::Dirs, QDir::Name);
-    
-    QStringList items;
-    items << "[all]";
-    foreach (QString decks_name, decks_names) {
-        QString item = decks_name.split("_")[0];
-        if (! items.contains(item + "_") && decks_name.contains("_"))
-        {
-            items.append(item + "_");
-        }
-    }
-    this->combo_name_filter->blockSignals(true);
-    this->combo_name_filter->addItems(items);
-    this->combo_name_filter->blockSignals(false);
-    
-    // load last filter from config
-    QString current_text = this->config->getLastLanguageFilter();
-    this->combo_name_filter->setCurrentText(current_text);
 }
 
 void QDecksOverviewWidget::populateDecksOverview()

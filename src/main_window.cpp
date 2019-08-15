@@ -98,7 +98,7 @@ void QKulandayMainWindow::showDeckWidget(QString deck_name)
     }
     else
     {
-        QDeckOverviewWidget *deck = new QDeckOverviewWidget(this->deckpath, deck_name);
+        QDeckOverviewWidget *deck = new QDeckOverviewWidget(this->deckpath, deck_name, this->config);
         connect(deck, &QDeckOverviewWidget::newDeckItemRequested, this, &QKulandayMainWindow::createNewDeckItem);
         //connect(deck, &QDeckOverviewWidget::showDeckItemRequested, this, &QKulandayMainWindow::showMarkersDeckItem);
         connect(deck, &QDeckOverviewWidget::showDeckItemRequested, this, &QKulandayMainWindow::showSimpleDeckItem);
@@ -195,7 +195,7 @@ void QKulandayMainWindow::showMarkersDeckItem(QString deck_name, int rowid)
 void QKulandayMainWindow::onDeckItemContentsUpdated(QString deck_name)
 {
     int deck_id = this->deck_item_widgets[deck_name];
-    QDeckOverviewWidget *deck = (QDeckOverviewWidget*) tab_widget->widget(deck_id);
+    QDeckOverviewWidget *deck = dynamic_cast<QDeckOverviewWidget*>(tab_widget->widget(deck_id));
     deck->refresh();
 }
 

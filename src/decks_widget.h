@@ -7,7 +7,6 @@
 #include <QPushButton>
 #include <QDir>
 #include <QFileDialog>
-#include <QComboBox>
 #include <QListView>
 #include <QIcon>
 #include <QColor>
@@ -17,6 +16,7 @@
 #include "create_new_deck_dialog.h"
 #include "db_adapter_meta.h"
 #include "config.h"
+#include "filter_language_combo.h"
 
 class QDecksOverviewWidget : public QWidget
 {
@@ -28,7 +28,7 @@ public:
 private:
     DbAdapterMeta *database;
     QGridLayout *layout;
-    QComboBox *combo_name_filter;
+    FilterLanguageCombo *combo_name_filter;
     QStringList COMBO_STATI;
     QStringList COMBO_STATI_FILTER;
     QComboBox *combo_status_filter;
@@ -37,7 +37,6 @@ private:
     Config *config;
     QDir *decks_path;
     
-    void populateComboNameFilterBox();
     void populateDecksOverview();
     QComboBox *populateComboStatus(QString deck_name);
     void populateComboStatusFilter(QComboBox *combo);

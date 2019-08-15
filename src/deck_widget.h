@@ -30,12 +30,17 @@ class QDeckOverviewWidget : public QWidget
 {
     Q_OBJECT
 public:
+    /* to initialize the search result view */
     explicit QDeckOverviewWidget(QString filter, QDir *decks_path, QWidget *parent = nullptr);
-    explicit QDeckOverviewWidget(QDir *decks_path, QString deck_name, QWidget *parent = nullptr);
+    
+    /* open existing deck */
+    /* language_filter is for passing it to the move_item_dialog */
+    explicit QDeckOverviewWidget(QDir *decks_path, QString deck_name, Config *config, QWidget *parent = nullptr);
     
     void refresh();
     
 private:
+    Config *config;
     bool searchMode;
     QGridLayout *layout;
     QTableWidget *table;
