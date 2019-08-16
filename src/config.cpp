@@ -37,7 +37,7 @@ Config::Config(QObject *parent) : QObject(parent)
     }
     
     this->settings = new QSettings(config_file->fileName(), QSettings::IniFormat);
-    QString deckpath_var = this->settings->value("kulanday/deckpath").toString();
+    this->deckpath_var = this->settings->value("kulanday/deckpath").toString();
     
     deckpath = new QDir(deckpath_var.replace("$CONFDIR", config_dir->absolutePath()));
     if (! deckpath->exists())
@@ -49,6 +49,16 @@ Config::Config(QObject *parent) : QObject(parent)
 QDir *Config::getDecksPath()
 {
     return this->deckpath;
+}
+
+QString Config::getDeckpathString()
+{
+    return this->deckpath_var;
+}
+
+void Config::setDeckpath(QString path)
+{
+    this->settings->setValue("kulanday/deckpath", path);
 }
 
 QString Config::getLastLanguageFilter()

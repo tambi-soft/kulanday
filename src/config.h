@@ -18,12 +18,15 @@ public:
     explicit Config(QObject *parent = nullptr);
     
     QDir *getDecksPath();
+    QString getDeckpathString();
+    void setDeckpath(QString path);
     QString getLastLanguageFilter();
     void setLastLanguageFilter(QString filter);
     QSize getDirtyDozenSize();
     void setDirtyDozenSize(QSize size);
     
 private:
+    QString deckpath_var;
     QSettings *settings;
     QDir *deckpath;
     

@@ -61,6 +61,45 @@ void SettingsWidget::ddHeightChanged(int height)
 
 void SettingsWidget::addDeckPathSettingsArea()
 {
-    QGroupBox *group = new QGroupBox("Path for saving Decks");
+    QGroupBox *group = new QGroupBox("Path for opening/saving Decks");
+    QVBoxLayout *layout_outer = new QVBoxLayout;
+    QHBoxLayout *layout = new QHBoxLayout();
     
+    this->edit_path = new QLineEdit;
+    this->edit_path->setReadOnly(true);
+    layout->addWidget(edit_path);
+    
+    edit_path->setText(this->config->getDeckpathString());
+    
+    QPushButton *button = new QPushButton("select Folder");
+    layout->addWidget(button);
+    connect(button, &QPushButton::clicked, this, &SettingsWidget::showFolderSelectDialog);
+    
+    QWidget *edit_and_button_widget = new QWidget;
+    layout->setMargin(0);
+    layout->setSpacing(0);
+    edit_and_button_widget->setLayout(layout);
+    
+    QLabel *hint = new QLabel("<b>Hint:</b> You have to restart <i>kulanday</i> for the changed path to take effect!");
+    layout_outer->addWidget(edit_and_button_widget);
+    layout_outer->addWidget(hint);
+    
+    group->setLayout(layout_outer);
+    this->layout->addWidget(group);
+}
+
+void SettingsWidget::showFolderSelectDialog()
+{
+    QString dir_old = this->edit_path->text();
+    QString dir_new = QFileDialog::getExistingDirectory(this, tr("Select Directory"),
+        dir_old,
+        QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks);
+    
+    qDebug() << "DIR:" << dir_new;
+    // if the user hit "cancel", we have an empty string here
+    if (!dir_new.isEmpty() || !dir_new.isNull())
+    {
+        this->edit_path->setText(dir_new);
+        this->config->setDeckpath(dir_new);
+    }
 }

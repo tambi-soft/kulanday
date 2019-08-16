@@ -3,10 +3,14 @@
 
 #include <QWidget>
 #include <QVBoxLayout>
+#include <QHBoxLayout>
 
 #include <QLabel>
 #include <QSpinBox>
 #include <QGroupBox>
+#include <QLineEdit>
+#include <QPushButton>
+#include <QFileDialog>
 
 #include "config.h"
 
@@ -25,6 +29,10 @@ private:
     
     void ddWidthChanged(int width);
     void ddHeightChanged(int height);
+    
+    void showFolderSelectDialog();
+    
+    QLineEdit *edit_path;
     
     QSize dd_size;
     
