@@ -82,7 +82,7 @@ void QKulandayMainWindow::showDirtyDozenWidget(QString deck_name)
 
 void QKulandayMainWindow::showLearnWidget(QString deck_name)
 {
-    QInvDirtyDozenWidget *learn = new QInvDirtyDozenWidget(this->deckpath, deck_name);
+    QInvDirtyDozenWidget *learn = new QInvDirtyDozenWidget(this->deckpath, deck_name, this->config);
     tab_widget->addTab(learn, deck_name);
     
     activateNewTab();
@@ -265,7 +265,7 @@ void QKulandayMainWindow::showSettingsWidget()
 {
     SettingsWidget *widget = new SettingsWidget(this->config);
     
-    this->tab_widget->addTab(widget, "settings");
+    this->tab_widget->addTab(widget, QIcon::fromTheme("applications-system"), "settings");
     
     activateNewTab();
 }
@@ -328,7 +328,7 @@ void QKulandayMainWindow::synchronizeDecksOverviews()
         QWidget *widget = this->tab_widget->widget(i);
         if (QString(widget->metaObject()->className()) == "QDecksOverviewWidget")
         {
-            QDecksOverviewWidget *decks = (QDecksOverviewWidget*)widget;
+            QDecksOverviewWidget *decks = dynamic_cast<QDecksOverviewWidget*>(widget);
             decks->refreshTable();
         }
     }

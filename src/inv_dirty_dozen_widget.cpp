@@ -1,12 +1,18 @@
 #include "inv_dirty_dozen_widget.h"
 
-QInvDirtyDozenWidget::QInvDirtyDozenWidget(QDir *decks_path, QString deck_name, QWidget *parent)
+QInvDirtyDozenWidget::QInvDirtyDozenWidget(QDir *decks_path, QString deck_name, Config *config, QWidget *parent)
     : QWidget(parent)
     , grid (new QGridLayout)
     , audioPlayer (new QMediaPlayer)
     , unicodeFonts (new UnicodeFonts)
 {
     DISPLAY_COMBO_ITEMS << "image" << "name" << "word" << "phonetical" << "translation";
+    
+    this->config = config;
+    QSize dd_size = this->config->getDirtyDozenSize();
+    this->ROWS = dd_size.height();
+    this->COLUMNS = dd_size.width();
+    
     this->decks_path = decks_path;
     
     setLayout(grid);
@@ -20,7 +26,7 @@ QInvDirtyDozenWidget::QInvDirtyDozenWidget(QDir *decks_path, QString deck_name, 
 void QInvDirtyDozenWidget::initialize()
 {
     DbAdapter *db_adapter = new DbAdapter(this->decks_path, this->deck_name);
-    this->dataset = db_adapter->selectDeckDirtyDozenItems(this->ITEM_COUNT);
+    this->dataset = db_adapter->selectDeckDirtyDozenItems(this->ROWS * this->COLUMNS);
     
     this->select_display_combo = new QComboBox();
     select_display_combo->addItems(DISPLAY_COMBO_ITEMS);
@@ -33,13 +39,13 @@ void QInvDirtyDozenWidget::initialize()
     QPushButton *button_new_set = new QPushButton("new set");
     connect(button_new_set, &QPushButton::clicked, this, &QInvDirtyDozenWidget::onNewSetButtonClicked);
     
-    this->grid->addWidget(button_new_set, int(this->ITEM_COUNT / this->COLUMNS +2), 0);
+    this->grid->addWidget(button_new_set, int(this->COLUMNS * this->ROWS / this->COLUMNS +2), 0);
     
     QPushButton *shuffle_button = new QPushButton("shuffle");
     shuffle_button->setIcon(QIcon::fromTheme("media-playlist-shuffle"));
     connect(shuffle_button, &QPushButton::clicked, this, &QInvDirtyDozenWidget::onShuffleButtonClicked);
     
-    this->grid->addWidget(shuffle_button, int(this->ITEM_COUNT / this->COLUMNS +2), this->COLUMNS-1);
+    this->grid->addWidget(shuffle_button, int(this->COLUMNS * this->ROWS / this->COLUMNS +2), this->COLUMNS-1);
 }
 
 void QInvDirtyDozenWidget::update()

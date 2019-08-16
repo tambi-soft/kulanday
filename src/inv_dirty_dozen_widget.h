@@ -14,26 +14,29 @@
 #include <QUrl>
 #include <QFont>
 #include <QIcon>
+#include <QSize>
 
 #include "db_adapter.h"
 #include "unicode_fonts.h"
+#include "config.h"
 
 class QInvDirtyDozenWidget : public QWidget
 {
     Q_OBJECT
 public:
-    explicit QInvDirtyDozenWidget(QDir *decks_path, QString deck_name, QWidget *parent = nullptr);
+    explicit QInvDirtyDozenWidget(QDir *decks_path, QString deck_name, Config *config, QWidget *parent = nullptr);
     void initialize();
     void clear();
         
 private:
-    int ITEM_COUNT = 16;
+    Config *config;
     QGridLayout *grid;
     UnicodeFonts *unicodeFonts;
     
     QDir *decks_path;
     
     int COLUMNS = 4;
+    int ROWS = 3;
     QList<QString> DISPLAY_COMBO_ITEMS;
     QString learn_mode = "image";
     QList<QPushButton*> button_list;
