@@ -51,6 +51,7 @@ QT += widgets\
 
 # Input
 HEADERS += \
+    src/backend.h \
     src/db_adapter.h \
     src/deck_item_markers_widget.h \
     src/deck_item_simple_widget.h \
@@ -80,6 +81,7 @@ HEADERS += \
     src/audio_converter.h
 
 SOURCES += \
+    src/backend.cpp \
     src/deck_item_markers_widget.cpp \
     src/deck_item_simple_widget.cpp \
     src/filter_language_combo.cpp \
