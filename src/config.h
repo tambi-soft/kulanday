@@ -7,6 +7,7 @@
 #include <QStandardPaths>
 #include <QSysInfo>
 #include <QSettings>
+#include <QSize>
 
 #include <QDebug>
 
@@ -19,6 +20,8 @@ public:
     QDir *getDecksPath();
     QString getLastLanguageFilter();
     void setLastLanguageFilter(QString filter);
+    QSize getDirtyDozenSize();
+    void setDirtyDozenSize(QSize size);
     
 private:
     QSettings *settings;

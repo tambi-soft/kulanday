@@ -72,7 +72,7 @@ void QKulandayMainWindow::showDecksOverviewTab()
 
 void QKulandayMainWindow::showDirtyDozenWidget(QString deck_name)
 {
-    QDirtyDozenWidget *dd = new QDirtyDozenWidget(this->deckpath, deck_name);
+    QDirtyDozenWidget *dd = new QDirtyDozenWidget(this->deckpath, deck_name, this->config);
     tab_widget->addTab(dd, deck_name);
     
     activateNewTab();

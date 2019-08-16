@@ -17,21 +17,24 @@
 #include <QSlider>
 #include <QGroupBox>
 #include <QLayout>
+#include <QSize>
 
 #include "db_adapter.h"
 #include "unicode_fonts.h"
+#include "config.h"
 
 class QDirtyDozenWidget : public QWidget
 {
     Q_OBJECT
 public:
-    explicit QDirtyDozenWidget(QDir *decks_path, QString deck_name, QWidget *parent = nullptr);
+    explicit QDirtyDozenWidget(QDir *decks_path, QString deck_name, Config *config, QWidget *parent = nullptr);
     
     void initialize(QString deck_name);
     void clear();
     void clearStyleSheet();
     
 private:
+    Config *config;
     QGridLayout *grid;
     QSlider *slider_repeat_times;
     UnicodeFonts *unicodeFonts;

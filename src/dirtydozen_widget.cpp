@@ -1,6 +1,6 @@
 #include "dirtydozen_widget.h"
 
-QDirtyDozenWidget::QDirtyDozenWidget(QDir *decks_path, QString deck_name, QWidget *parent)
+QDirtyDozenWidget::QDirtyDozenWidget(QDir *decks_path, QString deck_name, Config *config, QWidget *parent)
     : QWidget(parent)
     , grid (new QGridLayout)
 //    , slider_repeat (new QSlider)
@@ -8,6 +8,11 @@ QDirtyDozenWidget::QDirtyDozenWidget(QDir *decks_path, QString deck_name, QWidge
     , audioPlayer (new QMediaPlayer)
 {
     DISPLAY_COMBO_ITEMS << "image" << "name" << "word" << "translation";
+    
+    this->config = config;
+    QSize dd_size = this->config->getDirtyDozenSize();
+    this->ROWS = dd_size.height();
+    this->COLUMNS = dd_size.width();
     
     this->decks_path = decks_path;
     

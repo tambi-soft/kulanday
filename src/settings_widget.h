@@ -2,6 +2,11 @@
 #define SETTINGS_WIDGET_H
 
 #include <QWidget>
+#include <QVBoxLayout>
+
+#include <QLabel>
+#include <QSpinBox>
+#include <QGroupBox>
 
 #include "config.h"
 
@@ -13,10 +18,21 @@ public:
     
 private:
     Config *config;
+    QVBoxLayout *layout;
+    
+    void addDirtyDozenSettingsArea();
+    void addDeckPathSettingsArea();
+    
+    void ddWidthChanged(int width);
+    void ddHeightChanged(int height);
+    
+    QSize dd_size;
     
 signals:
     
+
 public slots:
+    
 };
 
 #endif // SETTINGS_WIDGET_H
