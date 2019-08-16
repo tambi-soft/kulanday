@@ -25,6 +25,7 @@ private:
     QDir *decks_paths;
     void addFileMenu();
     void addSearchMenu();
+    void addToolsMenu();
     void addHelpMenu();
     
     void onImportAction();
@@ -33,6 +34,7 @@ private:
 signals:
     void newDecksOverviewTab();
     void newSearchTab();
+    void newSettingsTab();
     void newHelpMarkersTab();
     void newAboutTab();
     void deckImported();
@@ -41,6 +43,7 @@ public slots:
     void quitApplication();
     void emitNewDecksOverviewTab();
     void emitSearchTab();
+    void emitSettingsTab();
     void emitHelpMarkersTab();
     void emitAboutTab();
 };

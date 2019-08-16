@@ -18,6 +18,7 @@
 #include "search_widget.h"
 #include "help_about_widget.h"
 #include "help_markers_widget.h"
+#include "settings_widget.h"
 
 class QKulandayMainWindow : public QMainWindow
 {
@@ -58,6 +59,7 @@ private slots:
     void showSimpleDeckItem(QString deck_name, int rowid);
     void showMarkersDeckItem(QString deck_name, int rowid);
     void showSearchWidget();
+    void showSettingsWidget();
     void showHelpMarkersWidget();
     void showHelpAboutWidget();
     

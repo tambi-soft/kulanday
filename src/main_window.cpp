@@ -18,6 +18,7 @@ QKulandayMainWindow::QKulandayMainWindow(QWidget *parent)
     setMenuBar(menu_bar);
     connect(menu_bar, &MenuBar::newDecksOverviewTab, this, &QKulandayMainWindow::showDecksOverviewTab);
     connect(menu_bar, &MenuBar::newSearchTab, this, &QKulandayMainWindow::showSearchWidget);
+    connect(menu_bar, &MenuBar::newSettingsTab, this, &QKulandayMainWindow::showSettingsWidget);
     connect(menu_bar, &MenuBar::newHelpMarkersTab, this, &QKulandayMainWindow::showHelpMarkersWidget);
     connect(menu_bar, &MenuBar::newAboutTab, this, &QKulandayMainWindow::showHelpAboutWidget);
     connect(menu_bar, &MenuBar::deckImported, this, &QKulandayMainWindow::synchronizeDecksOverviews);
@@ -256,6 +257,15 @@ void QKulandayMainWindow::showSearchWidget()
     SearchWidget *widget = new SearchWidget(this->deckpath);
     
     this->tab_widget->addTab(widget, "search");
+    
+    activateNewTab();
+}
+
+void QKulandayMainWindow::showSettingsWidget()
+{
+    SettingsWidget *widget = new SettingsWidget(this->config);
+    
+    this->tab_widget->addTab(widget, "settings");
     
     activateNewTab();
 }

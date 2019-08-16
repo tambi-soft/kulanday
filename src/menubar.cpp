@@ -6,6 +6,7 @@ MenuBar::MenuBar(QDir *decks_paths, QMenuBar *parent)
     
     addFileMenu();
     addSearchMenu();
+    addToolsMenu();
     addHelpMenu();
 }
 
@@ -54,6 +55,16 @@ void MenuBar::addSearchMenu()
     searchMenu->addAction(searchAction);
 }
 
+void MenuBar::addToolsMenu()
+{
+    QAction *settingsAction = new QAction(QIcon::fromTheme("applications-system"), "&Settings");
+    settingsAction->setShortcut(QKeySequence::fromString("Ctrl+S"));
+    connect(settingsAction, &QAction::triggered, this, &MenuBar::emitSettingsTab);
+    
+    QMenu *toolsMenu = addMenu("&Tools");
+    toolsMenu->addAction(settingsAction);
+}
+
 void MenuBar::addHelpMenu()
 {
     QAction *helpMarkersAction = new QAction(QIcon::fromTheme("help-faq"), "Markers");
@@ -80,6 +91,11 @@ void MenuBar::emitNewDecksOverviewTab()
 void MenuBar::emitSearchTab()
 {
     emit newSearchTab();
+}
+
+void MenuBar::emitSettingsTab()
+{
+    emit newSettingsTab();
 }
 
 void MenuBar::emitHelpMarkersTab()
