@@ -33,7 +33,7 @@ QDecksOverviewWidget :: QDecksOverviewWidget(Config *config, QDir *decks_path, Q
     QPushButton *new_markers_deck_button = new QPushButton("create new markers deck");
     connect(new_markers_deck_button, &QPushButton::clicked, this, &QDecksOverviewWidget::createNewMarkersDeckClicked);
     
-    QPushButton *new_simple_deck_button = new QPushButton("create new simple deck");
+    QPushButton *new_simple_deck_button = new QPushButton("create new deck");
     connect(new_simple_deck_button, &QPushButton::clicked, this, &QDecksOverviewWidget::createNewSimpleDeckClicked);
     
     layout->addWidget(new QLabel("filter:"), 0, 0);
