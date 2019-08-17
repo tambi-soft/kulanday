@@ -265,11 +265,21 @@ void QKulandayMainWindow::showSearchWidget()
 
 void QKulandayMainWindow::showSettingsWidget()
 {
-    SettingsWidget *widget = new SettingsWidget(this->config);
-    
-    this->tab_widget->addTab(widget, QIcon::fromTheme("applications-system"), "settings");
-    
-    activateNewTab();
+    // Open SettingsWidget only once. If it should be opened once again, show instead the already open tab.
+    if (this->open_deck_item_widgets.contains("settings"))
+    {
+        int index = this->open_deck_item_widgets["settings"];
+        this->tab_widget->setCurrentIndex(index);
+    }
+    else
+    {
+        SettingsWidget *widget = new SettingsWidget(this->config);
+        
+        this->tab_widget->addTab(widget, QIcon::fromTheme("applications-system"), "settings");
+        
+        activateNewTab();
+        this->open_deck_item_widgets["settings"] = this->tab_widget->currentIndex();
+    }
 }
 
 void QKulandayMainWindow::showHelpMarkersWidget()
