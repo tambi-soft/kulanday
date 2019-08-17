@@ -92,9 +92,10 @@ void QKulandayMainWindow::showLearnWidget(QString deck_name)
 
 void QKulandayMainWindow::showDeckWidget(QString deck_name)
 {   
-    if (this->deck_item_widgets.contains(deck_name))
+    // We want to have a "deck item widget" just open once for every deck to avoid synchronization issues. We store them in the map "open_deck_item_widgets". If our tab is already open somewhere, just activte this one instead of creating a new one.
+    if (this->open_deck_item_widgets.contains(deck_name))
     {
-        int index = this->deck_item_widgets[deck_name];
+        int index = this->open_deck_item_widgets[deck_name];
         this->tab_widget->setCurrentIndex(index);
     }
     else
@@ -108,7 +109,7 @@ void QKulandayMainWindow::showDeckWidget(QString deck_name)
         activateNewTab();
         this->tab_widget->setTabIcon(this->tab_widget->currentIndex(), QIcon::fromTheme("folder-open"));
         
-        this->deck_item_widgets[deck_name] = this->tab_widget->currentIndex();
+        this->open_deck_item_widgets[deck_name] = this->tab_widget->currentIndex();
     }
 }
 
@@ -142,14 +143,14 @@ void QKulandayMainWindow::createNewDeckItem(QString deck_name)
     this->tab_widget->setTabIcon(this->tab_widget->currentIndex(), QIcon::fromTheme("document-properties"));
     
     int rowid = deck_item->rowid;
-    this->deck_item_widgets[deck_name + "_" + QString::number(rowid)] = this->tab_widget->currentIndex();
+    this->open_deck_item_widgets[deck_name + "_" + QString::number(rowid)] = this->tab_widget->currentIndex();
 }
 
 void QKulandayMainWindow::showSimpleDeckItem(QString deck_name, int rowid)
 {
-    if (this->deck_item_widgets.contains(deck_name + "_" + QString::number(rowid)))
+    if (this->open_deck_item_widgets.contains(deck_name + "_" + QString::number(rowid)))
     {
-        int index = this->deck_item_widgets[deck_name + "_" + QString::number(rowid)];
+        int index = this->open_deck_item_widgets[deck_name + "_" + QString::number(rowid)];
         this->tab_widget->setCurrentIndex(index);
     }
     else
@@ -165,15 +166,15 @@ void QKulandayMainWindow::showSimpleDeckItem(QString deck_name, int rowid)
         activateNewTab();
         this->tab_widget->setTabIcon(this->tab_widget->currentIndex(), QIcon::fromTheme("document-properties"));
         
-        this->deck_item_widgets[deck_name + "_" + QString::number(rowid)] = this->tab_widget->currentIndex();
+        this->open_deck_item_widgets[deck_name + "_" + QString::number(rowid)] = this->tab_widget->currentIndex();
     }
 }
 
 void QKulandayMainWindow::showMarkersDeckItem(QString deck_name, int rowid)
 {
-    if (this->deck_item_widgets.contains(deck_name + "_" + QString::number(rowid)))
+    if (this->open_deck_item_widgets.contains(deck_name + "_" + QString::number(rowid)))
     {
-        int index = this->deck_item_widgets[deck_name + "_" + QString::number(rowid)];
+        int index = this->open_deck_item_widgets[deck_name + "_" + QString::number(rowid)];
         this->tab_widget->setCurrentIndex(index);
     }
     else
@@ -189,13 +190,13 @@ void QKulandayMainWindow::showMarkersDeckItem(QString deck_name, int rowid)
         activateNewTab();
         this->tab_widget->setTabIcon(this->tab_widget->currentIndex(), QIcon::fromTheme("document-properties"));
         
-        this->deck_item_widgets[deck_name + "_" + QString::number(rowid)] = this->tab_widget->currentIndex();
+        this->open_deck_item_widgets[deck_name + "_" + QString::number(rowid)] = this->tab_widget->currentIndex();
     }
 }
 
 void QKulandayMainWindow::onDeckItemContentsUpdated(QString deck_name)
 {
-    int deck_id = this->deck_item_widgets[deck_name];
+    int deck_id = this->open_deck_item_widgets[deck_name];
     QDeckOverviewWidget *deck = dynamic_cast<QDeckOverviewWidget*>(tab_widget->widget(deck_id));
     deck->refresh();
 }
@@ -211,18 +212,19 @@ void QKulandayMainWindow::closeTab(int tab_id)
     tab_widget->removeTab(tab_id);
     tab_to_delete->deleteLater();
     
-    for (auto k : this->deck_item_widgets.keys())
+    // We want to have a "deck item widget" just open once for every deck to avoid synchronization issues. We keep track of them by storing every active instance in the map open_deck_item_widgets. So on closing an according widget, we need to update the map accordingly.
+    for (auto k : this->open_deck_item_widgets.keys())
     {
-        int value = this->deck_item_widgets[k];
+        int value = this->open_deck_item_widgets[k];
         // remove key->value pair from the map
         if (value == tab_id)
         {
-            this->deck_item_widgets.remove(k);
+            this->open_deck_item_widgets.remove(k);
         }
         // adjust the map to match the new tab ids
         else if (value > tab_id)
         {
-            this->deck_item_widgets[k] = value -1;
+            this->open_deck_item_widgets[k] = value -1;
         }
     }
 }
@@ -230,17 +232,17 @@ void QKulandayMainWindow::closeTab(int tab_id)
 void QKulandayMainWindow::onTabMoved(int from, int to)
 {
     // adjust the map to match the new tab ids
-    for (auto k : this->deck_item_widgets.keys())
+    for (auto k : this->open_deck_item_widgets.keys())
     {
-        int value = this->deck_item_widgets[k];
+        int value = this->open_deck_item_widgets[k];
         
         if (value == from)
         {
-            this->deck_item_widgets[k] = to;
+            this->open_deck_item_widgets[k] = to;
         }
         if (value == to)
         {
-            this->deck_item_widgets[k] = from;
+            this->open_deck_item_widgets[k] = from;
         }
         
     }
