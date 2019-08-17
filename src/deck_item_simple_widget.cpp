@@ -177,7 +177,7 @@ void QDeckItemWidget::importImageClicked()
             }
         }
         
-        this->database->insertImageFilename(this->rowid, QUrl(image_url).fileName());
+        this->database->insertImageFilename(this->rowid, filename);
         
         QPixmap pixmap;
         pixmap.load(image_url);
@@ -188,7 +188,7 @@ void QDeckItemWidget::importImageClicked()
         this->delete_image_button->setEnabled(true);
         this->item_changed = true;
         
-        this->image_path = this->decks_path->absolutePath() + "/" + this->deck_name + "/" + QUrl(image_url).fileName();
+        this->image_path = this->decks_path->absolutePath() + "/" + this->deck_name + "/" + filename;
     }
 }
 
