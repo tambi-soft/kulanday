@@ -24,6 +24,8 @@ public:
     void setLastLanguageFilter(QString filter);
     QSize getDirtyDozenSize();
     void setDirtyDozenSize(QSize size);
+    int getDirtyDozenFieldSize();
+    void setDirtyDozenFieldSize(int size);
     
 private:
     QString deckpath_var;

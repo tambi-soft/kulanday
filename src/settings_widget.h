@@ -29,6 +29,7 @@ private:
     
     void ddWidthChanged(int width);
     void ddHeightChanged(int height);
+    void ddItemSizeChanged(int size);
     
     void showFolderSelectDialog();
     

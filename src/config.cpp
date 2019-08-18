@@ -73,8 +73,8 @@ void Config::setLastLanguageFilter(QString filter)
 
 QSize Config::getDirtyDozenSize()
 {
-    int width = this->settings->value("kulanday/dirty_dozen_width").toInt();
-    int height = this->settings->value("kulanday/dirty_dozen_height").toInt();
+    int width = this->settings->value("dirty_dozen/dirty_dozen_width").toInt();
+    int height = this->settings->value("dirty_dozen/dirty_dozen_height").toInt();
     
     /*
     width=0, height=0 does not make any sense here;
@@ -85,8 +85,8 @@ QSize Config::getDirtyDozenSize()
         // Creating entries with default values:
         setDirtyDozenSize(QSize(4, 3));
         
-        width = this->settings->value("kulanday/dirty_dozen_width").toInt();
-        height = this->settings->value("kulanday/dirty_dozen_height").toInt();
+        width = this->settings->value("dirty_dozen/dirty_dozen_width").toInt();
+        height = this->settings->value("dirty_dozen/dirty_dozen_height").toInt();
     }
     
     return QSize(width, height);
@@ -94,6 +94,25 @@ QSize Config::getDirtyDozenSize()
 
 void Config::setDirtyDozenSize(QSize size)
 {
-    this->settings->setValue("kulanday/dirty_dozen_width", size.width());
-    this->settings->setValue("kulanday/dirty_dozen_height", size.height());
+    this->settings->setValue("dirty_dozen/dirty_dozen_width", size.width());
+    this->settings->setValue("dirty_dozen/dirty_dozen_height", size.height());
+}
+
+int Config::getDirtyDozenFieldSize()
+{
+    int size = this->settings->value("dirty_dozen/dirty_dozen_item_size").toInt();
+    
+    // size=0 makes no sense, probably emty config entry
+    if (size == 0)
+    {
+        size = 200;
+        setDirtyDozenFieldSize(size);
+    }
+    
+    return size;
+}
+
+void Config::setDirtyDozenFieldSize(int size)
+{
+    this->settings->setValue("dirty_dozen/dirty_dozen_item_size", size);
 }
