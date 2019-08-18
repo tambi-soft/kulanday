@@ -46,10 +46,20 @@ void SettingsWidget::addDirtyDozenSettingsArea()
     dd_item_size->setRange(100, 800);
     int item_size = this->config->getDirtyDozenFieldSize();
     dd_item_size->setValue(item_size);
-    QLabel *label_item_size = new QLabel(tr("Image Size"));
+    QLabel *label_item_size = new QLabel(tr("Image Height"));
     
     dd_spinbox_layout->addWidget(label_item_size);
     dd_spinbox_layout->addWidget(dd_item_size);
+    
+    // item aspect ratio
+    QDoubleSpinBox *dd_aspect = new QDoubleSpinBox;
+    dd_aspect->setRange(0, 2);
+    double aspect = this->config->getDirtyDozenAspectRatio();
+    dd_aspect->setValue(aspect);
+    QLabel *label_item_aspect = new QLabel(tr("Image Aspect Ratio"));
+    
+    dd_spinbox_layout->addWidget(label_item_aspect);
+    dd_spinbox_layout->addWidget(dd_aspect);
     
     // put the group together
     spin_boxes_group->setLayout(dd_spinbox_layout);
@@ -60,6 +70,7 @@ void SettingsWidget::addDirtyDozenSettingsArea()
     connect(dd_height_spin, qOverload<int>(&QSpinBox::valueChanged), this, &SettingsWidget::ddHeightChanged);
     
     connect(dd_item_size, qOverload<int>(&QSpinBox::valueChanged), this, &SettingsWidget::ddItemSizeChanged);
+    connect(dd_aspect, qOverload<double>(&QDoubleSpinBox::valueChanged), this, &SettingsWidget::ddItemAspectChanged);
 }
 
 void SettingsWidget::ddWidthChanged(int width)
@@ -77,6 +88,11 @@ void SettingsWidget::ddHeightChanged(int height)
 void SettingsWidget::ddItemSizeChanged(int size)
 {
     this->config->setDirtyDozenFieldSize(size);
+}
+
+void SettingsWidget::ddItemAspectChanged(double aspect)
+{
+    this->config->setDirtyDozenAspectRatio(aspect);
 }
 
 void SettingsWidget::addDeckPathSettingsArea()

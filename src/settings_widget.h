@@ -7,6 +7,7 @@
 
 #include <QLabel>
 #include <QSpinBox>
+#include <QDoubleSpinBox>
 #include <QGroupBox>
 #include <QLineEdit>
 #include <QPushButton>
@@ -30,6 +31,7 @@ private:
     void ddWidthChanged(int width);
     void ddHeightChanged(int height);
     void ddItemSizeChanged(int size);
+    void ddItemAspectChanged(double aspect);
     
     void showFolderSelectDialog();
     

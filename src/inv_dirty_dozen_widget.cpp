@@ -52,9 +52,11 @@ void QInvDirtyDozenWidget::update()
 {
     clear();
     
+    int dd_size = this->config->getDirtyDozenFieldSize();
+    double dd_aspect = this->config->getDirtyDozenAspectRatio();
+    
     for (int i = 0; i < this->dataset.length(); ++i)
     {
-        int dd_size = this->config->getDirtyDozenFieldSize();
         QPushButton *button = new QPushButton();
         button->setMinimumHeight(dd_size);
         
@@ -76,10 +78,13 @@ void QInvDirtyDozenWidget::update()
                     pixmap->load(svg_path);
                 }
             }
-            QPixmap scaled_pixmap = pixmap->scaled(QSize(dd_size-5, dd_size-5), Qt::KeepAspectRatio);
+            QPixmap scaled_pixmap = pixmap->scaled(QSize(static_cast<int>(dd_size*dd_aspect-5), (dd_size-5)), Qt::KeepAspectRatio);
             QIcon icon(scaled_pixmap);
+            //QIcon icon(*pixmap);
+            
+            
             button->setIcon(icon);
-            button->setIconSize(QSize(dd_size, dd_size));
+            button->setIconSize(QSize(static_cast<int>(dd_size*dd_aspect), dd_size));
         }
         else if (this->select_display_combo->currentText() == "name")
         {

@@ -26,6 +26,8 @@ public:
     void setDirtyDozenSize(QSize size);
     int getDirtyDozenFieldSize();
     void setDirtyDozenFieldSize(int size);
+    double getDirtyDozenAspectRatio();
+    void setDirtyDozenAspectRatio(double aspect);
     
 private:
     QString deckpath_var;
