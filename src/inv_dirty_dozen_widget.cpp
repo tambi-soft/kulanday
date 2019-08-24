@@ -39,13 +39,16 @@ void QInvDirtyDozenWidget::initialize()
     QPushButton *button_new_set = new QPushButton("new set");
     connect(button_new_set, &QPushButton::clicked, this, &QInvDirtyDozenWidget::onNewSetButtonClicked);
     
-    this->grid->addWidget(button_new_set, int(this->COLUMNS * this->ROWS / this->COLUMNS +2), 0);
-    
     QPushButton *shuffle_button = new QPushButton("shuffle");
     shuffle_button->setIcon(QIcon::fromTheme("media-playlist-shuffle"));
     connect(shuffle_button, &QPushButton::clicked, this, &QInvDirtyDozenWidget::onShuffleButtonClicked);
     
-    this->grid->addWidget(shuffle_button, int(this->COLUMNS * this->ROWS / this->COLUMNS +2), this->COLUMNS-1);
+    // the int(...)+1 is because of leaving an emty row for the second rowStretch
+    this->grid->addWidget(button_new_set, int(this->COLUMNS * this->ROWS / this->COLUMNS +2)+1, 0);
+    this->grid->addWidget(shuffle_button, int(this->COLUMNS * this->ROWS / this->COLUMNS +2)+1, this->COLUMNS-1);
+    
+    this->grid->setRowStretch(1, 100);
+    this->grid->setRowStretch(int(this->COLUMNS * this->ROWS / this->COLUMNS +2), 100);
 }
 
 void QInvDirtyDozenWidget::update()
@@ -111,7 +114,8 @@ void QInvDirtyDozenWidget::update()
         connect(button, &QPushButton::released, this, [this, i, button]{ displayButtonReleased(i, button); });
         
         int row = i + this->COLUMNS;
-        this->grid->addWidget(button, int(row / COLUMNS), row % COLUMNS);
+        // int(...)+1 for leaving a row for the setRowStretch
+        this->grid->addWidget(button, int(row / COLUMNS)+1, row % COLUMNS);
         
         this->button_list.append(button);
     }
