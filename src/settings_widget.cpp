@@ -17,6 +17,8 @@ SettingsWidget::SettingsWidget(Config *config, QWidget *parent)
 void SettingsWidget::addDirtyDozenSettingsArea()
 {
     QGroupBox *spin_boxes_group = new QGroupBox("Dirty Dozen Matrix Size");
+    
+    // matrix size
     QSpinBox *dd_width_spin = new QSpinBox;
     QSpinBox *dd_height_spin = new QSpinBox;
     
@@ -39,12 +41,36 @@ void SettingsWidget::addDirtyDozenSettingsArea()
     dd_spinbox_layout->addWidget(label_height);
     dd_spinbox_layout->addWidget(dd_height_spin);
     
+    // item size
+    QSpinBox *dd_item_size = new QSpinBox;
+    dd_item_size->setRange(100, 800);
+    int item_size = this->config->getDirtyDozenFieldSize();
+    dd_item_size->setValue(item_size);
+    QLabel *label_item_size = new QLabel(tr("Image Height"));
+    
+    dd_spinbox_layout->addWidget(label_item_size);
+    dd_spinbox_layout->addWidget(dd_item_size);
+    
+    // item aspect ratio
+    QDoubleSpinBox *dd_aspect = new QDoubleSpinBox;
+    dd_aspect->setRange(0, 2);
+    double aspect = this->config->getDirtyDozenAspectRatio();
+    dd_aspect->setValue(aspect);
+    QLabel *label_item_aspect = new QLabel(tr("Image Aspect Ratio"));
+    
+    dd_spinbox_layout->addWidget(label_item_aspect);
+    dd_spinbox_layout->addWidget(dd_aspect);
+    
+    // put the group together
     spin_boxes_group->setLayout(dd_spinbox_layout);
     
     this->layout->addWidget(spin_boxes_group);
     
     connect(dd_width_spin, qOverload<int>(&QSpinBox::valueChanged), this, &SettingsWidget::ddWidthChanged);
     connect(dd_height_spin, qOverload<int>(&QSpinBox::valueChanged), this, &SettingsWidget::ddHeightChanged);
+    
+    connect(dd_item_size, qOverload<int>(&QSpinBox::valueChanged), this, &SettingsWidget::ddItemSizeChanged);
+    connect(dd_aspect, qOverload<double>(&QDoubleSpinBox::valueChanged), this, &SettingsWidget::ddItemAspectChanged);
 }
 
 void SettingsWidget::ddWidthChanged(int width)
@@ -57,6 +83,16 @@ void SettingsWidget::ddHeightChanged(int height)
 {
     this->dd_size.setHeight(height);
     this->config->setDirtyDozenSize(this->dd_size);
+}
+
+void SettingsWidget::ddItemSizeChanged(int size)
+{
+    this->config->setDirtyDozenFieldSize(size);
+}
+
+void SettingsWidget::ddItemAspectChanged(double aspect)
+{
+    this->config->setDirtyDozenAspectRatio(aspect);
 }
 
 void SettingsWidget::addDeckPathSettingsArea()

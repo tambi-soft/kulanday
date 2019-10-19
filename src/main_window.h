@@ -45,10 +45,8 @@ private:
     
     void deactivateDecksOverviewCloseButton();
     
-    // We want to have a "deck item widget" just open once for every deck to avoid synchronization issues. So we store them in this map to keep track of them
-    QMap<QString,int> open_deck_item_widgets; // {deck_name} OR {deck_name}_{item_id} -> tab widget id
-    // same here: Avoid having open the settings tab multiple times for avoiding synchronization issues. We keep track of the open setting tab with this variable storing the tab-id:
-    int open_settings_widget;
+    // We want to have a "deck item widget", "deck widget" and "settings widget" just open once for every deck to avoid synchronization issues. So we store them in this map to keep track of them
+    QMap<QString,int> open_deck_item_widgets; // {deck_name} OR {deck_name}_{item_id} OR "settings" -> tab widget id
     
     int tooltip_last_index;
     
