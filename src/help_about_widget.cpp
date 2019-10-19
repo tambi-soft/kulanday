@@ -30,6 +30,7 @@ void HelpAboutWidget::showLibraries()
 {
     QTextEdit *text = new QTextEdit();
     text->setText("Qt (5.11.0)\n\
+sqlite\n\
 ffmpeg\n\
 ogg vorbis codec");
     
