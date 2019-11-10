@@ -151,6 +151,7 @@ void QInvDirtyDozenWidget::displayButtonClicked(int rowid, QPushButton *button)
     }
     else
     {
+        showWrittenForm(rowid, button);
         playAudio(rowid);
         this->button_last_play = button;
     }
@@ -159,6 +160,13 @@ void QInvDirtyDozenWidget::displayButtonClicked(int rowid, QPushButton *button)
 void QInvDirtyDozenWidget::displayButtonReleased(int rowid, QPushButton *button)
 {
     
+}
+
+void QInvDirtyDozenWidget::showWrittenForm(int selector, QPushButton *button)
+{
+    QString text = this->dataset.at(selector)["word"].toString();
+    
+    QToolTip::showText(button->mapToGlobal(QPoint(0,0)), text);
 }
 
 void QInvDirtyDozenWidget::playAudio(int selector)

@@ -3,6 +3,7 @@
 
 #include <QWidget>
 #include <QGridLayout>
+#include <QToolTip>
 #include <QComboBox>
 #include <QLabel>
 #include <QPushButton>
@@ -65,6 +66,7 @@ public slots:
 private slots:
     void displayButtonClicked(int rowid, QPushButton *button);
     void displayButtonReleased(int rowid, QPushButton *button);
+    void showWrittenForm(int selector, QPushButton *button);
     void playAudio(int selector);
     void selectDisplayCurrentTextChanged(QString text);
     void onShuffleButtonClicked();
