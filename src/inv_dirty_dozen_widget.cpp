@@ -166,7 +166,8 @@ void QInvDirtyDozenWidget::showWrittenForm(int selector, QPushButton *button)
 {
     QString text = this->dataset.at(selector)["word"].toString();
     
-    QToolTip::showText(button->mapToGlobal(QPoint(0,0)), text);
+    QPoint pos = button->mapToGlobal(QPoint((button->width()-text.length()*8) /2, (button->height()-40)/2));
+    QToolTip::showText(pos, text);
 }
 
 void QInvDirtyDozenWidget::playAudio(int selector)
