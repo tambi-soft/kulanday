@@ -229,11 +229,21 @@ void QAudioListTable::importButtonClicked(int row)
 
 void QAudioListTable::editButtonClicked(int row)
 {
-    QString filename = item(row, FILE_NAME_COLUMN)->text();
-    QString filepath = this->decks_path->absolutePath() + "/" + this->deck_name + "/" + filename;
-    
-    QProcess *pro = new QProcess();
-    pro->startDetached("audacity " + filepath);
+    Config *config = new Config();
+    if (QFile::exists(config->getAudioEditorPath()))
+    {
+        QString filename = item(row, FILE_NAME_COLUMN)->text();
+        QString filepath = this->decks_path->absolutePath() + "/" + this->deck_name + "/" + filename;
+        
+        QProcess *pro = new QProcess();
+        pro->startDetached(config->getAudioEditorPath() + " " + filepath);
+    }
+    else
+    {
+        QMessageBox message;
+        message.setText("No valid Audio Editor found. Please install one and set the correct path in \"Settings\"!");
+        message.exec();
+    }
 }
 
 void QAudioListTable::newAudioLine()

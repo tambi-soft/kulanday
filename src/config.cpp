@@ -61,6 +61,16 @@ void Config::setDeckpath(QString path)
     this->settings->setValue("kulanday/deckpath", path);
 }
 
+QString Config::getAudioEditorPath()
+{
+    return this->settings->value("kulanday/audio_editor").toString();
+}
+
+void Config::setAudioEditorPath(QString path)
+{
+    this->settings->setValue("kulanday/audio_editor", path);
+}
+
 QString Config::getLastLanguageFilter()
 {
     return this->settings->value("kulanday/last_language_filter").toString();

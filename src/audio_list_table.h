@@ -7,6 +7,7 @@
 #include <QPushButton>
 #include <QIcon>
 #include <QDir>
+#include <QFile>
 
 #include <QDateTime>
 
@@ -21,6 +22,7 @@
 
 #include "db_adapter.h"
 #include "audio_recorder.h"
+#include "config.h"
 
 class QAudioListTable : public QTableWidget
 {

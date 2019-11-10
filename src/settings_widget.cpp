@@ -8,8 +8,9 @@ SettingsWidget::SettingsWidget(Config *config, QWidget *parent)
     
     setLayout(this->layout);
     
-    addDirtyDozenSettingsArea();
     addDeckPathSettingsArea();
+    addAudioEditorSettingsArea();
+    addDirtyDozenSettingsArea();
     
     this->layout->addStretch();
 }
@@ -102,7 +103,7 @@ void SettingsWidget::addDeckPathSettingsArea()
     QHBoxLayout *layout = new QHBoxLayout();
     
     this->edit_path = new QLineEdit;
-    this->edit_path->setReadOnly(true);
+    //this->edit_path->setReadOnly(true);
     layout->addWidget(edit_path);
     
     edit_path->setText(this->config->getDeckpathString());
@@ -110,10 +111,10 @@ void SettingsWidget::addDeckPathSettingsArea()
     QPushButton *button = new QPushButton("select Folder");
     layout->addWidget(button);
     connect(button, &QPushButton::clicked, this, &SettingsWidget::showFolderSelectDialog);
+    connect(edit_path, &QLineEdit::textChanged, this, &SettingsWidget::saveFolderPath);
     
     QWidget *edit_and_button_widget = new QWidget;
     layout->setMargin(0);
-    layout->setSpacing(0);
     edit_and_button_widget->setLayout(layout);
     
     QLabel *hint = new QLabel("<b>Hint:</b> You have to restart <i>kulanday</i> for the changed path to take effect!");
@@ -136,6 +137,50 @@ void SettingsWidget::showFolderSelectDialog()
     if (!dir_new.isEmpty() || !dir_new.isNull())
     {
         this->edit_path->setText(dir_new);
-        this->config->setDeckpath(dir_new);
+        saveFolderPath();
     }
+}
+
+void SettingsWidget::saveFolderPath()
+{
+    QString dir = this->edit_path->text();
+    this->config->setDeckpath(dir);
+}
+
+void SettingsWidget::addAudioEditorSettingsArea()
+{
+    QGroupBox *group = new QGroupBox("Path for the external Audio Editor (e.g. Audacity)");
+    QHBoxLayout *layout = new QHBoxLayout;
+    group->setLayout(layout);
+    this->layout->addWidget(group);
+    
+    this->edit_audio_editor = new QLineEdit;
+    layout->addWidget(this->edit_audio_editor);
+    
+    edit_audio_editor->setText(this->config->getAudioEditorPath());
+    
+    QPushButton *button = new QPushButton("select Audio Editor");
+    
+    connect(button, &QPushButton::clicked, this, &SettingsWidget::showAudioEditorSelectDialog);
+    connect(edit_audio_editor, &QLineEdit::textChanged, this, &SettingsWidget::saveAudioEditorPath);
+    
+    layout->addWidget(button);
+}
+
+void SettingsWidget::showAudioEditorSelectDialog()
+{
+    QString path_old = this->edit_audio_editor->text();
+    QString path = QFileDialog::getExistingDirectory(this, tr("Select Audio Editor"), path_old);
+    
+    if (!path.isEmpty() || !path.isNull())
+    {
+        this->edit_audio_editor->setText(path);
+        saveAudioEditorPath();
+    }
+}
+
+void SettingsWidget::saveAudioEditorPath()
+{
+    QString path = this->edit_audio_editor->text();
+    this->config->setAudioEditorPath(path);
 }

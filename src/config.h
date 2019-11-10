@@ -20,6 +20,8 @@ public:
     QDir *getDecksPath();
     QString getDeckpathString();
     void setDeckpath(QString path);
+    QString getAudioEditorPath();
+    void setAudioEditorPath(QString path);
     QString getLastLanguageFilter();
     void setLastLanguageFilter(QString filter);
     QSize getDirtyDozenSize();
