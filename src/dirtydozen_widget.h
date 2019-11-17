@@ -58,6 +58,7 @@ private:
     QComboBox *select_display_combo;
     QPushButton *show_all_button;
     QMediaPlayer *audioPlayer;
+    QLabel *written_form = new QLabel;
     
     void sliderRepeatTimesChanged(int value);
     

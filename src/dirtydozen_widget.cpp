@@ -45,6 +45,8 @@ void QDirtyDozenWidget::initialize(QString deck_name)
     
     this->grid->addWidget(select_display_combo, 0, 0);
     
+    this->grid->addWidget(this->written_form, 0, 1, 1, this->COLUMNS-2);
+    
     QPushButton *replay_audio_button = new QPushButton("replay audio");
     replay_audio_button->setIcon(QIcon::fromTheme("media-playback-start"));
     connect(replay_audio_button, &QPushButton::clicked, this, &QDirtyDozenWidget::replayAudioClicked);
@@ -313,6 +315,9 @@ void QDirtyDozenWidget::playAudio(int selector)
     QUrl audio_url = QUrl::fromLocalFile(audio_path);
     this->audioPlayer->setMedia(QMediaContent(audio_url));
     this->audioPlayer->play();
+    
+    this->written_form->setText(this->dataset.at(selector)["word"].toString());
+    this->written_form->setAlignment(Qt::AlignCenter);
 }
 
 void QDirtyDozenWidget::replayAudioClicked()
