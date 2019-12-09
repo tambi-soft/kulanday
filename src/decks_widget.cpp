@@ -14,8 +14,8 @@ QDecksOverviewWidget :: QDecksOverviewWidget(Config *config, QDir *decks_path, Q
     
     this->combo_name_filter = new FilterLanguageCombo(decks_path, config);
     
-    COMBO_STATI << "ToDo" << "perfect" << "good" << "weak" << "poor" << "none";
-    COMBO_STATI_FILTER << "[all]" << "ToDo" << "perfect" << "good" << "weak" << "poor" << "none";
+    COMBO_STATI << "ToDo" << "perfect" << "good" << "mediocre" << "weak" << "poor" << "none";
+    COMBO_STATI_FILTER << "[all]" << "ToDo" << "perfect" << "good" << "mediocre" << "weak" << "poor" << "none";
     
     this->database = new DbAdapterMeta(decks_path);
     
@@ -180,23 +180,26 @@ void QDecksOverviewWidget::populateDecksOverview()
 
 QComboBox *QDecksOverviewWidget::populateComboStatus(QString deck_name)
 {
-    QComboBox *combo_status = new QComboBox();
-    combo_status->addItems(COMBO_STATI);
+    QComboBox *combo = new QComboBox();
+    combo->addItems(COMBO_STATI);
+    //combo->addItems(COMBO_STATI_FILTER);
     
-    combo_status->setItemData( 0, QColor( Qt::blue ), Qt::BackgroundRole );
-    combo_status->setItemData( 1, QColor( 0, 180, 0 ), Qt::BackgroundRole );
-    combo_status->setItemData( 2, QColor( 0, 255, 0 ), Qt::BackgroundRole );
-    combo_status->setItemData( 3, QColor( Qt::yellow ), Qt::BackgroundRole );
-    combo_status->setItemData( 4, QColor( Qt::red ), Qt::BackgroundRole );
+    combo->setItemData(0, QColor(Qt::blue ), Qt::BackgroundRole);
+    combo->setItemData(1, QColor(0, 180, 0 ), Qt::BackgroundRole);
+    combo->setItemData(2, QColor(0, 255, 0 ), Qt::BackgroundRole);
+    combo->setItemData(3, QColor(200, 255, 0 ), Qt::BackgroundRole);
+    combo->setItemData(4, QColor(Qt::yellow ), Qt::BackgroundRole);
+    combo->setItemData(5, QColor(Qt::red ), Qt::BackgroundRole);
+    combo->setItemData(6, QColor(Qt::white), Qt::BackgroundRole);
     
-    combo_status->setStyleSheet("QFrame { border: 4px solid black; }\
-                                QComboBox { background-color: lightgrey; }");
+    combo->setStyleSheet("QFrame { border: 5px solid grey; }\
+                                QComboBox { background-color: white; }");
     
-    combo_status->setCurrentIndex(COMBO_STATI.length()-1);
+    combo->setCurrentIndex(COMBO_STATI.length()-1);
     
-    connect(combo_status, &QComboBox::currentTextChanged, this, [this, deck_name, combo_status]{ onComboStatusTextChanged(deck_name, combo_status); });
+    connect(combo, &QComboBox::currentTextChanged, this, [this, deck_name, combo]{ onComboStatusTextChanged(deck_name, combo); });
     
-    return combo_status;
+    return combo;
 }
 
 void QDecksOverviewWidget::populateComboStatusFilter(QComboBox *combo)
@@ -204,13 +207,15 @@ void QDecksOverviewWidget::populateComboStatusFilter(QComboBox *combo)
     combo->addItems(COMBO_STATI_FILTER);
     
     combo->setItemData(0, QColor(Qt::white), Qt::BackgroundRole);
-    combo->setItemData(1, QColor( Qt::blue ), Qt::BackgroundRole );
-    combo->setItemData(2, QColor( 0, 180, 0 ), Qt::BackgroundRole );
-    combo->setItemData(3, QColor( 0, 255, 0 ), Qt::BackgroundRole );
-    combo->setItemData(4, QColor( Qt::yellow ), Qt::BackgroundRole );
-    combo->setItemData(5, QColor( Qt::red ), Qt::BackgroundRole );
+    combo->setItemData(1, QColor(Qt::blue ), Qt::BackgroundRole);
+    combo->setItemData(2, QColor(0, 180, 0 ), Qt::BackgroundRole);
+    combo->setItemData(3, QColor(0, 255, 0 ), Qt::BackgroundRole);
+    combo->setItemData(4, QColor(200, 255, 0 ), Qt::BackgroundRole);
+    combo->setItemData(5, QColor(Qt::yellow ), Qt::BackgroundRole);
+    combo->setItemData(6, QColor(Qt::red ), Qt::BackgroundRole);
+    combo->setItemData(7, QColor(Qt::white), Qt::BackgroundRole);
     
-    combo->setStyleSheet("QFrame { border: 4px solid black; }\
+    combo->setStyleSheet("QFrame { border: 5px solid grey; }\
                                 QComboBox { background-color: white; }");
                                 
     combo->setCurrentIndex(0);
@@ -295,13 +300,17 @@ void QDecksOverviewWidget::comboColorAdjust(QComboBox *combo)
     }
     else if (text == COMBO_STATI[3])
     {
-        combo->setStyleSheet("QComboBox { background-color: yellow; }");
+        combo->setStyleSheet("QComboBox { background-color: rgb(200, 255, 0); }");
     }
     else if (text == COMBO_STATI[4])
     {
-        combo->setStyleSheet("QComboBox { background-color: red; }");
+        combo->setStyleSheet("QComboBox { background-color: yellow; }");
     }
     else if (text == COMBO_STATI[5])
+    {
+        combo->setStyleSheet("QComboBox { background-color: red; }");
+    }
+    else if (text == COMBO_STATI[6])
     {
         combo->setStyleSheet("QComboBox { background-color: lightgrey; }");
     }
@@ -328,13 +337,17 @@ void QDecksOverviewWidget::comboFilterColorAdjust(QComboBox *combo)
     }
     else if (text == COMBO_STATI_FILTER[4])
     {
-        combo->setStyleSheet("QComboBox { background-color: yellow; }");
+        combo->setStyleSheet("QComboBox { background-color: rgb(200, 255, 0); }");
     }
     else if (text == COMBO_STATI_FILTER[5])
     {
-        combo->setStyleSheet("QComboBox { background-color: red; }");
+        combo->setStyleSheet("QComboBox { background-color: yellow; }");
     }
     else if (text == COMBO_STATI_FILTER[6])
+    {
+        combo->setStyleSheet("QComboBox { background-color: red; }");
+    }
+    else if (text == COMBO_STATI_FILTER[7])
     {
         combo->setStyleSheet("QComboBox { background-color: lightgrey; }");
     }
