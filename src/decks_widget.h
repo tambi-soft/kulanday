@@ -10,6 +10,7 @@
 #include <QListView>
 #include <QIcon>
 #include <QColor>
+#include <QRgb>
 #include <QMessageBox>
 #include <QLabel>
 
@@ -29,8 +30,9 @@ private:
     DbAdapterMeta *database;
     QGridLayout *layout;
     FilterLanguageCombo *combo_name_filter;
-    QStringList COMBO_STATI;
-    QStringList COMBO_STATI_FILTER;
+    QStringList COMBO_STATI_LABELS;
+    QList<QColor> COMBO_STATI_COLORS;
+    QStringList style_list;
     QComboBox *combo_status_filter;
     QTableWidget *table;
     
@@ -41,7 +43,7 @@ private:
     QComboBox *populateComboStatus(QString deck_name);
     void populateComboStatusFilter(QComboBox *combo);
     void comboColorAdjust(QComboBox *combo);
-    void comboFilterColorAdjust(QComboBox *combo);
+    void comboColorAdjustBuildStylelist();
     
 public slots:
     void refreshTable();

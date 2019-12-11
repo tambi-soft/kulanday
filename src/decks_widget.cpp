@@ -14,8 +14,9 @@ QDecksOverviewWidget :: QDecksOverviewWidget(Config *config, QDir *decks_path, Q
     
     this->combo_name_filter = new FilterLanguageCombo(decks_path, config);
     
-    COMBO_STATI << "ToDo" << "perfect" << "good" << "mediocre" << "weak" << "poor" << "none";
-    COMBO_STATI_FILTER << "[all]" << "ToDo" << "perfect" << "good" << "mediocre" << "weak" << "poor" << "none";
+    COMBO_STATI_LABELS << "[all]" << "ToDo" << "perfect" << "good" << "mediocre" << "weak" << "poor" << "none";
+    
+    COMBO_STATI_COLORS << QColor(Qt::white) << QColor(Qt::blue) << QColor(0, 180, 0 ) << QColor(0, 255, 0 ) << QColor(200, 255, 0 ) << QColor(Qt::yellow ) << QColor(Qt::red ) << QColor(Qt::white);
     
     this->database = new DbAdapterMeta(decks_path);
     
@@ -181,21 +182,17 @@ void QDecksOverviewWidget::populateDecksOverview()
 QComboBox *QDecksOverviewWidget::populateComboStatus(QString deck_name)
 {
     QComboBox *combo = new QComboBox();
-    combo->addItems(COMBO_STATI);
-    //combo->addItems(COMBO_STATI_FILTER);
+    combo->addItems(COMBO_STATI_LABELS.mid(1, -1));
     
-    combo->setItemData(0, QColor(Qt::blue ), Qt::BackgroundRole);
-    combo->setItemData(1, QColor(0, 180, 0 ), Qt::BackgroundRole);
-    combo->setItemData(2, QColor(0, 255, 0 ), Qt::BackgroundRole);
-    combo->setItemData(3, QColor(200, 255, 0 ), Qt::BackgroundRole);
-    combo->setItemData(4, QColor(Qt::yellow ), Qt::BackgroundRole);
-    combo->setItemData(5, QColor(Qt::red ), Qt::BackgroundRole);
-    combo->setItemData(6, QColor(Qt::white), Qt::BackgroundRole);
+    // starting at 1 because we do not want to have the first entry for "showing all" here
+    for (int i=1; i < COMBO_STATI_COLORS.length(); i++)
+    {
+        combo->setItemData(i-1, COMBO_STATI_COLORS.at(i), Qt::BackgroundRole);
+    }
     
-    combo->setStyleSheet("QFrame { border: 5px solid grey; }\
-                                QComboBox { background-color: white; }");
+    //combo->setStyleSheet("QFrame { border: 5px solid grey; } QComboBox { background-color: white; }");
     
-    combo->setCurrentIndex(COMBO_STATI.length()-1);
+    combo->setCurrentIndex(COMBO_STATI_LABELS.length()-2);
     
     connect(combo, &QComboBox::currentTextChanged, this, [this, deck_name, combo]{ onComboStatusTextChanged(deck_name, combo); });
     
@@ -204,19 +201,14 @@ QComboBox *QDecksOverviewWidget::populateComboStatus(QString deck_name)
 
 void QDecksOverviewWidget::populateComboStatusFilter(QComboBox *combo)
 {
-    combo->addItems(COMBO_STATI_FILTER);
+    combo->addItems(COMBO_STATI_LABELS);
     
-    combo->setItemData(0, QColor(Qt::white), Qt::BackgroundRole);
-    combo->setItemData(1, QColor(Qt::blue ), Qt::BackgroundRole);
-    combo->setItemData(2, QColor(0, 180, 0 ), Qt::BackgroundRole);
-    combo->setItemData(3, QColor(0, 255, 0 ), Qt::BackgroundRole);
-    combo->setItemData(4, QColor(200, 255, 0 ), Qt::BackgroundRole);
-    combo->setItemData(5, QColor(Qt::yellow ), Qt::BackgroundRole);
-    combo->setItemData(6, QColor(Qt::red ), Qt::BackgroundRole);
-    combo->setItemData(7, QColor(Qt::white), Qt::BackgroundRole);
+    for (int i=0; i < COMBO_STATI_COLORS.length(); i++)
+    {
+        combo->setItemData(i, COMBO_STATI_COLORS.at(i), Qt::BackgroundRole);
+    }
     
-    combo->setStyleSheet("QFrame { border: 5px solid grey; }\
-                                QComboBox { background-color: white; }");
+    //combo->setStyleSheet("QFrame { border: 5px solid grey; } QComboBox { background-color: white; }");
                                 
     combo->setCurrentIndex(0);
 }
@@ -271,7 +263,7 @@ void QDecksOverviewWidget::onComboNameFilterTextChanged(QString text)
 
 void QDecksOverviewWidget::onComboStatusFilterTextChanged(QString text)
 {
-    comboFilterColorAdjust(this->combo_status_filter);
+    comboColorAdjust(this->combo_status_filter);
     
     this->table->clear();
     populateDecksOverview();
@@ -283,72 +275,45 @@ void QDecksOverviewWidget::onComboStatusTextChanged(QString deck_name, QComboBox
     comboColorAdjust(combo_status);
 }
 
+/* 
+ * Adjusts the color for the selected item to match with the color
+ * defined in COMBO_STATI_COLORS 
+ */
 void QDecksOverviewWidget::comboColorAdjust(QComboBox *combo)
 {
+    // make shure the list with the stylesheets for each item is built
+    if (this->style_list.length() != COMBO_STATI_COLORS.length())
+    {
+        comboColorAdjustBuildStylelist();
+    }
+    
+    // select the stylesheet-entry relevant for the current item
     QString text = combo->currentText();
-    if (text == COMBO_STATI[0])
+    for (int i=0; i < COMBO_STATI_LABELS.length(); i++)
     {
-        combo->setStyleSheet("QComboBox { background-color: blue; }");
-    }
-    else if (text == COMBO_STATI[1])
-    {
-        combo->setStyleSheet("QComboBox { background-color: rgb(0, 180, 0); }");
-    }
-    else if (text == COMBO_STATI[2])
-    {
-        combo->setStyleSheet("QComboBox { background-color: rgb(0, 255, 0); }");
-    }
-    else if (text == COMBO_STATI[3])
-    {
-        combo->setStyleSheet("QComboBox { background-color: rgb(200, 255, 0); }");
-    }
-    else if (text == COMBO_STATI[4])
-    {
-        combo->setStyleSheet("QComboBox { background-color: yellow; }");
-    }
-    else if (text == COMBO_STATI[5])
-    {
-        combo->setStyleSheet("QComboBox { background-color: red; }");
-    }
-    else if (text == COMBO_STATI[6])
-    {
-        combo->setStyleSheet("QComboBox { background-color: lightgrey; }");
+        if (text == COMBO_STATI_LABELS.at(i))
+        {
+            combo->setStyleSheet(this->style_list.at(i));
+            break;
+        }
     }
 }
 
-void QDecksOverviewWidget::comboFilterColorAdjust(QComboBox *combo)
+void QDecksOverviewWidget::comboColorAdjustBuildStylelist()
 {
-    QString text = combo->currentText();
-    if (text == COMBO_STATI_FILTER[0])
+    for (int i=0; i < COMBO_STATI_COLORS.length(); i++)
     {
-        combo->setStyleSheet("QComboBox { color: black; background-color: white; }");
-    }
-    else if (text == COMBO_STATI_FILTER[1])
-    {
-        combo->setStyleSheet("QComboBox { background-color: blue; }");
-    }
-    else if (text == COMBO_STATI_FILTER[2])
-    {
-        combo->setStyleSheet("QComboBox { background-color: rgb(0, 180, 0); }");
-    }
-    else if (text == COMBO_STATI_FILTER[3])
-    {
-        combo->setStyleSheet("QComboBox { background-color: rgb(0, 255, 0); }");
-    }
-    else if (text == COMBO_STATI_FILTER[4])
-    {
-        combo->setStyleSheet("QComboBox { background-color: rgb(200, 255, 0); }");
-    }
-    else if (text == COMBO_STATI_FILTER[5])
-    {
-        combo->setStyleSheet("QComboBox { background-color: yellow; }");
-    }
-    else if (text == COMBO_STATI_FILTER[6])
-    {
-        combo->setStyleSheet("QComboBox { background-color: red; }");
-    }
-    else if (text == COMBO_STATI_FILTER[7])
-    {
-        combo->setStyleSheet("QComboBox { background-color: lightgrey; }");
+        QString r = QString::number(COMBO_STATI_COLORS.at(i).red());
+        QString g = QString::number(COMBO_STATI_COLORS.at(i).green());
+        QString b = QString::number(COMBO_STATI_COLORS.at(i).blue());
+        
+        QString style = "QFrame {"
+                        "border: 5px solid grey;"
+                        "}"
+                        "QComboBox {"
+                        "background-color: rgb("+r+","+g+","+b+");"
+                        "}";
+        
+        this->style_list.append(style);
     }
 }
