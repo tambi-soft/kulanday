@@ -3,8 +3,14 @@
 
 #include <QObject>
 #include <QWidget>
-
+#include <QVBoxLayout>
+#include <QGridLayout>
 #include <QDir>
+#include <QGroupBox>
+#include <QLabel>
+
+#include "db_adapter.h"
+#include "db_adapter_meta.h"
 
 class StatsWidget : public QWidget
 {
@@ -14,6 +20,13 @@ public:
     
 private:
     QDir *deckpath;
+    
+    QVBoxLayout *layout = new QVBoxLayout;
+    
+    // prefix_ -> QMap<QString,QVariant>
+    QMap<QString,QMap<QString,QVariant>> data;
+    
+    void addPrefixStats(QMap<QString, QVariant> item);
     
 signals:
     

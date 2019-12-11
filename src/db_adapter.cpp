@@ -50,6 +50,25 @@ QList<QMap<QString,QVariant>> DbAdapter::dbIteratorToMapList(QSqlQuery query)
     return result;
 }
 
+QMap<QString,QVariant> DbAdapter::dbIteratorToMap(QSqlQuery query)
+{
+    QMap<QString,QVariant> result;
+    
+    QSqlRecord rec = query.record();
+    while (query.next())
+    {
+        for (int i=0; i <= rec.count(); ++i)
+        {
+            QString name = rec.fieldName(i);
+            QVariant value = query.value(i);
+            
+            result[name] = value;
+        }
+    }
+    
+    return result;
+}
+
 void DbAdapter::initializeTables()
 {
     QSqlQuery query_deck("CREATE TABLE IF NOT EXISTS deck (rowid INTEGER PRIMARY KEY AUTOINCREMENT, order_index INTEGER, name TEXT, word TEXT, phonetical TEXT, translation TEXT, svg_filename TEXT, image TEXT, created NUMERIC, known NUMERIC, priority NUMERIC, changed NUMERIC)", this->db);
@@ -245,4 +264,13 @@ void DbAdapter::insertImageFilename(qlonglong rowid, QString filename)
     query.bindValue(":rowid", rowid);
     query.bindValue(":filename", filename);
     query.exec();
+}
+
+QMap<QString,QVariant> DbAdapter::selectDeckEntriesCount()
+{
+    QSqlQuery query(this->db);
+    query.prepare("SELECT COUNT(rowid) AS count FROM deck");
+    query.exec();
+    
+    return dbIteratorToMap(query);
 }

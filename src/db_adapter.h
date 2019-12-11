@@ -17,6 +17,7 @@ private:
     QString deck_name;
     
     QList<QMap<QString,QVariant>> dbIteratorToMapList(QSqlQuery query);
+    QMap<QString, QVariant> dbIteratorToMap(QSqlQuery query);
     
     void initializeTables();
 public:
@@ -35,6 +36,7 @@ public:
     void deleteAudio(qlonglong rowid);
     void insertAudioFilename(qlonglong deck_rowid, qlonglong audio_rowid, QString filename, QString description);
     void insertImageFilename(qlonglong rowid, QString filename);
+    QMap<QString, QVariant> selectDeckEntriesCount();
 };
 
 #endif // DB_ADAPTER_H
