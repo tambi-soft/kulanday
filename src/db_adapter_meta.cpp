@@ -115,3 +115,21 @@ void DbAdapterMeta::updateLastLearned(QString deck_name)
     query.bindValue(":last_learned", dtime->currentDateTime().toTime_t());
     query.exec();
 }
+
+QStringList DbAdapterMeta::selectStatiGrouped()
+{
+    QSqlQuery query("SELECT status FROM decks GROUP BY status", this->db);
+    
+    return dbIteratorToMap(query).keys();
+}
+
+QString DbAdapterMeta::selectStatusForDeck(QString deckname)
+{
+    QSqlQuery query(this->db);
+    query.prepare("SELECT status FROM decks WHERE deck_name=:deck_name");
+    query.bindValue(":deck_name", deckname);
+    query.exec();
+    
+    QString res = dbIteratorToMap(query).keys().at(0);
+    return res;
+}

@@ -7,6 +7,7 @@
 #include <QGridLayout>
 #include <QDir>
 #include <QGroupBox>
+#include <QScrollArea>
 #include <QLabel>
 
 #include "db_adapter.h"
@@ -26,7 +27,7 @@ private:
     // prefix_ -> QMap<QString,QVariant>
     QMap<QString,QMap<QString,QVariant>> data;
     
-    void addPrefixStats(QMap<QString, QVariant> item);
+    void addPrefixStats(QMap<QString, QVariant> item, QStringList stati_list);
     
 signals:
     

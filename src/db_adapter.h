@@ -36,7 +36,7 @@ public:
     void deleteAudio(qlonglong rowid);
     void insertAudioFilename(qlonglong deck_rowid, qlonglong audio_rowid, QString filename, QString description);
     void insertImageFilename(qlonglong rowid, QString filename);
-    QMap<QString, QVariant> selectDeckEntriesCount();
+    int selectDeckEntriesCount();
 };
 
 #endif // DB_ADAPTER_H

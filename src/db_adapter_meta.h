@@ -28,6 +28,9 @@ public:
     QMap<QString, QString> selectDecksLearned();
     void updateDeckStatus(QString deck_name, QString status);
     void updateLastLearned(QString deck_name);
+    QStringList selectStatiGrouped();
+    QString selectStatusForDeck(QString deckname);
+    
 signals:
     
 public slots:

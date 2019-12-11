@@ -266,11 +266,11 @@ void DbAdapter::insertImageFilename(qlonglong rowid, QString filename)
     query.exec();
 }
 
-QMap<QString,QVariant> DbAdapter::selectDeckEntriesCount()
+int DbAdapter::selectDeckEntriesCount()
 {
     QSqlQuery query(this->db);
     query.prepare("SELECT COUNT(rowid) AS count FROM deck");
     query.exec();
     
-    return dbIteratorToMap(query);
+    return dbIteratorToMap(query)["count"].toInt();
 }
