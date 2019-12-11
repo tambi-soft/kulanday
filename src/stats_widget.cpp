@@ -78,6 +78,6 @@ void StatsWidget::addPrefixStats(QMap<QString,QVariant> item, QStringList stati_
     for (int i=0; i < stati_list.length(); i++)
     {
         QString status = stati_list.at(i);
-        grid->addWidget(new QLabel(status + ": " + item[status].toString()), i, 1 );
+        grid->addWidget(new QLabel(status + ":\t\t" + item[status].toString() + "\t words"), i, 1);
     }
 }
