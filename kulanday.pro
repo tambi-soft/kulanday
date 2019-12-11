@@ -60,6 +60,7 @@ HEADERS += \
     src/help_markers_widget.h \
     src/q_click_label.h\
     src/settings_widget.h \
+    src/stats_widget.h \
     src/text_edit_markers.h \
     src/text_edit_resizing.h \
     src/unicode_fonts.h \
@@ -91,6 +92,7 @@ SOURCES += \
     src/db_adapter.cpp \
     src/q_click_label.cpp\
     src/settings_widget.cpp \
+    src/stats_widget.cpp \
     src/text_edit_markers.cpp \
     src/text_edit_resizing.cpp \
     src/unicode_fonts.cpp \

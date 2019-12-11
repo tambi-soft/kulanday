@@ -35,6 +35,7 @@ signals:
     void newDecksOverviewTab();
     void newSearchTab();
     void newSettingsTab();
+    void newStatsTab();
     void newHelpMarkersTab();
     void newAboutTab();
     void deckImported();
@@ -44,6 +45,7 @@ public slots:
     void emitNewDecksOverviewTab();
     void emitSearchTab();
     void emitSettingsTab();
+    void emitStatsTab();
     void emitHelpMarkersTab();
     void emitAboutTab();
 };

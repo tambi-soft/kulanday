@@ -57,7 +57,7 @@ void SettingsWidget::addDirtyDozenSettingsArea()
     dd_aspect->setRange(0, 2);
     double aspect = this->config->getDirtyDozenAspectRatio();
     dd_aspect->setValue(aspect);
-    QLabel *label_item_aspect = new QLabel(tr("Image Aspect Ratio"));
+    QLabel *label_item_aspect = new QLabel(tr("Image Aspect Ratio (default: 1.60)"));
     
     dd_spinbox_layout->addWidget(label_item_aspect);
     dd_spinbox_layout->addWidget(dd_aspect);

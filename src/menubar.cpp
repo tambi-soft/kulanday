@@ -57,11 +57,15 @@ void MenuBar::addSearchMenu()
 
 void MenuBar::addToolsMenu()
 {
+    QAction *statsAction = new QAction(QIcon::fromTheme("dialog-question"), "Stats");
+    connect(statsAction, &QAction::triggered, this, &MenuBar::emitStatsTab);
+    
     QAction *settingsAction = new QAction(QIcon::fromTheme("applications-system"), "&Settings");
     settingsAction->setShortcut(QKeySequence::fromString("Ctrl+S"));
     connect(settingsAction, &QAction::triggered, this, &MenuBar::emitSettingsTab);
     
     QMenu *toolsMenu = addMenu("&Tools");
+    toolsMenu->addAction(statsAction);
     toolsMenu->addAction(settingsAction);
 }
 
@@ -96,6 +100,11 @@ void MenuBar::emitSearchTab()
 void MenuBar::emitSettingsTab()
 {
     emit newSettingsTab();
+}
+
+void MenuBar::emitStatsTab()
+{
+    emit newStatsTab();
 }
 
 void MenuBar::emitHelpMarkersTab()

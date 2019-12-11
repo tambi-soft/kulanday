@@ -19,6 +19,7 @@ QKulandayMainWindow::QKulandayMainWindow(QWidget *parent)
     connect(menu_bar, &MenuBar::newDecksOverviewTab, this, &QKulandayMainWindow::showDecksOverviewTab);
     connect(menu_bar, &MenuBar::newSearchTab, this, &QKulandayMainWindow::showSearchWidget);
     connect(menu_bar, &MenuBar::newSettingsTab, this, &QKulandayMainWindow::showSettingsWidget);
+    connect(menu_bar, &MenuBar::newStatsTab, this, &QKulandayMainWindow::showStatsWidget);
     connect(menu_bar, &MenuBar::newHelpMarkersTab, this, &QKulandayMainWindow::showHelpMarkersWidget);
     connect(menu_bar, &MenuBar::newAboutTab, this, &QKulandayMainWindow::showHelpAboutWidget);
     connect(menu_bar, &MenuBar::deckImported, this, &QKulandayMainWindow::synchronizeDecksOverviews);
@@ -280,6 +281,15 @@ void QKulandayMainWindow::showSettingsWidget()
         activateNewTab();
         this->open_deck_item_widgets["settings"] = this->tab_widget->currentIndex();
     }
+}
+
+void QKulandayMainWindow::showStatsWidget()
+{
+    StatsWidget *widget = new StatsWidget(this->deckpath);
+    
+    this->tab_widget->addTab(widget, QIcon::fromTheme("dialog-question"), "stats");
+    
+    activateNewTab();
 }
 
 void QKulandayMainWindow::showHelpMarkersWidget()
