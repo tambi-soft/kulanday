@@ -2,7 +2,7 @@
 #include <QDebug>
 #include <QWidget>
 #include <QGridLayout>
-#include <QTableWidget>
+#include <QScrollArea>
 #include <QHeaderView>
 #include <QPushButton>
 #include <QDir>
@@ -28,13 +28,16 @@ public:
 
 private:
     DbAdapterMeta *database;
-    QGridLayout *layout;
+    QGridLayout *layout = new QGridLayout; // outer layout
+    QGridLayout *grid; // inner layout containing the qscrollarea
+    QScrollArea *scroll_area = new QScrollArea;
+    QWidget *scroll_widget = nullptr;
+    
     FilterLanguageCombo *combo_name_filter;
     QStringList COMBO_STATI_LABELS;
     QList<QColor> COMBO_STATI_COLORS;
     QStringList style_list;
     QComboBox *combo_status_filter;
-    QTableWidget *table;
     
     Config *config;
     QDir *decks_path;

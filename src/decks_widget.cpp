@@ -2,15 +2,15 @@
 #include <src/decks_widget.h>
 
 QDecksOverviewWidget :: QDecksOverviewWidget(Config *config, QDir *decks_path, QWidget */*parent*/)
-    : layout (new QGridLayout)
-    , combo_status_filter (new QComboBox)
-    , table (new QTableWidget)
+    : combo_status_filter (new QComboBox)
 {
     resize(600, 400);
     setLayout(layout);
     
     this->config = config;
     this->decks_path = decks_path;
+    
+    this->scroll_area->setWidgetResizable(true);
     
     this->combo_name_filter = new FilterLanguageCombo(decks_path, config);
     
@@ -40,13 +40,12 @@ QDecksOverviewWidget :: QDecksOverviewWidget(Config *config, QDir *decks_path, Q
     layout->addWidget(new QLabel("filter:"), 0, 0);
     layout->addWidget(combo_name_filter, 0, 1);
     layout->addWidget(combo_status_filter, 0, 2);
-    layout->addWidget(table, 1, 0, 1, 3);
+    layout->addWidget(this->scroll_area, 1, 0, 1, 3);
+    //layout->addWidget(table, 1, 0, 1, 3);
     layout->addWidget(refresh_button, 2, 0);
     //layout->addWidget(new_markers_deck_button, 2, 1);
     layout->addWidget(new_simple_deck_button, 2, 2);
-    
-    //table->horizontalHeader()->hide();
-    //table->verticalHeader()->hide();
+    layout->setRowStretch(1, 100);
     
     populateDecksOverview();
 }
@@ -59,8 +58,7 @@ void QDecksOverviewWidget::createNewSimpleDeckClicked()
     
     emit createNewDeck(QUrl(url_path));
     
-    table->clear();
-    populateDecksOverview();
+    refreshTable();
 }
 
 void QDecksOverviewWidget::createNewMarkersDeckClicked()
@@ -70,20 +68,24 @@ void QDecksOverviewWidget::createNewMarkersDeckClicked()
 
 void QDecksOverviewWidget::refreshTable()
 {
-    table->clear();
+    //table->clear();
     populateDecksOverview();
 }
 
 void QDecksOverviewWidget::populateDecksOverview()
 {
+    this->grid = new QGridLayout;
+    this->scroll_widget = new QWidget;
+    this->scroll_widget->setLayout(this->grid);
+    this->scroll_area->setWidget(scroll_widget);
+    
+    
     QStringList decks_names = decks_path->entryList(QDir::NoDotAndDotDot | QDir::Dirs, QDir::Name);
     
     this->database->populateDecksTable(decks_names);
     QMap<QString,QString> decks_meta = this->database->selectDecksStati();
     QMap<QString,QString> decks_meta_learned = this->database->selectDecksLearned();
     
-    this->table->setColumnCount(8);
-    this->table->setRowCount(decks_names.length());
     
     int i = -1;
     foreach (QString deck_name, decks_names)
@@ -92,27 +94,24 @@ void QDecksOverviewWidget::populateDecksOverview()
                 || deck_name.startsWith(this->combo_name_filter->currentText()))
         {
             QString current_filter_text = this->combo_status_filter->currentText();
-            //QComboBox *combo_widget = this->table->cellWidget(0, 4);
             
             if (current_filter_text == "[all]"
                     || current_filter_text == decks_meta[deck_name])
             {
                 i++;
                 
-                QTableWidgetItem *item_name = new QTableWidgetItem(deck_name);
-                item_name->setFlags(Qt::ItemIsEnabled);
                 
-                QPushButton *button_dirty_dozen = new QPushButton();
+                QPushButton *button_dirty_dozen = new QPushButton("hear and response");
                 button_dirty_dozen->setIcon(QIcon::fromTheme("image-loading"));
                 connect(button_dirty_dozen, &QPushButton::clicked, this, [this, deck_name]{  tableButtonDirtyDozenClicked(deck_name); });
                 button_dirty_dozen->setToolTip("dirty dozen");
                 
-                QPushButton *button_inv_dirty_dozen = new QPushButton();
+                QPushButton *button_inv_dirty_dozen = new QPushButton("think and hear");
                 button_inv_dirty_dozen->setIcon(QIcon::fromTheme("image-x-generic"));
                 connect(button_inv_dirty_dozen, &QPushButton::clicked, this, [this, deck_name]{ tableButtonLearnClicked(deck_name); });
                 button_inv_dirty_dozen->setToolTip("inverted dirty dozen");
                 
-                QPushButton *button_dirtydozen_write = new QPushButton();
+                QPushButton *button_dirtydozen_write = new QPushButton("write");
                 //TODO: add some fancy icon here
                 connect(button_dirtydozen_write, &QPushButton::clicked, this, [this, deck_name]{ tableButtonDirtydozenWriteClicked(deck_name); });
                 button_dirtydozen_write->setToolTip("train writing");
@@ -121,11 +120,13 @@ void QDecksOverviewWidget::populateDecksOverview()
                 button_view_deck->setIcon(QIcon::fromTheme("folder-open"));
                 connect(button_view_deck, &QPushButton::clicked, this, [this, deck_name]{ tableButtonViewDeckClicked(deck_name); });
                 button_view_deck->setToolTip("view / edit deck");
+                button_view_deck->setMaximumWidth(25);
                 
                 QPushButton *button_delete_deck = new QPushButton();
                 button_delete_deck->setIcon(QIcon::fromTheme("edit-delete"));
                 connect(button_delete_deck, &QPushButton::clicked, this, [this, deck_name]{ tableButtonDeleteDeckClicked(deck_name); });
                 button_delete_deck->setToolTip("delete deck");
+                button_delete_deck->setMaximumWidth(25);
                 
                 QComboBox *combo_status = populateComboStatus(deck_name);
                 if (decks_meta[deck_name] != "")
@@ -133,56 +134,29 @@ void QDecksOverviewWidget::populateDecksOverview()
                     combo_status->setCurrentText(decks_meta[deck_name]);
                 }
                 
-                QTableWidgetItem *item_last_learned;
+                QLabel *item_last_learned;
                 if (decks_meta_learned[deck_name] == "")
                 {
-                    item_last_learned = new QTableWidgetItem("never");
+                    item_last_learned = new QLabel("never");
                 }
                 else
                 {
                     QDateTime timestamp;
                     timestamp.setTime_t(decks_meta_learned[deck_name].toInt());
-                    item_last_learned = new QTableWidgetItem(timestamp.toString("dd. MMM yy"));
+                    item_last_learned = new QLabel(timestamp.toString("dd. MMM yy"));
                 }
                 
-                item_last_learned->setFlags(Qt::ItemIsEnabled);
-                
-                this->table->setCellWidget(i, 0, button_view_deck);
-                this->table->setItem(i, 1, item_name);
-                this->table->setCellWidget(i, 2, button_dirty_dozen);
-                this->table->setCellWidget(i, 3, button_inv_dirty_dozen);
-                this->table->setCellWidget(i, 4, button_dirtydozen_write);
-                this->table->setCellWidget(i, 5, combo_status);
-                this->table->setItem(i, 6, item_last_learned);
-                this->table->setCellWidget(i, 7, button_delete_deck);
+                this->grid->addWidget(button_view_deck, i, 0);
+                this->grid->addWidget(new QLabel(deck_name), i, 1);
+                this->grid->addWidget(button_dirty_dozen, i, 2);
+                this->grid->addWidget(button_inv_dirty_dozen, i, 3);
+                this->grid->addWidget(button_dirtydozen_write, i, 4);
+                this->grid->addWidget(combo_status, i, 5);
+                this->grid->addWidget(item_last_learned, i, 6);
+                this->grid->addWidget(button_delete_deck, i, 7);
             }
         }
     }
-    
-    this->table->setRowCount(i+1);
-    
-    
-    QStringList labels;
-    labels << "view" << "deck name" << "learn a" << "learn b" << "learn c" << "tag" << "last learned" << "";
-    table->setHorizontalHeaderLabels(labels);
-    table->verticalHeader()->hide();
-    
-    QTableWidgetItem *dd_header_item = this->table->horizontalHeaderItem(2);
-    if (dd_header_item)
-    {
-        dd_header_item->setToolTip("dirty dozen");
-    }
-    
-    QTableWidgetItem *inv_dd_header_item = this->table->horizontalHeaderItem(3);
-    if (inv_dd_header_item)
-    {
-        inv_dd_header_item->setToolTip("inverted dirty dozen");
-    }
-    
-    // using visibility-toggling as workaround to also resize columns to header label
-    this->table->setVisible(false);
-    this->table->resizeColumnsToContents();
-    this->table->setVisible(true);
 }
 
 QComboBox *QDecksOverviewWidget::populateComboStatus(QString deck_name)
@@ -225,8 +199,7 @@ void QDecksOverviewWidget::tableButtonLearnClicked(QString deck_name)
     
     emit deckLearnClicked(deck_name);
     
-    this->table->clear();
-    populateDecksOverview();
+    refreshTable();
 }
 
 void QDecksOverviewWidget::tableButtonDirtyDozenClicked(QString deck_name)
@@ -235,8 +208,7 @@ void QDecksOverviewWidget::tableButtonDirtyDozenClicked(QString deck_name)
     
     emit deckDirtyDozenClicked(deck_name);
     
-    this->table->clear();
-    populateDecksOverview();
+    refreshTable();
 }
 
 void QDecksOverviewWidget::tableButtonDirtydozenWriteClicked(QString deck_name)
@@ -245,8 +217,7 @@ void QDecksOverviewWidget::tableButtonDirtydozenWriteClicked(QString deck_name)
     
     emit deckDirtydozenWriteClicked(deck_name);
     
-    this->table->clear();
-    populateDecksOverview();
+    refreshTable();
 }
 
 void QDecksOverviewWidget::tableButtonViewDeckClicked(QString deck_name)
@@ -265,24 +236,21 @@ void QDecksOverviewWidget::tableButtonDeleteDeckClicked(QString deck_name)
         emit deleteDeck(deck_name);
     }
     
-    this->table->clear();
-    populateDecksOverview();
+    refreshTable();
 }
 
 void QDecksOverviewWidget::onComboNameFilterTextChanged(QString text)
 {
     this->config->setLastLanguageFilter(text);
     
-    this->table->clear();
-    populateDecksOverview();
+    refreshTable();
 }
 
 void QDecksOverviewWidget::onComboStatusFilterTextChanged(QString text)
 {
     comboColorAdjust(this->combo_status_filter);
     
-    this->table->clear();
-    populateDecksOverview();
+    refreshTable();
 }
 
 void QDecksOverviewWidget::onComboStatusTextChanged(QString deck_name, QComboBox *combo_status)
