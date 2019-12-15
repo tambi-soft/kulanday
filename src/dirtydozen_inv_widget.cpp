@@ -1,4 +1,4 @@
-#include "inv_dirty_dozen_widget.h"
+#include "dirtydozen_inv_widget.h"
 
 QInvDirtyDozenWidget::QInvDirtyDozenWidget(QDir *decks_path, QString deck_name, Config *config, QWidget *parent)
     : QWidget(parent)

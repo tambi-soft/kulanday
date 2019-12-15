@@ -63,6 +63,7 @@ void QKulandayMainWindow::showDecksOverviewTab()
     QDecksOverviewWidget *decks = new QDecksOverviewWidget(this->config, this->deckpath);
     tab_widget->addTab(decks, "decks");
     connect(decks, &QDecksOverviewWidget::deckDirtyDozenClicked, this, &QKulandayMainWindow::showDirtyDozenWidget);
+    connect(decks, &QDecksOverviewWidget::deckDirtydozenWriteClicked, this, &QKulandayMainWindow::showDirtyDozenWriteWidget);
     connect(decks, &QDecksOverviewWidget::deckLearnClicked, this, &QKulandayMainWindow::showLearnWidget);
     connect(decks, &QDecksOverviewWidget::deckViewClicked, this, &QKulandayMainWindow::showDeckWidget);
     connect(decks, &QDecksOverviewWidget::createNewDeck, this, &QKulandayMainWindow::createNewDeck);
@@ -79,6 +80,14 @@ void QKulandayMainWindow::showDirtyDozenWidget(QString deck_name)
     activateNewTab();
     
     this->tab_widget->setTabIcon(this->tab_widget->currentIndex(), QIcon::fromTheme("image-loading"));
+}
+
+void QKulandayMainWindow::showDirtyDozenWriteWidget(QString deck_name)
+{
+    DirtydozenWriteWidget *widget = new DirtydozenWriteWidget(this->deckpath, deck_name, this->config);
+    tab_widget->addTab(widget, deck_name);
+    
+    activateNewTab();
 }
 
 void QKulandayMainWindow::showLearnWidget(QString deck_name)

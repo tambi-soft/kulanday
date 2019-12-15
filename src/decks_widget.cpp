@@ -82,7 +82,7 @@ void QDecksOverviewWidget::populateDecksOverview()
     QMap<QString,QString> decks_meta = this->database->selectDecksStati();
     QMap<QString,QString> decks_meta_learned = this->database->selectDecksLearned();
     
-    this->table->setColumnCount(7);
+    this->table->setColumnCount(8);
     this->table->setRowCount(decks_names.length());
     
     int i = -1;
@@ -111,6 +111,11 @@ void QDecksOverviewWidget::populateDecksOverview()
                 button_inv_dirty_dozen->setIcon(QIcon::fromTheme("image-x-generic"));
                 connect(button_inv_dirty_dozen, &QPushButton::clicked, this, [this, deck_name]{ tableButtonLearnClicked(deck_name); });
                 button_inv_dirty_dozen->setToolTip("inverted dirty dozen");
+                
+                QPushButton *button_dirtydozen_write = new QPushButton();
+                //TODO: add some fancy icon here
+                connect(button_dirtydozen_write, &QPushButton::clicked, this, [this, deck_name]{ tableButtonDirtydozenWriteClicked(deck_name); });
+                button_dirtydozen_write->setToolTip("train writing");
                 
                 QPushButton *button_view_deck = new QPushButton();
                 button_view_deck->setIcon(QIcon::fromTheme("folder-open"));
@@ -146,9 +151,10 @@ void QDecksOverviewWidget::populateDecksOverview()
                 this->table->setItem(i, 1, item_name);
                 this->table->setCellWidget(i, 2, button_dirty_dozen);
                 this->table->setCellWidget(i, 3, button_inv_dirty_dozen);
-                this->table->setCellWidget(i, 4, combo_status);
-                this->table->setItem(i, 5, item_last_learned);
-                this->table->setCellWidget(i, 6, button_delete_deck);
+                this->table->setCellWidget(i, 4, button_dirtydozen_write);
+                this->table->setCellWidget(i, 5, combo_status);
+                this->table->setItem(i, 6, item_last_learned);
+                this->table->setCellWidget(i, 7, button_delete_deck);
             }
         }
     }
@@ -157,7 +163,7 @@ void QDecksOverviewWidget::populateDecksOverview()
     
     
     QStringList labels;
-    labels << "view" << "deck name" << "learn a" << "learn b" << "tag" << "last learned" << "";
+    labels << "view" << "deck name" << "learn a" << "learn b" << "learn c" << "tag" << "last learned" << "";
     table->setHorizontalHeaderLabels(labels);
     table->verticalHeader()->hide();
     
@@ -228,6 +234,16 @@ void QDecksOverviewWidget::tableButtonDirtyDozenClicked(QString deck_name)
     this->database->updateLastLearned(deck_name);
     
     emit deckDirtyDozenClicked(deck_name);
+    
+    this->table->clear();
+    populateDecksOverview();
+}
+
+void QDecksOverviewWidget::tableButtonDirtydozenWriteClicked(QString deck_name)
+{
+    this->database->updateLastLearned(deck_name);
+    
+    emit deckDirtydozenWriteClicked(deck_name);
     
     this->table->clear();
     populateDecksOverview();

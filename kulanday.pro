@@ -55,6 +55,8 @@ HEADERS += \
     src/db_adapter.h \
     src/deck_item_markers_widget.h \
     src/deck_item_simple_widget.h \
+    src/dirtydozen_inv_widget.h \
+    src/dirtydozen_write_widget.h \
     src/filter_language_combo.h \
     src/help_about_widget.h \
     src/help_markers_widget.h \
@@ -72,7 +74,6 @@ HEADERS += \
     src/main_window.h \
     src/audio_list_table.h \
     src/create_new_deck_dialog.h \
-    src/inv_dirty_dozen_widget.h \
     src/dirtydozen_widget.h \
     src/decks_widget.h \
     src/deck_widget.h \
@@ -85,6 +86,8 @@ SOURCES += \
     src/backend.cpp \
     src/deck_item_markers_widget.cpp \
     src/deck_item_simple_widget.cpp \
+    src/dirtydozen_inv_widget.cpp \
+    src/dirtydozen_write_widget.cpp \
     src/filter_language_combo.cpp \
     src/help_about_widget.cpp \
     src/help_markers_widget.cpp \
@@ -104,7 +107,6 @@ SOURCES += \
     src/main_window.cpp \
     src/audio_list_table.cpp \
     src/create_new_deck_dialog.cpp \
-    src/inv_dirty_dozen_widget.cpp \
     src/dirtydozen_widget.cpp \
     src/decks_widget.cpp \
     src/deck_widget.cpp \

@@ -52,6 +52,7 @@ private slots:
     void createNewSimpleDeckClicked();
     void createNewMarkersDeckClicked();
     void tableButtonDirtyDozenClicked(QString deck_name);
+    void tableButtonDirtydozenWriteClicked(QString deck_name);
     void tableButtonLearnClicked(QString deck_name);
     void tableButtonViewDeckClicked(QString deck_name);
     void tableButtonDeleteDeckClicked(QString deck_name);
@@ -61,6 +62,7 @@ private slots:
     
 signals:
     void deckDirtyDozenClicked(QString deck_name);
+    void deckDirtydozenWriteClicked(QString deck_name);
     void deckLearnClicked(QString deck_name);
     void deckViewClicked(QString deck_name);
     void createNewDeck(QUrl url);

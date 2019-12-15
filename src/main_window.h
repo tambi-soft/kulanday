@@ -9,8 +9,9 @@
 #include "menubar.h"
 #include "decks_widget.h"
 #include "deck_widget.h"
-#include "inv_dirty_dozen_widget.h"
+#include "dirtydozen_inv_widget.h"
 #include "dirtydozen_widget.h"
+#include "dirtydozen_write_widget.h"
 #include "deck_item_simple_widget.h"
 #include "deck_item_markers_widget.h"
 #include "db_adapter.h"
@@ -55,6 +56,7 @@ private slots:
     void showDecksOverviewTab();
     void showLearnWidget(QString deck_name);
     void showDirtyDozenWidget(QString deck_name);
+    void showDirtyDozenWriteWidget(QString deck_name);
     void showDeckWidget(QString deck_name);
     void createNewDeck(QUrl deck_url);
     void createNewDeckItem(QString deck_name);
