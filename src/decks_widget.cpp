@@ -145,18 +145,20 @@ void QDecksOverviewWidget::populateDecksOverview()
                     timestamp.setTime_t(decks_meta_learned[deck_name].toInt());
                     item_last_learned = new QLabel(timestamp.toString("dd. MMM yy"));
                 }
+                item_last_learned->setToolTip("last learned date");
                 
                 this->grid->addWidget(button_view_deck, i, 0);
                 this->grid->addWidget(new QLabel(deck_name), i, 1);
-                this->grid->addWidget(button_dirty_dozen, i, 2);
-                this->grid->addWidget(button_inv_dirty_dozen, i, 3);
-                this->grid->addWidget(button_dirtydozen_write, i, 4);
-                this->grid->addWidget(combo_status, i, 5);
+                this->grid->addWidget(combo_status, i, 2);
+                this->grid->addWidget(button_dirty_dozen, i, 3);
+                this->grid->addWidget(button_inv_dirty_dozen, i, 4);
+                this->grid->addWidget(button_dirtydozen_write, i, 5);
                 this->grid->addWidget(item_last_learned, i, 6);
                 this->grid->addWidget(button_delete_deck, i, 7);
             }
         }
     }
+    this->grid->setRowStretch(i+1, 100);
 }
 
 QComboBox *QDecksOverviewWidget::populateComboStatus(QString deck_name)
