@@ -68,7 +68,7 @@ void QDecksOverviewWidget::createNewMarkersDeckClicked()
 
 void QDecksOverviewWidget::refreshTable()
 {
-    //table->clear();
+    this->scroll_widget->deleteLater();
     populateDecksOverview();
 }
 
