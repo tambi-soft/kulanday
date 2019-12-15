@@ -5,6 +5,8 @@ StatsWidget::StatsWidget(QDir *deckpath, QWidget *parent) : QWidget(parent)
     this->deckpath = deckpath;
     
     this->scroll_area = new QScrollArea;
+    connect(this->scroll_area->verticalScrollBar(), &QScrollBar::rangeChanged, this, &StatsWidget::scrollBarRangeChanged);
+    
     QVBoxLayout *scroll_layout = new QVBoxLayout;
     
     setLayout(scroll_layout);
@@ -22,17 +24,20 @@ void StatsWidget::showData()
     this->scroll_widget->setLayout(this->layout);
     this->scroll_area->setWidget(scroll_widget);
     
+    
     DbAdapterMeta *db_meta = new DbAdapterMeta(this->deckpath);
     QStringList stati_list = db_meta->selectStatiGrouped();
     
     QStringList decks_names = this->deckpath->entryList(QDir::NoDotAndDotDot | QDir::Dirs, QDir::Name);
     
+    // prefix_ -> QMap<QString,QVariant>
+    QMap<QString,QMap<QString,QVariant>> data;
     for (int i=0; i < decks_names.length(); i++)
     {
         QString deckname = decks_names.at(i);
         QString prefix = deckname.split("_")[0];
         
-        if (! this->data.contains(prefix) && deckname.contains("_"))
+        if (! data.contains(prefix) && deckname.contains("_"))
         {
             QMap<QString,QVariant> item;
             item["prefix"] = prefix;
@@ -43,29 +48,29 @@ void StatsWidget::showData()
                 item[stati_list.at(i)] = 0;
             }
             
-            this->data[prefix] = item;
+            data[prefix] = item;
         }
         else
         {
-            int count = this->data[prefix]["decks_count"].toInt();
-            this->data[prefix]["decks_count"] = ++count;
+            int count = data[prefix]["decks_count"].toInt();
+            data[prefix]["decks_count"] = ++count;
         }
         
         DbAdapter *db = new DbAdapter(this->deckpath, deckname);
         int word_count = db->selectDeckEntriesCount();
         
-        int word_count_old = this->data[prefix]["words_count"].toInt();
-        this->data[prefix]["words_count"] = word_count_old + word_count;
+        int word_count_old = data[prefix]["words_count"].toInt();
+        data[prefix]["words_count"] = word_count_old + word_count;
         
         QString status = db_meta->selectStatusForDeck(deckname);
-        int status_current = this->data[prefix][status].toInt();
-        this->data[prefix][status] = status_current + word_count;
+        int status_current = data[prefix][status].toInt();
+        data[prefix][status] = status_current + word_count;
     }
     
     
-    for (QString item : this->data.keys())
+    for (QString item : data.keys())
     {
-        addPrefixStats(this->data[item], stati_list);
+        addPrefixStats(data[item], stati_list);
     }
 }
 
@@ -89,15 +94,21 @@ void StatsWidget::addPrefixStats(QMap<QString,QVariant> item, QStringList stati_
 
 void StatsWidget::showEvent(QShowEvent */* event */)
 {
-    //int pos = this->scroll_area->verticalScrollBar()->value();
+    // store the scrollbar position first to be restored in scrollBarRangeChanged afterwards
+    this->scrollbar_pos = this->scroll_area->verticalScrollBar()->sliderPosition();
+    
     if (this->scroll_widget != nullptr)
     {
         this->scroll_widget->deleteLater();
     }
     
-    this->data.clear();
-    
     showData();
-    
-    //this->scroll_area->verticalScrollBar()->setValue(pos);
+}
+
+void StatsWidget::scrollBarRangeChanged(int /*min*/, int max)
+{
+    if (this->scrollbar_pos <= max)
+    {
+        this->scroll_area->verticalScrollBar()->setSliderPosition(this->scrollbar_pos);
+    }
 }

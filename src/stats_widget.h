@@ -22,14 +22,13 @@ public:
     
 private:
     QDir *deckpath;
+    int scrollbar_pos;
     
     QVBoxLayout *layout;
     QScrollArea *scroll_area = new QScrollArea;
     QWidget *scroll_widget = nullptr;
     
     void showData();
-    // prefix_ -> QMap<QString,QVariant>
-    QMap<QString,QMap<QString,QVariant>> data;
     
     void addPrefixStats(QMap<QString, QVariant> item, QStringList stati_list);
     
@@ -37,6 +36,9 @@ signals:
     
 public slots:
     void showEvent(QShowEvent */*event*/);
+    
+private slots:
+    void scrollBarRangeChanged(int /*min*/, int max);
 };
 
 #endif // STATS_H
