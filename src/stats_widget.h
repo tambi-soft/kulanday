@@ -8,6 +8,7 @@
 #include <QDir>
 #include <QGroupBox>
 #include <QScrollArea>
+#include <QScrollBar>
 #include <QLabel>
 
 #include "db_adapter.h"
@@ -22,8 +23,11 @@ public:
 private:
     QDir *deckpath;
     
-    QVBoxLayout *layout = new QVBoxLayout;
+    QVBoxLayout *layout;
+    QScrollArea *scroll_area = new QScrollArea;
+    QWidget *scroll_widget = nullptr;
     
+    void showData();
     // prefix_ -> QMap<QString,QVariant>
     QMap<QString,QMap<QString,QVariant>> data;
     
@@ -32,6 +36,7 @@ private:
 signals:
     
 public slots:
+    void showEvent(QShowEvent */*event*/);
 };
 
 #endif // STATS_H

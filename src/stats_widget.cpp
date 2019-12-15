@@ -4,18 +4,23 @@ StatsWidget::StatsWidget(QDir *deckpath, QWidget *parent) : QWidget(parent)
 {
     this->deckpath = deckpath;
     
-    QScrollArea *scroll_area = new QScrollArea;
-    QWidget *scroll_widget = new QWidget;
+    this->scroll_area = new QScrollArea;
     QVBoxLayout *scroll_layout = new QVBoxLayout;
     
     setLayout(scroll_layout);
-    scroll_layout->addWidget(scroll_area);
+    scroll_layout->addWidget(this->scroll_area);
     
-    scroll_area->setWidgetResizable(true);
-    scroll_area->setWidget(scroll_widget);
-    scroll_widget->setLayout(this->layout);
+    this->scroll_area->setWidgetResizable(true);
+    
     scroll_layout->setMargin(0);
-    
+}
+
+void StatsWidget::showData()
+{
+    this->layout = new QVBoxLayout;
+    this->scroll_widget = new QWidget;
+    this->scroll_widget->setLayout(this->layout);
+    this->scroll_area->setWidget(scroll_widget);
     
     DbAdapterMeta *db_meta = new DbAdapterMeta(this->deckpath);
     QStringList stati_list = db_meta->selectStatiGrouped();
@@ -80,4 +85,19 @@ void StatsWidget::addPrefixStats(QMap<QString,QVariant> item, QStringList stati_
         QString status = stati_list.at(i);
         grid->addWidget(new QLabel(status + ":\t\t" + item[status].toString() + "\t words"), i, 1);
     }
+}
+
+void StatsWidget::showEvent(QShowEvent */* event */)
+{
+    //int pos = this->scroll_area->verticalScrollBar()->value();
+    if (this->scroll_widget != nullptr)
+    {
+        this->scroll_widget->deleteLater();
+    }
+    
+    this->data.clear();
+    
+    showData();
+    
+    //this->scroll_area->verticalScrollBar()->setValue(pos);
 }
