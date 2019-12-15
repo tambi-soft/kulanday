@@ -60,7 +60,7 @@ private slots:
     void tableButtonViewDeckClicked(QString deck_name);
     void tableButtonDeleteDeckClicked(QString deck_name);
     void onComboNameFilterTextChanged(QString text);
-    void onComboStatusFilterTextChanged(QString text);
+    void onComboStatusFilterTextChanged(QString);
     void onComboStatusTextChanged(QString deck_name, QComboBox *combo_status);
     
 signals:

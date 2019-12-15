@@ -248,7 +248,7 @@ void QDecksOverviewWidget::onComboNameFilterTextChanged(QString text)
     refreshTable();
 }
 
-void QDecksOverviewWidget::onComboStatusFilterTextChanged(QString text)
+void QDecksOverviewWidget::onComboStatusFilterTextChanged(QString /*text*/)
 {
     comboColorAdjust(this->combo_status_filter);
     
