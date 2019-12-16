@@ -3,7 +3,6 @@
 #include <QWidget>
 #include <QGridLayout>
 #include <QScrollArea>
-#include <QHeaderView>
 #include <QPushButton>
 #include <QDir>
 #include <QFileDialog>

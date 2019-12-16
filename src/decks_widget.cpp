@@ -77,7 +77,7 @@ void QDecksOverviewWidget::populateDecksOverview()
     this->grid = new QGridLayout;
     this->scroll_widget = new QWidget;
     this->scroll_widget->setLayout(this->grid);
-    this->scroll_area->setWidget(scroll_widget);
+    this->scroll_area->setWidget(this->scroll_widget);
     
     
     QStringList decks_names = decks_path->entryList(QDir::NoDotAndDotDot | QDir::Dirs, QDir::Name);

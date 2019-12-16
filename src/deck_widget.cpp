@@ -48,7 +48,7 @@ QDeckOverviewWidget::QDeckOverviewWidget(QDir *decks_path, QString deck_name, Co
 void QDeckOverviewWidget::initGui()
 {
     layout = new QGridLayout();
-    table = new QTableWidget();
+    this->scroll_area->setWidgetResizable(true);
     player = new QMediaPlayer();
     unicodeFonts = new UnicodeFonts();
     chk_name = new QCheckBox();
@@ -81,8 +81,8 @@ void QDeckOverviewWidget::initGui()
     chk_layout->addWidget(chk_phonetical, 0, Qt::AlignLeft);
     chk_layout->addWidget(new QLabel("translation:"), 1, Qt::AlignRight);
     chk_layout->addWidget(chk_translation, 0, Qt::AlignLeft);
-    chk_layout->addWidget(new QLabel("svg:"), 1, Qt::AlignRight);
-    chk_layout->addWidget(chk_svg, 0, Qt::AlignLeft);
+    //chk_layout->addWidget(new QLabel("svg:"), 1, Qt::AlignRight);
+    //chk_layout->addWidget(chk_svg, 0, Qt::AlignLeft);
     chk_layout->addWidget(new QLabel("image:"), 1, Qt::AlignRight);
     chk_layout->addWidget(chk_image, 0, Qt::AlignLeft);
     
@@ -104,7 +104,7 @@ void QDeckOverviewWidget::initGui()
     {
         layout->addWidget(chk_widget, 0, 0, 1, 2);
     }
-    layout->addWidget(table, 1, 0, 1, 2);
+    layout->addWidget(this->scroll_area, 1, 0, 1, 2);
     if (! this->searchMode)
     {
         layout->addWidget(refresh_button, 2, 0);
@@ -124,18 +124,17 @@ QList<QMap<QString,QVariant>> QDeckOverviewWidget::fetchDeckData()
 
 void QDeckOverviewWidget::populateTableWidget(QList<QMap<QString,QVariant>> data)
 {
+    this->grid = new QGridLayout;
+    this->scroll_widget = new QWidget;
+    this->scroll_widget->setLayout(this->grid);
+    this->scroll_area->setWidget(this->scroll_widget);
+    
+    
     // to avoid pointing to a deleted object after reinitializing
     this->playing_button = nullptr;
     
     if (data.length() > 0)
     {
-        table->setRowCount(data.length());
-        
-        // we want to make sure that the table is large enough for holding all columns.
-        // sadly, we now the correct column count only afterwards ...
-        table->setColumnCount(COLUMN_OFFSET + 1000);
-        
-        // insert data
         for (int i = 0; i < data.length(); ++i)
         {
             int rowid = data.at(i)["rowid"].toInt();
@@ -146,17 +145,20 @@ void QDeckOverviewWidget::populateTableWidget(QList<QMap<QString,QVariant>> data
             edit_button->setIcon(QIcon::fromTheme("document-properties"));
             connect(edit_button, &QPushButton::clicked, this, [this, deck_name, rowid]{ editRowButtonClicked(deck_name, rowid); });
             edit_button->setToolTip("edit this item");
+            edit_button->setMaximumWidth(BUTTON_WIDTH);
             
             // move item to another deck
             QPushButton *move_button = new QPushButton();
             move_button->setIcon(QIcon::fromTheme("document-send"));
             connect(move_button, &QPushButton::clicked, this, [this, deck_name, rowid]{ moveItem(deck_name, rowid); });
             move_button->setToolTip("move this item to another deck");
+            move_button->setMaximumWidth(BUTTON_WIDTH);
             
             QPushButton *delete_button = new QPushButton();
             delete_button->setIcon(QIcon::fromTheme("edit-delete"));
             connect(delete_button, &QPushButton::clicked, this, [this, rowid, data, i, deck_name]{ deleteRowButtonClicked(rowid, data.at(i), deck_name); });
             delete_button->setToolTip("delete this item");
+            delete_button->setMaximumWidth(BUTTON_WIDTH);
             
             QString order_index = data.at(i)["order_index"].toString();
             QString name = data.at(i)["name"].toString();
@@ -188,47 +190,43 @@ void QDeckOverviewWidget::populateTableWidget(QList<QMap<QString,QVariant>> data
                 svg_widget->setFixedSize(60, 30);
             }
             
-            table->setItem(i, 0, new QTableWidgetItem(deck_name));
-            table->setCellWidget(i, 1, edit_button);
-            table->setCellWidget(i, 2, move_button);
-            table->setCellWidget(i, 3, delete_button);
+            this->grid->addWidget(edit_button, i, 1);
+            this->grid->addWidget(move_button, i, 2);
+            this->grid->addWidget(delete_button, i, 3);
             
-            table->setItem(i, 4, new QTableWidgetItem(order_index));
+            //table->setItem(i, 4, new QTableWidgetItem(order_index));
             
             if (chk_name->isChecked())
             {
-                table->setItem(i, 5, new QTableWidgetItem(name));
+                this->grid->addWidget(new QLabel(name), i, 5);
             }
+            else
+            {
+                
+            }
+            
             if (chk_word->isChecked())
             {
-                table->setItem(i, 6, new QTableWidgetItem(word));
+                this->grid->addWidget(new QLabel(word), i, 6);
             }
             if (chk_phonetical->isChecked())
             {
-                table->setItem(i, 7, new QTableWidgetItem(phonetical));
+                this->grid->addWidget(new QLabel(phonetical), i, 7);
             }
             if (chk_translation->isChecked())
             {
-                table->setItem(i, 8, new QTableWidgetItem(translation));
+                this->grid->addWidget(new QLabel(translation), i, 8);
             }
             
-            table->setCellWidget(i, 9, svg_widget);
-            table->setCellWidget(i, 10, image_widget);
+            this->grid->addWidget(image_widget, i, 9);
             
             appendPlayButtons(i, data, deck_name);
         }
     }
+    // push all columns to the left for getting the table a bit more compact
+    this->grid->setColumnStretch(100, 100);
     
-    //table->horizontalHeader()->hide();
-    QStringList labels;
-    labels << "deck" << "" << "" << "" << "" << "name" << "word" << "phon." << "trans." << "svg" << "image" << "" << "" << "" << "" << "" << "" << "" << "" << "" << "";
-    table->setHorizontalHeaderLabels(labels);
-    
-    table->resizeColumnsToContents();
-    //table->resizeRowsToContents();
-    
-    table->setColumnCount(COLUMN_OFFSET + this->max_audio_count);
-    
+    /*
     if (this->searchMode)
     {
         table->setColumnHidden(1, true);
@@ -240,6 +238,7 @@ void QDeckOverviewWidget::populateTableWidget(QList<QMap<QString,QVariant>> data
     {
         table->setColumnHidden(0, true);
     }
+    */
 }
 
 void QDeckOverviewWidget::appendPlayButtons(int table_rowid, QList<QMap<QString,QVariant>> data, QString deck_name)
@@ -279,8 +278,10 @@ void QDeckOverviewWidget::appendPlayButtons(int table_rowid, QList<QMap<QString,
         if (audio_filename != nullptr)
         {
             connect(audio_button, &QPushButton::clicked, this, [this, audio_button, audio_filename, deck_name]{ audioButtonClicked(audio_button, audio_filename, deck_name); });
-            
-            table->setCellWidget(table_rowid, column + COLUMN_OFFSET, audio_button);
+            // TODO:
+            //table->setCellWidget(table_rowid, column + COLUMN_OFFSET, audio_button);
+            this->grid->addWidget(audio_button, table_rowid, column + COLUMN_OFFSET);
+            audio_button->setMaximumWidth(BUTTON_WIDTH);
         }
     }
 }
@@ -322,15 +323,12 @@ void QDeckOverviewWidget::newItemButtonClicked()
 {
     emit newDeckItemRequested(deck_name);
     
-    table->clear();
-    
-    QList<QMap<QString,QVariant>> data = fetchDeckData();
-    populateTableWidget(data);
+    refreshTable();
 }
 
 void QDeckOverviewWidget::refreshTable()
 {
-    table->clear();
+    this->scroll_widget->deleteLater();
     
     QList<QMap<QString,QVariant>> data = fetchDeckData();
     populateTableWidget(data);
@@ -367,10 +365,7 @@ void QDeckOverviewWidget::deleteRow(qlonglong rowid, QString deck_name)
         }
     }
     
-    table->clear();
-    
-    QList<QMap<QString,QVariant>> data = fetchDeckData();
-    populateTableWidget(data);
+    refreshTable();
 }
 
 void QDeckOverviewWidget::moveItem(QString deck_name, qlonglong rowid)
@@ -393,10 +388,7 @@ void QDeckOverviewWidget::showEvent(QShowEvent *event)
 
 void QDeckOverviewWidget::refresh()
 {
-    table->clear();
-    
-    QList<QMap<QString,QVariant>> data = fetchDeckData();
-    populateTableWidget(data);
+    refreshTable();
 }
 
 QString QDeckOverviewWidget::cropText(QString text)

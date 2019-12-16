@@ -5,9 +5,7 @@
 #include <QGridLayout>
 #include <QPushButton>
 #include <QCheckBox>
-#include <QTableWidget>
-#include <QTableWidgetItem>
-#include <QHeaderView>
+#include <QScrollArea>
 #include <QMessageBox>
 #include <QIcon>
 #include <QFont>
@@ -40,10 +38,14 @@ public:
     void refresh();
     
 private:
+    int BUTTON_WIDTH = 25;
     Config *config;
     bool searchMode;
     QGridLayout *layout;
-    QTableWidget *table;
+    QGridLayout *grid; // inner layout containing the qscrollarea
+    QScrollArea *scroll_area = new QScrollArea;
+    QWidget *scroll_widget = nullptr;
+    
     QDir *decks_path;
     QString deck_name;
     QMediaPlayer *player;
