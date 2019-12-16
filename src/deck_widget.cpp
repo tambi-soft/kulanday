@@ -190,6 +190,7 @@ void QDeckOverviewWidget::populateTableWidget(QList<QMap<QString,QVariant>> data
                 svg_widget->setFixedSize(60, 30);
             }
             
+            this->grid->addWidget(new QLabel(QString::number(i+1)), i, 0);
             this->grid->addWidget(edit_button, i, 1);
             this->grid->addWidget(move_button, i, 2);
             this->grid->addWidget(delete_button, i, 3);
