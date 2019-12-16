@@ -191,19 +191,18 @@ void QDeckOverviewWidget::populateTableWidget(QList<QMap<QString,QVariant>> data
             }
             
             this->grid->addWidget(new QLabel(QString::number(i+1)), i, 0);
-            this->grid->addWidget(edit_button, i, 1);
-            this->grid->addWidget(move_button, i, 2);
-            this->grid->addWidget(delete_button, i, 3);
+            if (! this->searchMode)
+            {
+                this->grid->addWidget(edit_button, i, 1);
+                this->grid->addWidget(move_button, i, 2);
+                this->grid->addWidget(delete_button, i, 3);
+            }
             
             //table->setItem(i, 4, new QTableWidgetItem(order_index));
             
             if (chk_name->isChecked())
             {
                 this->grid->addWidget(new QLabel(name), i, 5);
-            }
-            else
-            {
-                
             }
             
             if (chk_word->isChecked())
@@ -226,20 +225,8 @@ void QDeckOverviewWidget::populateTableWidget(QList<QMap<QString,QVariant>> data
     }
     // push all columns to the left for getting the table a bit more compact
     this->grid->setColumnStretch(100, 100);
-    
-    /*
-    if (this->searchMode)
-    {
-        table->setColumnHidden(1, true);
-        table->setColumnHidden(2, true);
-        table->setColumnHidden(3, true);
-        table->setColumnHidden(4, true);
-    }
-    else
-    {
-        table->setColumnHidden(0, true);
-    }
-    */
+    // push everything up
+    this->grid->setRowStretch(data.length(), 100);
 }
 
 void QDeckOverviewWidget::appendPlayButtons(int table_rowid, QList<QMap<QString,QVariant>> data, QString deck_name)
