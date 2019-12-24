@@ -35,7 +35,7 @@ QDeckOverviewWidget::QDeckOverviewWidget(QDir *decks_path, QString deck_name, Co
     this->searchMode = false;
     
     this->config = config;
-    
+
     initGui();
     
     this->decks_path = decks_path;
@@ -47,6 +47,7 @@ QDeckOverviewWidget::QDeckOverviewWidget(QDir *decks_path, QString deck_name, Co
 
 void QDeckOverviewWidget::initGui()
 {
+    connect(this->scroll_area->verticalScrollBar(), &QScrollBar::rangeChanged, this, &QDeckOverviewWidget::scrollBarRangeChanged);
     layout = new QGridLayout();
     this->scroll_area->setWidgetResizable(true);
     player = new QMediaPlayer();
@@ -197,6 +198,10 @@ void QDeckOverviewWidget::populateTableWidget(QList<QMap<QString,QVariant>> data
                 this->grid->addWidget(move_button, i, 2);
                 this->grid->addWidget(delete_button, i, 3);
             }
+            else
+            {
+                this->grid->addWidget(new QLabel(this->deck_name), i, 1);
+            }
             
             //table->setItem(i, 4, new QTableWidgetItem(order_index));
             
@@ -316,10 +321,21 @@ void QDeckOverviewWidget::newItemButtonClicked()
 
 void QDeckOverviewWidget::refreshTable()
 {
+    // store the scrollbar position first to be restored in scrollBarRangeChanged afterwards
+    this->scrollbar_pos = this->scroll_area->verticalScrollBar()->sliderPosition();
+
     this->scroll_widget->deleteLater();
     
     QList<QMap<QString,QVariant>> data = fetchDeckData();
     populateTableWidget(data);
+}
+
+void QDeckOverviewWidget::scrollBarRangeChanged(int /*min*/, int max)
+{
+    if (this->scrollbar_pos <= max)
+    {
+        this->scroll_area->verticalScrollBar()->setSliderPosition(this->scrollbar_pos);
+    }
 }
 
 void QDeckOverviewWidget::editRowButtonClicked(QString deck_name, int rowid)
