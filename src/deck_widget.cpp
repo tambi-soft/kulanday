@@ -197,6 +197,10 @@ void QDeckOverviewWidget::populateTableWidget(QList<QMap<QString,QVariant>> data
                 this->grid->addWidget(move_button, i, 2);
                 this->grid->addWidget(delete_button, i, 3);
             }
+            else
+            {
+                this->grid->addWidget(new QLabel(this->deck_name), i, 1);
+            }
             
             //table->setItem(i, 4, new QTableWidgetItem(order_index));
             
