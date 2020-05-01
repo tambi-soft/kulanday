@@ -25,7 +25,7 @@ bool UnicodeFonts::isInUnicodeRange(int start, int end, QString string)
     QString::iterator iter;
     for (iter = string.begin(); iter < string.end(); iter++)
     {
-        if (iter->unicode() > start and iter->unicode() < end)
+        if ((iter->unicode() > start) && (iter->unicode() < end))
         {
             return true;
         }
