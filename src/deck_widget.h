@@ -6,6 +6,7 @@
 #include <QPushButton>
 #include <QCheckBox>
 #include <QScrollArea>
+#include <QScrollBar>
 #include <QMessageBox>
 #include <QIcon>
 #include <QFont>
@@ -57,6 +58,7 @@ private:
     
     int COLUMN_OFFSET = 11;
     int max_audio_count = 0;
+    int scrollbar_pos;
     
     QCheckBox *chk_name;
     QCheckBox *chk_word;
@@ -90,6 +92,7 @@ private slots:
     void editRowButtonClicked(QString deck_name, int rowid);
     void deleteRowButtonClicked(qlonglong rowid, QMap<QString, QVariant> data_row, QString deck_name);
     void mediaPlayerStateChanged(int state);
+    void scrollBarRangeChanged(int /*min*/, int max);
 };
 
 #endif // Q_DECK_OVERVIEW_H
