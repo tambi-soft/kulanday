@@ -55,7 +55,7 @@ void QDirtyDozenWidget::initialize(QString deck_name)
     this->show_all_button = new QPushButton("show all");
     connect(show_all_button, &QPushButton::clicked, this, &QDirtyDozenWidget::showAllButtonClicked);
     
-    QGroupBox *slider_group = new QGroupBox("repeats counter");
+    QGroupBox *slider_group = new QGroupBox("number of repeats");
     QHBoxLayout *slider_layout = new QHBoxLayout();
     slider_layout->setContentsMargins(0, 0, 0, 0);
     this->slider_repeat_times = new QSlider(Qt::Horizontal);
