@@ -100,6 +100,8 @@ void QDecksOverviewWidget::populateDecksOverview()
             {
                 i++;
                 
+                QLabel *label_number_words = new QLabel();
+                label_number_words->setToolTip("number of itmes in this deck");
                 
                 QPushButton *button_dirty_dozen = new QPushButton("hear and response");
                 button_dirty_dozen->setIcon(QIcon::fromTheme("image-loading"));
@@ -149,12 +151,13 @@ void QDecksOverviewWidget::populateDecksOverview()
                 
                 this->grid->addWidget(button_view_deck, i, 0);
                 this->grid->addWidget(new QLabel(deck_name), i, 1);
-                this->grid->addWidget(combo_status, i, 2);
-                this->grid->addWidget(button_dirty_dozen, i, 3);
-                this->grid->addWidget(button_inv_dirty_dozen, i, 4);
-                this->grid->addWidget(button_dirtydozen_write, i, 5);
-                this->grid->addWidget(item_last_learned, i, 6);
-                this->grid->addWidget(button_delete_deck, i, 7);
+                this->grid->addWidget(label_number_words, i, 2);
+                this->grid->addWidget(combo_status, i, 3);
+                this->grid->addWidget(button_dirty_dozen, i, 4);
+                this->grid->addWidget(button_inv_dirty_dozen, i, 5);
+                this->grid->addWidget(button_dirtydozen_write, i, 6);
+                this->grid->addWidget(item_last_learned, i, 7);
+                this->grid->addWidget(button_delete_deck, i, 8);
             }
         }
     }
