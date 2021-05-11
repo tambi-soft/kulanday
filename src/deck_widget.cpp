@@ -167,10 +167,10 @@ void QDeckOverviewWidget::populateTableWidget(QList<QMap<QString,QVariant>> data
             QString phonetical = data.at(i)["phonetical"].toString();
             QString translation = data.at(i)["translation"].toString();
             
-            name = cropText(name);
-            word = cropText(word);
-            phonetical = cropText(phonetical);
-            translation = cropText(translation);
+            //name = cropText(name);
+            //word = cropText(word);
+            //phonetical = cropText(phonetical);
+            //translation = cropText(translation);
             
             QString image_filename = data.at(i)["image"].toString();
             QString svg_filename = data.at(i)["svg_filename"].toString();
@@ -207,20 +207,28 @@ void QDeckOverviewWidget::populateTableWidget(QList<QMap<QString,QVariant>> data
             
             if (chk_name->isChecked())
             {
-                this->grid->addWidget(new QLabel(name), i, 5);
+                QLabel *label_name = new QLabel(name);
+                label_name->setWordWrap(true);
+                this->grid->addWidget(label_name, i, 5);
             }
             
             if (chk_word->isChecked())
             {
-                this->grid->addWidget(new QLabel(word), i, 6);
+                QLabel *label_word = new QLabel(word);
+                label_word->setWordWrap(true);
+                this->grid->addWidget(label_word, i, 6);
             }
             if (chk_phonetical->isChecked())
             {
-                this->grid->addWidget(new QLabel(phonetical), i, 7);
+                QLabel *label_phonetical = new QLabel(phonetical);
+                label_phonetical->setWordWrap(true);
+                this->grid->addWidget(label_phonetical, i, 7);
             }
             if (chk_translation->isChecked())
             {
-                this->grid->addWidget(new QLabel(translation), i, 8);
+                QLabel *label_translation = new QLabel(translation);
+                label_translation->setWordWrap(true);
+                this->grid->addWidget(label_translation, i, 8);
             }
             
             this->grid->addWidget(image_widget, i, 9);
